@@ -642,6 +642,13 @@
             gap: 3rem;
             align-items: center;
         }
+        
+        @media (max-width: 768px) {
+            .video-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
 
         .video-description {
             padding: 2rem;
@@ -1644,17 +1651,26 @@
             <!-- Mobile Lab Video Section -->
             <div class="lab-video-section">
                 <div class="video-container">
-                    <div class="video-wrapper">
-                        <iframe width="100%" 
-                                height="400" 
+                    <div class="video-wrapper" style="display: flex; justify-content: center; align-items: center;">
+                        <div style="position: relative; width: 100%; max-width: 560px; height: 0; padding-bottom: 56.25%; /* 16:9 aspect ratio */ margin: 0 auto;">
+                            <iframe 
                                 src="https://www.youtube.com/embed/6KTdPVELAcI" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen
-                                style="border-radius: 10px;">
-                        </iframe>
+                                style="
+                                    position: absolute; 
+                                    top: 0; 
+                                    left: 0; 
+                                    width: 100%; 
+                                    height: 100%; 
+                                    border-radius: 15px;
+                                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                                ">
+                            </iframe>
+                        </div>
                     </div>
-                    <div class="video-description">
+                    <div class="video-description" style="text-align: center;">
                         <h3>Revolutionary Mobile Education Platform</h3>
                         <p>Experience our cutting-edge mobile laboratory that brings AI education directly to communities everywhere. Equipped with the latest technology and staffed by expert educators, our mobile lab transforms any location into a world-class AI learning environment.</p>
                     </div>

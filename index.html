@@ -770,6 +770,11 @@
         .team-member:hover {
             transform: translateY(-5px);
         }
+        
+        .team-member:hover .team-icon {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
 
         .team-member img {
             width: 120px;
@@ -1017,15 +1022,11 @@
                 
                 <div class="hero-stats">
                     <div class="venn-diagram">
-                        <div class="venn-circle left" data-video="https://www.youtube.com/embed/6KTdPVELAcI" onclick="window.location.href='ai-literacy-workshops.html'">
+                        <div class="venn-circle left" data-video="videos/mobile_lab_demo.mp4" onclick="window.location.href='ai-literacy-workshops.html'">
                             <i class="fas fa-chalkboard-teacher"></i>
-                            <iframe class="hover-video" 
-                                    src="https://www.youtube.com/embed/6KTdPVELAcI?autoplay=1&mute=1&loop=1&playlist=6KTdPVELAcI&controls=0&showinfo=0&rel=0&modestbranding=1" 
-                                    frameborder="0" 
-                                    allow="autoplay; encrypted-media" 
-                                    allowfullscreen
-                                    style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 50%; opacity: 0; transition: opacity 0.4s ease;">
-                            </iframe>
+                            <video class="hover-video" muted loop preload="auto">
+                                <source src="videos/mobile_lab_demo.mp4" type="video/mp4">
+                            </video>
                         </div>
                         <div class="venn-label left">AI Literacy<br>Workshops</div>
                         
@@ -1143,36 +1144,54 @@
             
             <div class="research-grid">
                 <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/terms_condition', '_blank')">
+                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
+                        <i class="fas fa-file-contract" style="font-size: 3rem; color: var(--color-workshops); opacity: 0.8;"></i>
+                    </div>
                     <h4>Industry-First Informed Consent</h4>
                     <div class="research-stat">2022</div>
                     <p>First to use LLMs to translate company policies, ensuring truly informed consent for AI data usage.</p>
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true', '_blank')">
+                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
+                        <i class="fas fa-brain" style="font-size: 3rem; color: var(--color-integration); opacity: 0.8;"></i>
+                    </div>
                     <h4>Biometric AI Feedback</h4>
                     <div class="research-stat">EEG + FEA</div>
                     <p>Pioneering research using biometric data as human feedback for training more ethical, personalized AI systems.</p>
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media', '_blank')">
+                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
+                        <i class="fas fa-users" style="font-size: 3rem; color: var(--color-research); opacity: 0.8;"></i>
+                    </div>
                     <h4>Diversity in Media Study</h4>
                     <div class="research-stat">83%</div>
                     <p>Groundbreaking research showing 83% believe GenAI can promote diversity and inclusion in media.</p>
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/blog/blog-post-2', '_blank')">
+                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
+                        <i class="fas fa-theater-masks" style="font-size: 3rem; color: var(--color-workshops); opacity: 0.8;"></i>
+                    </div>
                     <h4>SAG-AFTRA Analysis</h4>
                     <div class="research-stat">100 Days</div>
                     <p>Real-time analysis of entertainment industry strikes, informing consent and compensation frameworks.</p>
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a', '_blank')">
+                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
+                        <i class="fas fa-spa" style="font-size: 3rem; color: var(--color-integration); opacity: 0.8;"></i>
+                    </div>
                     <h4>AI Relaxation Study</h4>
                     <div class="research-stat">2024</div>
                     <p>EEG-based study comparing relaxation levels between AI-generated content and traditional therapy methods.</p>
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://youtu.be/ngWUBlO2iHg', '_blank')">
+                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
+                        <i class="fas fa-presentation" style="font-size: 3rem; color: var(--color-research); opacity: 0.8;"></i>
+                    </div>
                     <h4>Conference Presentations</h4>
                     <div class="research-stat">NMSBA</div>
                     <p>Featured presentations at NMSBA World Forum and Center for Reiki Research conferences.</p>
@@ -1190,42 +1209,54 @@
             
             <div class="team-grid">
                 <div class="team-member fade-in">
-                    <img src="https://via.placeholder.com/120x120?text=MJ" alt="Morgan Jones">
+                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-workshops) 0%, var(--color-workshops-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                        <i class="fas fa-user-tie" style="font-size: 3rem; color: white;"></i>
+                    </div>
                     <h4>Morgan Jones</h4>
                     <p class="role">Founder & Chief Data Scientist</p>
                     <p>Educator to 10,000+ students across U.S. & China, Howard University alumnus</p>
                 </div>
                 
                 <div class="team-member fade-in">
-                    <img src="https://via.placeholder.com/120x120?text=DG" alt="Devin Gore">
+                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-integration) 0%, var(--color-integration-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                        <i class="fas fa-brain" style="font-size: 3rem; color: white;"></i>
+                    </div>
                     <h4>Devin Gore</h4>
                     <p class="role">EEG Researcher</p>
                     <p>Electroencephalogram Tech & Researcher specializing in biometric AI</p>
                 </div>
                 
                 <div class="team-member fade-in">
-                    <img src="https://via.placeholder.com/120x120?text=NB" alt="Naveen Balaji">
+                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-research) 0%, var(--color-research-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                        <i class="fas fa-robot" style="font-size: 3rem; color: white;"></i>
+                    </div>
                     <h4>Naveen Balaji</h4>
                     <p class="role">Robotics Engineer</p>
                     <p>Leading our mobile AI lab robotics and automation initiatives</p>
                 </div>
                 
                 <div class="team-member fade-in">
-                    <img src="https://via.placeholder.com/120x120?text=HM" alt="Haris Muhammed">
+                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-workshops) 0%, var(--color-workshops-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                        <i class="fas fa-code" style="font-size: 3rem; color: white;"></i>
+                    </div>
                     <h4>Haris Muhammed</h4>
                     <p class="role">Frontend Software Engineer</p>
                     <p>Developing intuitive AI platform interfaces and user experiences</p>
                 </div>
                 
                 <div class="team-member fade-in">
-                    <img src="https://via.placeholder.com/120x120?text=TM" alt="Tahir Muhammed">
+                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-integration) 0%, var(--color-integration-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                        <i class="fas fa-server" style="font-size: 3rem; color: white;"></i>
+                    </div>
                     <h4>Tahir Muhammed</h4>
                     <p class="role">Backend Software Engineer</p>
                     <p>Building robust AI systems and data processing infrastructure</p>
                 </div>
                 
                 <div class="team-member fade-in">
-                    <img src="https://via.placeholder.com/120x120?text=AM" alt="Ashley Martin">
+                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-research) 0%, var(--color-research-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                        <i class="fas fa-user-md" style="font-size: 3rem; color: white;"></i>
+                    </div>
                     <h4>Ashley Martin</h4>
                     <p class="role">BCBA/LPC Consultant</p>
                     <p>Applied Behavior Analysis & Mental Health expertise for ethical AI development</p>
