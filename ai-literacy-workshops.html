@@ -8,6 +8,32 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-header: #4a3c28;
+            --accent-primary: #8b7355;
+            --accent-secondary: #a08c69;
+            --bg-gradient-start: #f4f1e8;
+            --bg-gradient-end: #e8e0d0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --text-header: #f0f0f0;
+            --accent-primary: #F5B11A;
+            --accent-secondary: #d4af37;
+            --bg-gradient-start: #2d2d2d;
+            --bg-gradient-end: #1a1a1a;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,8 +43,9 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: #ffffff;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -29,14 +56,15 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, #f4f1e8 0%, #e8e0d0 100%);
-            color: #4a3c28;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         nav {
@@ -51,11 +79,12 @@
             display: flex;
             align-items: center;
             text-decoration: none;
-            color: #4a3c28;
+            color: var(--text-header);
+            transition: color 0.3s ease;
         }
 
         .logo img {
-            height: 40px;
+            height: 50px;
             width: auto;
             margin-right: 10px;
         }
@@ -67,14 +96,78 @@
         }
 
         .nav-links a {
-            color: #4a3c28;
+            color: var(--text-header);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: #8b7355;
+            color: var(--accent-primary);
+        }
+        
+        .nav-links .auth-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-links .login-btn {
+            color: var(--text-header);
+            border: 1px solid var(--accent-primary);
+            background: transparent;
+        }
+        
+        .nav-links .signup-btn {
+            color: var(--bg-primary);
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+        
+        .nav-links .auth-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            color: inherit;
+        }
+        
+        .nav-links .login-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+        
+        .nav-links .signup-btn:hover {
+            background: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+        }
+        
+        .theme-toggle-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--text-header);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: var(--bg-gradient-start);
         }
 
         /* Hero Section */
@@ -1362,16 +1455,23 @@
 <body>
     <header>
         <nav class="container">
-            <a href="index.html" class="logo">
-                <img src="logos/light_logo.png" alt="G-Data Labs">
-                G-Data Labs
+            <a href="index.html#home" class="logo">
+                <img id="logo-img" src="logos/light_logo.png" alt="G-Data" style="height: 50px;">
+                G-Data
             </a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="ai-research-consulting.html">AI Research</a></li>
-                <li><a href="ai-literacy-workshops.html">AI Workshops</a></li>
-                <li><a href="ai-workflow-integration.html">AI Integration</a></li>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="https://ai.g-datalabs.com/" target="_blank">G-Data Labs</a></li>
+                <li><a href="https://www.g-datalabs.com/blog" target="_blank">Blogs</a></li>
+                <li><a href="index.html#mission">Mission</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
+                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+                <li class="theme-toggle-item">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -2039,6 +2139,37 @@
 
         // Set chart canvas height
         document.getElementById('assessmentChart').height = 400;
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const logoImg = document.getElementById('logo-img');
+
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Update UI based on saved theme
+        if (savedTheme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            logoImg.src = 'logos/gdata_night_trans.png';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                logoImg.src = 'logos/gdata_night_trans.png';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                logoImg.src = 'logos/light_logo.png';
+            }
+        });
     </script>
 </body>
 </html>
