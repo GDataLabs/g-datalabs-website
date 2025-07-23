@@ -1074,6 +1074,20 @@
             .video-description h3 {
                 font-size: 1.5rem;
             }
+            
+            /* Large video mobile adjustments */
+            .lab-video-section iframe {
+                border-radius: 15px !important;
+            }
+            
+            .lab-video-section h3 {
+                font-size: 1.6rem !important;
+            }
+            
+            .lab-video-section p {
+                font-size: 1rem !important;
+            }
+        }
 
             .benefits-header h3 {
                 font-size: 1.6rem;
@@ -1650,29 +1664,28 @@
             
             <!-- Mobile Lab Video Section -->
             <div class="lab-video-section">
-                <div class="video-container">
-                    <div class="video-wrapper" style="display: flex; justify-content: center; align-items: center;">
-                        <div style="position: relative; width: 100%; max-width: 560px; height: 0; padding-bottom: 56.25%; /* 16:9 aspect ratio */ margin: 0 auto;">
-                            <iframe 
-                                src="https://www.youtube.com/embed/6KTdPVELAcI" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                style="
-                                    position: absolute; 
-                                    top: 0; 
-                                    left: 0; 
-                                    width: 100%; 
-                                    height: 100%; 
-                                    border-radius: 15px;
-                                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                                ">
-                            </iframe>
-                        </div>
+                <!-- Large Featured Video Section -->
+                <div style="max-width: 1000px; margin: 0 auto; text-align: center; margin-bottom: 4rem;">
+                    <div style="position: relative; width: 100%; max-width: 800px; height: 0; padding-bottom: 56.25%; /* 16:9 aspect ratio */ margin: 2rem auto;">
+                        <iframe 
+                            src="https://www.youtube.com/embed/6KTdPVELAcI" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="
+                                position: absolute; 
+                                top: 0; 
+                                left: 0; 
+                                width: 100%; 
+                                height: 100%; 
+                                border-radius: 20px;
+                                box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+                            ">
+                        </iframe>
                     </div>
-                    <div class="video-description" style="text-align: center;">
-                        <h3>Revolutionary Mobile Education Platform</h3>
-                        <p>Experience our cutting-edge mobile laboratory that brings AI education directly to communities everywhere. Equipped with the latest technology and staffed by expert educators, our mobile lab transforms any location into a world-class AI learning environment.</p>
+                    <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+                        <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: #333;">Revolutionary Mobile Education Platform</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.8; color: #666;">Experience our cutting-edge mobile laboratory that brings AI education directly to communities everywhere. Equipped with the latest technology and staffed by expert educators, our mobile lab transforms any location into a world-class AI learning environment.</p>
                     </div>
                 </div>
             </div>

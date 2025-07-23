@@ -239,15 +239,15 @@
 
         .venn-diagram {
             position: relative;
-            width: 600px;
-            height: 450px;
+            width: 700px;
+            height: 520px;
             margin: 0 auto;
         }
 
         .venn-circle {
             position: absolute;
-            width: 280px;
-            height: 280px;
+            width: 350px;
+            height: 350px;
             border-radius: 50%;
             border: 3px solid rgba(74,60,40,0.3);
             backdrop-filter: blur(10px);
@@ -299,17 +299,17 @@
 
         /* Venn circle positioning (no colors) */
         .venn-circle.left {
-            top: 120px;
-            left: 40px;
+            top: 130px;
+            left: 20px;
         }
 
         .venn-circle.right {
-            top: 120px;
-            right: 40px;
+            top: 130px;
+            right: 20px;
         }
 
         .venn-circle.center {
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -372,14 +372,14 @@
         }
 
         .venn-label.left {
-            top: 420px;
-            left: 90px;
+            top: 490px;
+            left: 105px;
             color: var(--color-workshops);
         }
 
         .venn-label.right {
-            top: 420px;
-            right: 90px;
+            top: 490px;
+            right: 105px;
             color: var(--color-integration);
         }
 
@@ -394,38 +394,38 @@
 
         @media (max-width: 768px) {
             .venn-diagram {
-                width: 400px;
-                height: 350px;
+                width: 480px;
+                height: 400px;
             }
             
             .venn-circle {
-                width: 200px;
-                height: 200px;
+                width: 240px;
+                height: 240px;
                 font-size: 1rem;
             }
             
             .venn-circle.left {
-                top: 100px;
-                left: 20px;
+                top: 110px;
+                left: 15px;
             }
             
             .venn-circle.right {
-                top: 100px;
-                right: 20px;
+                top: 110px;
+                right: 15px;
             }
             
             .venn-circle.center {
-                top: 20px;
+                top: 15px;
             }
             
             .venn-label.left {
-                top: 320px;
-                left: 60px;
+                top: 370px;
+                left: 75px;
             }
             
             .venn-label.right {
-                top: 320px;
-                right: 60px;
+                top: 370px;
+                right: 75px;
             }
             
             .venn-label.center {
