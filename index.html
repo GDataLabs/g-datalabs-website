@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-Data Labs - Empowering People Through AI Research & Literacy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-gradient-start: #f4f1e8;
+            --bg-gradient-end: #e8e0d0;
+            --bg-card: #ffffff;
+            --bg-card-gradient-start: #f8f6f1;
+            --bg-card-gradient-end: #f0ede6;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: rgba(74,60,40,0.8);
+            --text-header: #4a3c28;
+            --accent-primary: #8b7355;
+            --accent-secondary: #a08c69;
+            --border-color: rgba(0,0,0,0.1);
+            --shadow-color: rgba(0,0,0,0.1);
+            --logo-path: 'logos/light_logo.png';
+            /* Service colors for light mode */
+            --color-workshops: #ff4b4b;
+            --color-workshops-bg: rgba(255, 75, 75, 0.15);
+            --color-workshops-border: rgba(255, 75, 75, 0.6);
+            --color-workshops-hover-bg: rgba(255, 75, 75, 0.3);
+            --color-workshops-hover-border: rgba(255, 75, 75, 0.9);
+            --color-integration: #4b96ff;
+            --color-integration-bg: rgba(75, 150, 255, 0.15);
+            --color-integration-border: rgba(75, 150, 255, 0.6);
+            --color-integration-hover-bg: rgba(75, 150, 255, 0.3);
+            --color-integration-hover-border: rgba(75, 150, 255, 0.9);
+            --color-research: #ffd700;
+            --color-research-bg: rgba(255, 215, 0, 0.15);
+            --color-research-border: rgba(255, 215, 0, 0.6);
+            --color-research-hover-bg: rgba(255, 215, 0, 0.3);
+            --color-research-hover-border: rgba(255, 215, 0, 0.9);
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors based on night logo */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-gradient-start: #2d2d2d;
+            --bg-gradient-end: #1a1a1a;
+            --bg-card: #333333;
+            --bg-card-gradient-start: #3a3a3a;
+            --bg-card-gradient-end: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --text-muted: rgba(240,240,240,0.8);
+            --text-header: #f0f0f0;
+            --accent-primary: #F5B11A;  /* Gold from logo */
+            --accent-secondary: #d4af37;
+            --border-color: rgba(255,255,255,0.1);
+            --shadow-color: rgba(0,0,0,0.3);
+            --logo-path: 'logos/gdata_night_trans.png';
+            /* Service colors for dark mode */
+            --color-workshops: #E62431;
+            --color-workshops-bg: rgba(230, 36, 49, 0.15);
+            --color-workshops-border: rgba(230, 36, 49, 0.6);
+            --color-workshops-hover-bg: rgba(230, 36, 49, 0.3);
+            --color-workshops-hover-border: rgba(230, 36, 49, 0.9);
+            --color-integration: #046C98;
+            --color-integration-bg: rgba(4, 108, 152, 0.15);
+            --color-integration-border: rgba(4, 108, 152, 0.6);
+            --color-integration-hover-bg: rgba(4, 108, 152, 0.3);
+            --color-integration-hover-border: rgba(4, 108, 152, 0.9);
+            --color-research: #F5B11A;
+            --color-research-bg: rgba(245, 177, 26, 0.15);
+            --color-research-border: rgba(245, 177, 26, 0.6);
+            --color-research-hover-bg: rgba(245, 177, 26, 0.3);
+            --color-research-hover-border: rgba(245, 177, 26, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-header);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: var(--bg-gradient-start);
+        }
+
+        .theme-toggle i {
+            font-size: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            color: var(--text-header);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-header);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--accent-primary);
+            transition: color 0.3s ease;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: color 0.3s ease;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4rem 0;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .venn-diagram {
+            position: relative;
+            width: 600px;
+            height: 450px;
+            margin: 0 auto;
+        }
+
+        .venn-circle {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 3px solid rgba(74,60,40,0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--text-header);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            overflow: hidden;
+        }
+
+        /* Ensure icon colors transition */
+        .venn-circle i {
+            color: var(--text-header);
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hover-video {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            border-radius: 50%;
+        }
+
+        .venn-circle i {
+            position: relative;
+            z-index: 2;
+            transition: opacity 0.3s ease;
+        }
+
+        .venn-circle:hover .hover-video {
+            opacity: 1;
+        }
+
+        .venn-circle:hover i {
+            opacity: 0;
+        }
+
+        /* Venn circle positioning (no colors) */
+        .venn-circle.left {
+            top: 120px;
+            left: 40px;
+        }
+
+        .venn-circle.right {
+            top: 120px;
+            right: 40px;
+        }
+
+        .venn-circle.center {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        /* Venn colors using CSS variables */
+        .venn-circle.left {
+            background: var(--color-workshops-bg);
+            border-color: var(--color-workshops-border);
+        }
+
+        .venn-circle.right {
+            background: var(--color-integration-bg);
+            border-color: var(--color-integration-border);
+        }
+
+        .venn-circle.center {
+            background: var(--color-research-bg);
+            border-color: var(--color-research-border);
+        }
+
+
+        .venn-circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            z-index: 20;
+        }
+
+        .venn-circle.left:hover {
+            background: var(--color-workshops-hover-bg);
+            border-color: var(--color-workshops-hover-border);
+            color: var(--color-workshops);
+        }
+
+        .venn-circle.right:hover {
+            background: var(--color-integration-hover-bg);
+            border-color: var(--color-integration-hover-border);
+            color: var(--color-integration);
+        }
+
+        .venn-circle.center:hover {
+            background: var(--color-research-hover-bg);
+            border-color: var(--color-research-hover-border);
+            color: var(--color-research);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+
+        .venn-label {
+            position: absolute;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            opacity: 1;
+            pointer-events: none;
+            text-align: center;
+            z-index: 30;
+        }
+
+        .venn-label.left {
+            top: 420px;
+            left: 90px;
+            color: var(--color-workshops);
+        }
+
+        .venn-label.right {
+            top: 420px;
+            right: 90px;
+            color: var(--color-integration);
+        }
+
+        .venn-label.center {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--color-research);
+        }
+
+        /* Dark mode Venn label colors - removed !important to allow CSS variables */
+
+        @media (max-width: 768px) {
+            .venn-diagram {
+                width: 400px;
+                height: 350px;
+            }
+            
+            .venn-circle {
+                width: 200px;
+                height: 200px;
+                font-size: 1rem;
+            }
+            
+            .venn-circle.left {
+                top: 100px;
+                left: 20px;
+            }
+            
+            .venn-circle.right {
+                top: 100px;
+                right: 20px;
+            }
+            
+            .venn-circle.center {
+                top: 20px;
+            }
+            
+            .venn-label.left {
+                top: 320px;
+                left: 60px;
+            }
+            
+            .venn-label.right {
+                top: 320px;
+                right: 60px;
+            }
+            
+            .venn-label.center {
+                top: -10px;
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #8b7355;
+            color: #f4f1e8;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139,115,85,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139,115,85,0.4);
+            background: #a08c69;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            transition: color 0.3s ease;
+        }
+
+        /* Mission Section */
+        .mission {
+            background: var(--bg-secondary);
+            transition: background 0.3s ease;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .mission-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            text-align: center;
+            transition: transform 0.3s, background 0.3s ease;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mission-card i {
+            font-size: 3rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .mission-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .mission-card p {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--bg-card);
+            transition: background 0.3s ease;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--bg-card-gradient-start) 0%, var(--bg-card-gradient-end) 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--accent-primary);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-card.workshops {
+            background: linear-gradient(135deg, var(--bg-card-gradient-start) 0%, var(--bg-card-gradient-end) 100%);
+            border-left: 5px solid #ff4b4b;
+        }
+
+        .service-card.workshops:hover {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            box-shadow: 0 10px 30px rgba(255,75,75,0.2);
+        }
+
+        .service-card.integration {
+            background: linear-gradient(135deg, var(--bg-card-gradient-start) 0%, var(--bg-card-gradient-end) 100%);
+            border-left: 5px solid #4b96ff;
+        }
+
+        .service-card.integration:hover {
+            background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
+            box-shadow: 0 10px 30px rgba(75,150,255,0.2);
+        }
+
+        .service-card.research {
+            background: linear-gradient(135deg, var(--bg-card-gradient-start) 0%, var(--bg-card-gradient-end) 100%);
+            border-left: 5px solid #ffd700;
+        }
+
+        .service-card.research:hover {
+            background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.2);
+        }
+
+        /* Dark mode Service card colors - using CSS variables instead of !important */
+        [data-theme="dark"] .service-card.workshops {
+            border-left: 5px solid var(--color-workshops);
+        }
+
+        [data-theme="dark"] .service-card.workshops:hover {
+            background: linear-gradient(135deg, var(--color-workshops-hover-bg) 0%, var(--color-workshops-bg) 100%);
+            box-shadow: 0 10px 30px var(--color-workshops-hover-bg);
+        }
+
+        [data-theme="dark"] .service-card.integration {
+            border-left: 5px solid var(--color-integration);
+        }
+
+        [data-theme="dark"] .service-card.integration:hover {
+            background: linear-gradient(135deg, var(--color-integration-hover-bg) 0%, var(--color-integration-bg) 100%);
+            box-shadow: 0 10px 30px var(--color-integration-hover-bg);
+        }
+
+        [data-theme="dark"] .service-card.research {
+            border-left: 5px solid var(--color-research);
+        }
+
+        [data-theme="dark"] .service-card.research:hover {
+            background: linear-gradient(135deg, var(--color-research-hover-bg) 0%, var(--color-research-bg) 100%);
+            box-shadow: 0 10px 30px var(--color-research-hover-bg);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .service-card.workshops:hover .service-icon {
+            color: #ff4b4b;
+        }
+
+        .service-card.integration:hover .service-icon {
+            color: #4b96ff;
+        }
+
+        .service-card.research:hover .service-icon {
+            color: #ffd700;
+        }
+
+        /* Dark mode Service icon colors - using CSS variables instead of !important */
+        [data-theme="dark"] .service-card.workshops:hover .service-icon {
+            color: var(--color-workshops);
+        }
+
+        [data-theme="dark"] .service-card.integration:hover .service-icon {
+            color: var(--color-integration);
+        }
+
+        [data-theme="dark"] .service-card.research:hover .service-icon {
+            color: var(--color-research);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        /* Research Section */
+        .research {
+            background: var(--bg-secondary);
+            transition: background 0.3s ease;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .research-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Dark mode research card accent colors */
+        [data-theme="dark"] .research-card:nth-child(1) {
+            border-top: 3px solid #E62431;
+        }
+
+        [data-theme="dark"] .research-card:nth-child(2) {
+            border-top: 3px solid #907CB4;
+        }
+
+        [data-theme="dark"] .research-card:nth-child(3) {
+            border-top: 3px solid #F5B11A;
+        }
+
+        [data-theme="dark"] .research-card:nth-child(4) {
+            border-top: 3px solid #A1BF8C;
+        }
+
+        [data-theme="dark"] .research-card:nth-child(5) {
+            border-top: 3px solid #046C98;
+        }
+
+        [data-theme="dark"] .research-card:nth-child(6) {
+            border-top: 3px solid #EA6D24;
+        }
+
+        .research-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+            transition: color 0.3s ease;
+        }
+
+        .research-card p {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .research-stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        /* Team Section */
+        .team {
+            background: var(--bg-primary);
+            transition: background 0.3s ease;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            transition: transform 0.3s, background 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .team-member h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .team-member .role {
+            color: var(--accent-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .team-member p {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        /* Impact Section */
+        .impact {
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            color: #f4f1e8;
+            text-align: center;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .impact-stat {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .impact-stat:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1rem;
+        }
+
+        .impact-label {
+            font-size: 1.1rem;
+            color: #e8e0d0;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-secondary);
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            transition: background 0.3s ease;
+        }
+
+        .contact-card i {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Dark mode footer */
+        [data-theme="dark"] footer {
+            background: #1a1a1a;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Contact info styles */
+        .contact h3 {
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .contact strong {
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .contact-details {
+            margin-top: 3rem;
+        }
+
+        .contact-details h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .contact-person {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .contact-website {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 1rem;
+            }
+
+            .theme-toggle {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .theme-toggle span {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .services-grid,
+            .research-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img id="logo-img" src="logos/light_logo.png" alt="G-Data Labs">
+                G-Data Labs
+            </div>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#mission">Mission</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Night</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Empowering People Through AI Research & Literacy</h1>
+                <p class="subtitle">G-Data Labs is pioneering ethical AI research and literacy on the interaction between humans and AI.</p>
+                
+                <div class="hero-stats">
+                    <div class="venn-diagram">
+                        <div class="venn-circle left" data-video="https://www.youtube.com/embed/6KTdPVELAcI" onclick="window.location.href='ai-literacy-workshops.html'">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <iframe class="hover-video" 
+                                    src="https://www.youtube.com/embed/6KTdPVELAcI?autoplay=1&mute=1&loop=1&playlist=6KTdPVELAcI&controls=0&showinfo=0&rel=0&modestbranding=1" 
+                                    frameborder="0" 
+                                    allow="autoplay; encrypted-media" 
+                                    allowfullscreen
+                                    style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 50%; opacity: 0; transition: opacity 0.4s ease;">
+                            </iframe>
+                        </div>
+                        <div class="venn-label left">AI Literacy<br>Workshops</div>
+                        
+                        <div class="venn-circle right" data-video="videos/G-Data's_Data_Market_Transaction_prototype.mp4" onclick="window.location.href='ai-workflow-integration.html'">
+                            <i class="fas fa-cogs"></i>
+                            <video class="hover-video" muted loop preload="auto">
+                                <source src="videos/G-Data's_Data_Market_Transaction_prototype.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="venn-label right">AI Workflow<br>Integration</div>
+                        
+                        <div class="venn-circle center" data-video="videos/You_Choose_with_the_Faces_of_AI.mp4" onclick="window.location.href='ai-research-consulting.html'">
+                            <i class="fas fa-flask"></i>
+                            <video class="hover-video" muted loop preload="auto">
+                                <source src="videos/You_Choose_with_the_Faces_of_AI.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="venn-label center">AI Research &<br>Consulting</div>
+                    </div>
+                </div>
+                
+                <a href="#contact" class="cta-button">Partner With Us</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="mission" class="mission">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Mission</h2>
+                <p class="section-subtitle">To shepherd the interaction of Humans and AI for the safety and benefit of all people by researching and developing responsible AI frameworks, providing accessible AI literacy, and implementing effective AI integrations to organizations across a wide range of industries.</p>
+            </div>
+            
+            <div class="mission-grid">
+                <div class="mission-card fade-in">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Our Vision</h3>
+                    <p>We believe every person generates value and deserves to understand and benefit from AI technology.</p>
+                </div>
+                
+                <div class="mission-card fade-in">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Our Values</h3>
+                    <p>Ethical AI development with explicit consent, transparency, and fair compensation for data contributors.</p>
+                </div>
+                
+                <div class="mission-card fade-in">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Our Goal</h3>
+                    <p>Foster new careers, entrepreneurship, and ownership in the AI economy through education and empowerment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Comprehensive AI literacy programs designed to empower communities and organizations</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card workshops fade-in" data-url="ai-literacy-workshops.html">
+                    <div class="service-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>AI Literacy Workshops</h3>
+                    <p>Interactive, hands-on workshops that demystify AI and teach practical applications. Our workshops help participants understand AI's impact on their daily lives and career opportunities.</p>
+                    <ul class="service-features">
+                        <li>Step-by-step AI demonstrations</li>
+                        <li>Real-world applications and examples</li>
+                        <li>Data privacy and ethics education</li>
+                        <li>Career pathway guidance</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card integration fade-in" data-url="ai-workflow-integration.html">
+                    <div class="service-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>AI Workflow Integration</h3>
+                    <p>Custom AI solutions and workflow integrations that help organizations leverage artificial intelligence to improve efficiency and outcomes.</p>
+                    <ul class="service-features">
+                        <li>Industry-ready automation</li>
+                        <li>Custom AI model development</li>
+                        <li>Healthcare and manufacturing solutions</li>
+                        <li>Ethical AI implementation</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card research fade-in" data-url="ai-research-consulting.html">
+                    <div class="service-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>AI Research & Consulting</h3>
+                    <p>Cutting-edge research into AI's societal impact, with expert consulting services to guide organizations in ethical AI adoption.</p>
+                    <ul class="service-features">
+                        <li>Biometric AI research</li>
+                        <li>Ethical AI framework development</li>
+                        <li>AI impact assessment</li>
+                        <li>Strategic AI consulting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="research">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Groundbreaking Research</h2>
+                <p class="section-subtitle">Industry-leading research that shapes the future of ethical AI development</p>
+            </div>
+            
+            <div class="research-grid">
+                <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/terms_condition', '_blank')">
+                    <h4>Industry-First Informed Consent</h4>
+                    <div class="research-stat">2022</div>
+                    <p>First to use LLMs to translate company policies, ensuring truly informed consent for AI data usage.</p>
+                </div>
+                
+                <div class="research-card fade-in" onclick="window.open('https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true', '_blank')">
+                    <h4>Biometric AI Feedback</h4>
+                    <div class="research-stat">EEG + FEA</div>
+                    <p>Pioneering research using biometric data as human feedback for training more ethical, personalized AI systems.</p>
+                </div>
+                
+                <div class="research-card fade-in" onclick="window.open('https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media', '_blank')">
+                    <h4>Diversity in Media Study</h4>
+                    <div class="research-stat">83%</div>
+                    <p>Groundbreaking research showing 83% believe GenAI can promote diversity and inclusion in media.</p>
+                </div>
+                
+                <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/blog/blog-post-2', '_blank')">
+                    <h4>SAG-AFTRA Analysis</h4>
+                    <div class="research-stat">100 Days</div>
+                    <p>Real-time analysis of entertainment industry strikes, informing consent and compensation frameworks.</p>
+                </div>
+                
+                <div class="research-card fade-in" onclick="window.open('https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a', '_blank')">
+                    <h4>AI Relaxation Study</h4>
+                    <div class="research-stat">2024</div>
+                    <p>EEG-based study comparing relaxation levels between AI-generated content and traditional therapy methods.</p>
+                </div>
+                
+                <div class="research-card fade-in" onclick="window.open('https://youtu.be/ngWUBlO2iHg', '_blank')">
+                    <h4>Conference Presentations</h4>
+                    <div class="research-stat">NMSBA</div>
+                    <p>Featured presentations at NMSBA World Forum and Center for Reiki Research conferences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Expert Team</h2>
+                <p class="section-subtitle">A diverse team of researchers, engineers, and consultants focused on human-centric AI</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member fade-in">
+                    <img src="https://via.placeholder.com/120x120?text=MJ" alt="Morgan Jones">
+                    <h4>Morgan Jones</h4>
+                    <p class="role">Founder & Chief Data Scientist</p>
+                    <p>Educator to 10,000+ students across U.S. & China, Howard University alumnus</p>
+                </div>
+                
+                <div class="team-member fade-in">
+                    <img src="https://via.placeholder.com/120x120?text=DG" alt="Devin Gore">
+                    <h4>Devin Gore</h4>
+                    <p class="role">EEG Researcher</p>
+                    <p>Electroencephalogram Tech & Researcher specializing in biometric AI</p>
+                </div>
+                
+                <div class="team-member fade-in">
+                    <img src="https://via.placeholder.com/120x120?text=NB" alt="Naveen Balaji">
+                    <h4>Naveen Balaji</h4>
+                    <p class="role">Robotics Engineer</p>
+                    <p>Leading our mobile AI lab robotics and automation initiatives</p>
+                </div>
+                
+                <div class="team-member fade-in">
+                    <img src="https://via.placeholder.com/120x120?text=HM" alt="Haris Muhammed">
+                    <h4>Haris Muhammed</h4>
+                    <p class="role">Frontend Software Engineer</p>
+                    <p>Developing intuitive AI platform interfaces and user experiences</p>
+                </div>
+                
+                <div class="team-member fade-in">
+                    <img src="https://via.placeholder.com/120x120?text=TM" alt="Tahir Muhammed">
+                    <h4>Tahir Muhammed</h4>
+                    <p class="role">Backend Software Engineer</p>
+                    <p>Building robust AI systems and data processing infrastructure</p>
+                </div>
+                
+                <div class="team-member fade-in">
+                    <img src="https://via.placeholder.com/120x120?text=AM" alt="Ashley Martin">
+                    <h4>Ashley Martin</h4>
+                    <p class="role">BCBA/LPC Consultant</p>
+                    <p>Applied Behavior Analysis & Mental Health expertise for ethical AI development</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Partner With Us</h2>
+                <p class="section-subtitle">Ready to bring ethical AI education and research to your organization?</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-card fade-in">
+                    <i class="fas fa-university"></i>
+                    <h4>Educational Partnerships</h4>
+                    <p>Collaborate with us to bring AI literacy programs to your institution and prepare students for the AI economy.</p>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <i class="fas fa-building"></i>
+                    <h4>Organizational Training</h4>
+                    <p>Transform your workforce with comprehensive AI literacy training and ethical AI implementation strategies.</p>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <i class="fas fa-handshake"></i>
+                    <h4>Research Collaboration</h4>
+                    <p>Partner with us on cutting-edge AI research projects that shape the future of human-AI interaction.</p>
+                </div>
+            </div>
+            
+            <div class="contact-details">
+                <h3>Get in Touch</h3>
+                <p class="contact-person">
+                    <strong>Morgan Jones</strong><br>
+                    Founder<br>
+                    <i class="fas fa-envelope"></i> support@g-datalabs.com
+                </p>
+                <p class="contact-website">
+                    <i class="fas fa-globe"></i> www.g-datalabs.com
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 G-Data Labs. All rights reserved. | Empowering Communities Through AI & Data Literacy</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle (basic implementation)
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // Video hover functionality
+        document.querySelectorAll('.venn-circle').forEach(circle => {
+            const video = circle.querySelector('.hover-video');
+            if (video) {
+                circle.addEventListener('mouseenter', () => {
+                    video.play();
+                });
+                
+                circle.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+            }
+        });
+
+        // Service card click functionality
+        document.addEventListener('click', function(e) {
+            const serviceCard = e.target.closest('.service-card');
+            if (serviceCard) {
+                const url = serviceCard.getAttribute('data-url');
+                if (url) {
+                    window.location.href = url;
+                }
+            }
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const themeText = themeToggle.querySelector('span');
+        const logoImg = document.getElementById('logo-img');
+
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        // Update UI based on saved theme
+        if (savedTheme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Day';
+            logoImg.src = 'logos/gdata_night_trans.png';
+        }
+
+        // Function to update Venn diagram colors
+        function updateVennColors(theme) {
+            const vennCircles = document.querySelectorAll('.venn-circle');
+            const vennLabels = document.querySelectorAll('.venn-label');
+            
+            if (theme === 'dark') {
+                // Night mode colors from night logo
+                const nightColors = {
+                    workshops: '#E62431',
+                    integration: '#046C98', 
+                    research: '#F5B11A'
+                };
+                
+                // Update CSS variables
+                document.documentElement.style.setProperty('--color-workshops', nightColors.workshops);
+                document.documentElement.style.setProperty('--color-workshops-bg', 'rgba(230, 36, 49, 0.15)');
+                document.documentElement.style.setProperty('--color-workshops-border', 'rgba(230, 36, 49, 0.6)');
+                document.documentElement.style.setProperty('--color-workshops-hover-bg', 'rgba(230, 36, 49, 0.3)');
+                document.documentElement.style.setProperty('--color-workshops-hover-border', 'rgba(230, 36, 49, 0.9)');
+                
+                document.documentElement.style.setProperty('--color-integration', nightColors.integration);
+                document.documentElement.style.setProperty('--color-integration-bg', 'rgba(4, 108, 152, 0.15)');
+                document.documentElement.style.setProperty('--color-integration-border', 'rgba(4, 108, 152, 0.6)');
+                document.documentElement.style.setProperty('--color-integration-hover-bg', 'rgba(4, 108, 152, 0.3)');
+                document.documentElement.style.setProperty('--color-integration-hover-border', 'rgba(4, 108, 152, 0.9)');
+                
+                document.documentElement.style.setProperty('--color-research', nightColors.research);
+                document.documentElement.style.setProperty('--color-research-bg', 'rgba(245, 177, 26, 0.15)');
+                document.documentElement.style.setProperty('--color-research-border', 'rgba(245, 177, 26, 0.6)');
+                document.documentElement.style.setProperty('--color-research-hover-bg', 'rgba(245, 177, 26, 0.3)');
+                document.documentElement.style.setProperty('--color-research-hover-border', 'rgba(245, 177, 26, 0.9)');
+                
+                // Update Venn circle icons to night colors
+                vennCircles.forEach(circle => {
+                    const icon = circle.querySelector('i');
+                    if (circle.classList.contains('left')) {
+                        icon.style.color = nightColors.workshops;
+                    } else if (circle.classList.contains('right')) {
+                        icon.style.color = nightColors.integration;
+                    } else if (circle.classList.contains('center')) {
+                        icon.style.color = nightColors.research;
+                    }
+                });
+                
+                // Update Venn labels to night colors
+                vennLabels.forEach(label => {
+                    if (label.classList.contains('left')) {
+                        label.style.color = nightColors.workshops;
+                    } else if (label.classList.contains('right')) {
+                        label.style.color = nightColors.integration;
+                    } else if (label.classList.contains('center')) {
+                        label.style.color = nightColors.research;
+                    }
+                });
+                
+            } else {
+                // Light mode colors
+                const lightColors = {
+                    workshops: '#ff4b4b',
+                    integration: '#4b96ff',
+                    research: '#ffd700'
+                };
+                
+                // Update CSS variables
+                document.documentElement.style.setProperty('--color-workshops', lightColors.workshops);
+                document.documentElement.style.setProperty('--color-workshops-bg', 'rgba(255, 75, 75, 0.15)');
+                document.documentElement.style.setProperty('--color-workshops-border', 'rgba(255, 75, 75, 0.6)');
+                document.documentElement.style.setProperty('--color-workshops-hover-bg', 'rgba(255, 75, 75, 0.3)');
+                document.documentElement.style.setProperty('--color-workshops-hover-border', 'rgba(255, 75, 75, 0.9)');
+                
+                document.documentElement.style.setProperty('--color-integration', lightColors.integration);
+                document.documentElement.style.setProperty('--color-integration-bg', 'rgba(75, 150, 255, 0.15)');
+                document.documentElement.style.setProperty('--color-integration-border', 'rgba(75, 150, 255, 0.6)');
+                document.documentElement.style.setProperty('--color-integration-hover-bg', 'rgba(75, 150, 255, 0.3)');
+                document.documentElement.style.setProperty('--color-integration-hover-border', 'rgba(75, 150, 255, 0.9)');
+                
+                document.documentElement.style.setProperty('--color-research', lightColors.research);
+                document.documentElement.style.setProperty('--color-research-bg', 'rgba(255, 215, 0, 0.15)');
+                document.documentElement.style.setProperty('--color-research-border', 'rgba(255, 215, 0, 0.6)');
+                document.documentElement.style.setProperty('--color-research-hover-bg', 'rgba(255, 215, 0, 0.3)');
+                document.documentElement.style.setProperty('--color-research-hover-border', 'rgba(255, 215, 0, 0.9)');
+                
+                // Update Venn circle icons to light colors
+                vennCircles.forEach(circle => {
+                    const icon = circle.querySelector('i');
+                    if (circle.classList.contains('left')) {
+                        icon.style.color = lightColors.workshops;
+                    } else if (circle.classList.contains('right')) {
+                        icon.style.color = lightColors.integration;
+                    } else if (circle.classList.contains('center')) {
+                        icon.style.color = lightColors.research;
+                    }
+                });
+                
+                // Update Venn labels to light colors
+                vennLabels.forEach(label => {
+                    if (label.classList.contains('left')) {
+                        label.style.color = lightColors.workshops;
+                    } else if (label.classList.contains('right')) {
+                        label.style.color = lightColors.integration;
+                    } else if (label.classList.contains('center')) {
+                        label.style.color = lightColors.research;
+                    }
+                });
+            }
+        }
+
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateVennColors(newTheme);
+            
+            if (newTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Day';
+                logoImg.src = 'logos/gdata_night_trans.png';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Night';
+                logoImg.src = 'logos/light_logo.png';
+            }
+        });
+
+        // Initialize colors on page load
+        updateVennColors(savedTheme);
+    </script>
+</body>
+</html>

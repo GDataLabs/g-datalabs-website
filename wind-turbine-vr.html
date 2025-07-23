@@ -1,0 +1,2947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Turbine Operations & Maintenance VR Simulation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #canvas {
+            display: block;
+            cursor: grab;
+        }
+
+        #canvas:active {
+            cursor: grabbing;
+        }
+
+        .ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .control-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(10, 10, 20, 0.95);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            pointer-events: auto;
+            backdrop-filter: blur(20px);
+            min-width: 320px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .status-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 10, 20, 0.95);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            pointer-events: auto;
+            backdrop-filter: blur(20px);
+            min-width: 280px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .bottom-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            pointer-events: auto;
+            background: rgba(10, 10, 20, 0.9);
+            padding: 15px 25px;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .view-button {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(29, 78, 216, 0.8));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .view-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 1), rgba(29, 78, 216, 1));
+        }
+
+        .view-button.active {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.9));
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .maintenance-button {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.9), rgba(234, 88, 12, 0.9));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .maintenance-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5);
+            background: linear-gradient(135deg, rgba(249, 115, 22, 1), rgba(234, 88, 12, 1));
+        }
+
+        .slider-container {
+            margin: 20px 0;
+        }
+
+        .slider-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #E5E7EB;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(to right, #1F2937, #374151);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.7);
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+        }
+
+        .status-item span:first-child {
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+
+        .status-value {
+            font-weight: 700;
+            color: #10B981;
+            font-size: 16px;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .status-warning {
+            color: #F59E0B;
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .status-critical {
+            color: #EF4444;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .maintenance-alert {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.98), rgba(185, 28, 28, 0.98));
+            color: white;
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            pointer-events: auto;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 15px 50px rgba(239, 68, 68, 0.6);
+            display: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+        }
+
+        .alert-button {
+            background: rgba(255, 255, 255, 0.95);
+            color: #DC2626;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            margin: 10px 8px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .alert-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: white;
+        }
+
+        .height-indicator {
+            position: absolute;
+            left: 20px;
+            bottom: 120px;
+            background: rgba(10, 10, 20, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            pointer-events: auto;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .particles-info {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(10, 10, 20, 0.9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            pointer-events: auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Weather dropdown styling */
+        #weatherSelect {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1F2937, #374151);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #weatherSelect:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Enhanced panel headers */
+        h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+            }
+        }
+
+        .pulsing {
+            animation: pulse 2s infinite;
+        }
+
+        /* Interior view specific styles */
+        .interior-mode .control-panel,
+        .interior-mode .height-indicator,
+        .interior-mode .particles-info {
+            display: none;
+        }
+
+        .interior-mode .status-display {
+            top: 50%;
+            right: 50px;
+            transform: translateY(-50%);
+            background: rgba(10, 10, 20, 0.98);
+            min-width: 350px;
+            padding: 35px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Loading screen */
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1a2e, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(59, 130, 246, 0.2);
+            border-top: 4px solid #3B82F6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas"></canvas>
+        
+        <div class="loading-screen" id="loadingScreen">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h2>Loading Wind Turbine VR Simulation...</h2>
+            </div>
+        </div>
+        
+        <div class="ui-overlay">
+            <div class="control-panel">
+                <h3>Turbine Control</h3>
+                
+                <div class="slider-container">
+                    <label class="slider-label">Wind Speed: <span id="windValue">12</span> m/s</label>
+                    <input type="range" class="slider" id="windSlider" min="0" max="25" value="12">
+                </div>
+                
+                <div class="slider-container">
+                    <label class="slider-label">Time of Day: <span id="timeValue">12:00</span></label>
+                    <input type="range" class="slider" id="timeSlider" min="0" max="24" value="12" step="0.5">
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <label class="slider-label">Weather Conditions:</label>
+                    <select id="weatherSelect">
+                        <option value="clear">Clear Skies</option>
+                        <option value="cloudy">Cloudy</option>
+                        <option value="storm">Storm Approaching</option>
+                        <option value="maintenance">Maintenance Window</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="status-display">
+                <h3>Turbine Status</h3>
+                
+                <div class="status-item">
+                    <span>Power Output</span>
+                    <span class="status-value" id="powerOutput">2.1 MW</span>
+                </div>
+                
+                <div class="status-item">
+                    <span>Rotor Speed</span>
+                    <span class="status-value" id="rotorSpeed">18 RPM</span>
+                </div>
+                
+                <div class="status-item">
+                    <span>Nacelle Temp</span>
+                    <span class="status-value" id="nacelleTemp">42°C</span>
+                </div>
+                
+                <div class="status-item">
+                    <span>Gearbox Vibration</span>
+                    <span class="status-value" id="vibration">2.1 mm/s</span>
+                </div>
+                
+                <div class="status-item">
+                    <span>Blade Pitch</span>
+                    <span class="status-value" id="bladePitch">3.2°</span>
+                </div>
+
+                <div class="status-item">
+                    <span>Daily Generation</span>
+                    <span class="status-value" id="dailyGen">48.6 MWh</span>
+                </div>
+            </div>
+
+            <div class="bottom-controls">
+                <button class="view-button active" id="overviewBtn">Wind Farm</button>
+                <button class="view-button" id="turbineBtn">Single Turbine</button>
+                <button class="view-button" id="nacelleBtn">Nacelle Interior</button>
+                <button class="view-button" id="maintenanceBtn">Top of Turbine</button>
+                <button class="maintenance-button" id="alertBtn">Generate Problem</button>
+                <button class="maintenance-button" id="resetBtn" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.9));">Reset Environment</button>
+            </div>
+
+            <div class="height-indicator">
+                <div><strong>Current Height:</strong> <span id="currentHeight">0m</span></div>
+                <div><strong>Reference:</strong> <span id="heightRef">Ground Level</span></div>
+            </div>
+
+            <div class="particles-info">
+                Wind Particles: <span id="particleCount">1000</span> | Flow Direction: <span id="windDirection">SW</span>
+            </div>
+        </div>
+
+        <div class="maintenance-alert" id="maintenanceAlert">
+            <h2 style="color: #FFF; margin-bottom: 25px; font-size: 28px;">⚠️ TURBINE PROBLEM DETECTED</h2>
+            <p id="problemDescription" style="margin-bottom: 25px; font-size: 20px; line-height: 1.5;">Gearbox bearing temperature critical: 85°C</p>
+            <p id="problemConsequence" style="margin-bottom: 35px; font-size: 16px; opacity: 0.9;">Choose your action - wrong choice could damage equipment or create safety hazards</p>
+            <div id="actionButtons">
+                <button class="alert-button" onclick="handleMaintenanceAction('action1')">Reduce Load Immediately</button>
+                <button class="alert-button" onclick="handleMaintenanceAction('action2')">Emergency Stop</button>
+                <button class="alert-button" onclick="handleMaintenanceAction('action3')">Monitor & Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Global variables
+        let scene, camera, renderer, controls;
+        let windTurbines = [];
+        let windParticles;
+        let currentView = 'overview';
+        let windSpeed = 12;
+        let timeOfDay = 12;
+        let currentWeather = 'clear';
+        let maintenanceMode = false;
+        let animationId;
+        let composer, renderPass, bloomPass;
+        let interiorScene, interiorCamera;
+        let topScene, topCamera;
+        let statusPanels = {};
+        let environmentalLights = [];
+
+        // Simulation parameters
+        const turbineParams = {
+            bladeRotation: 0,
+            targetRPM: 0,
+            currentRPM: 0,
+            powerOutput: 0,
+            efficiency: 0.85,
+            maintenanceStatus: 'normal'
+        };
+
+        // Check if Three.js is loaded and initialize
+        if (typeof THREE !== 'undefined') {
+            console.log('Three.js loaded, initializing...');
+            init();
+        } else {
+            window.addEventListener('load', function() {
+                if (typeof THREE !== 'undefined') {
+                    console.log('Three.js loaded after window load, initializing...');
+                    init();
+                } else {
+                    console.error('Three.js failed to load');
+                    document.querySelector('.loading-content h2').textContent = 'Error: Failed to load 3D library. Please refresh the page.';
+                }
+            });
+        }
+
+        // Initialize the simulation
+        function init() {
+            try {
+                console.log('Initializing Wind Turbine VR Simulation...');
+                
+                // Check for WebGL support
+                if (!window.WebGLRenderingContext) {
+                    throw new Error('WebGL not supported in this browser');
+                }
+                
+                // Get canvas element
+                const canvas = document.getElementById('canvas');
+                if (!canvas) {
+                    throw new Error('Canvas element not found');
+                }
+                
+                // Create main scene
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x87CEEB);
+                scene.fog = new THREE.Fog(0x87CEEB, 200, 3000);
+
+                // Create camera
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
+                camera.position.set(0, 100, 400);
+                camera.lookAt(0, 0, 0);
+
+                // Create renderer with error handling
+                try {
+                    renderer = new THREE.WebGLRenderer({ 
+                        canvas: canvas, 
+                        antialias: true,
+                        alpha: false
+                    });
+                } catch (e) {
+                    console.error('WebGL renderer creation failed:', e);
+                    throw new Error('Failed to create WebGL renderer. Please check WebGL support.');
+                }
+                
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                
+                console.log('Renderer created successfully');
+
+                // Create interior scene
+                createInteriorScene();
+
+                // Create top of turbine scene
+                createTopOfTurbineScene();
+
+                // Create lighting
+                createEnhancedLighting();
+
+                // Create environment
+                createEnhancedEnvironment();
+
+                // Create wind turbines
+                createWindFarm();
+
+                // Create wind particle system
+                createEnhancedWindParticles();
+
+                // Setup controls
+                setupControls();
+
+                // Setup event listeners
+                setupEventListeners();
+
+                console.log('All components initialized');
+
+                // Test render
+                renderer.render(scene, camera);
+                console.log('Test render completed');
+
+                // Hide loading screen
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('loadingScreen');
+                    if (loadingScreen) {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 1000);
+                    }
+                }, 500);
+
+                // Start animation loop
+                animate();
+                
+            } catch (error) {
+                console.error('Error initializing simulation:', error);
+                const loadingContent = document.querySelector('.loading-content h2');
+                if (loadingContent) {
+                    loadingContent.textContent = 'Error: ' + error.message;
+                }
+            }
+        }
+
+        function createEnhancedLighting() {
+            // Ambient light with color
+            const ambientLight = new THREE.AmbientLight(0x4080ff, 0.3);
+            scene.add(ambientLight);
+
+            // Main directional light (sun)
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            directionalLight.position.set(200, 400, 200);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 4096;
+            directionalLight.shadow.mapSize.height = 4096;
+            directionalLight.shadow.camera.near = 0.5;
+            directionalLight.shadow.camera.far = 1000;
+            directionalLight.shadow.camera.left = -300;
+            directionalLight.shadow.camera.right = 300;
+            directionalLight.shadow.camera.top = 300;
+            directionalLight.shadow.camera.bottom = -300;
+            directionalLight.shadow.bias = -0.0005;
+            scene.add(directionalLight);
+
+            // Sky light for atmospheric scattering
+            const skyLight = new THREE.HemisphereLight(0x87CEEB, 0x222222, 0.6);
+            scene.add(skyLight);
+
+            // Add some rim lighting
+            const rimLight = new THREE.DirectionalLight(0x4080ff, 0.3);
+            rimLight.position.set(-100, 100, -200);
+            scene.add(rimLight);
+        }
+
+        function createEnhancedEnvironment() {
+            // Simple ground plane
+            const groundGeometry = new THREE.PlaneGeometry(3000, 3000);
+            const groundMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x3a5f3a
+            });
+            
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            // Simple sky
+            const skyGeometry = new THREE.SphereGeometry(2000, 32, 16);
+            const skyMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x87CEEB,
+                side: THREE.BackSide
+            });
+            const sky = new THREE.Mesh(skyGeometry, skyMaterial);
+            scene.add(sky);
+
+            // Add some basic clouds
+            createEnhancedClouds();
+        }
+
+        function createEnhancedClouds() {
+            const cloudGroup = new THREE.Group();
+            
+            for (let i = 0; i < 20; i++) {
+                const cloudGeometry = new THREE.SphereGeometry(30, 8, 6);
+                const cloudMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.8
+                });
+
+                const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+                cloud.position.set(
+                    (Math.random() - 0.5) * 2000,
+                    200 + Math.random() * 100,
+                    (Math.random() - 0.5) * 2000
+                );
+                cloud.scale.set(
+                    1 + Math.random() * 2,
+                    0.5 + Math.random() * 0.5,
+                    1 + Math.random() * 2
+                );
+                
+                cloudGroup.add(cloud);
+            }
+            
+            scene.add(cloudGroup);
+        }
+
+        function createTopOfTurbineScene() {
+            // Create scene for top of turbine view
+            topScene = new THREE.Scene();
+            topScene.fog = new THREE.Fog(0x87CEEB, 50, 1000);
+            
+            // Camera positioned on top of nacelle
+            topCamera = new THREE.PerspectiveCamera(
+                80, 
+                window.innerWidth / window.innerHeight, 
+                0.1, 
+                2000
+            );
+            topCamera.position.set(0, 3, -5);
+            topCamera.lookAt(0, 2, 10);
+
+            // Lighting for top scene
+            const topAmbient = new THREE.AmbientLight(0x404040, 0.6);
+            topScene.add(topAmbient);
+
+            const topSun = new THREE.DirectionalLight(0xffffff, 1.2);
+            topSun.position.set(100, 200, 100);
+            topSun.castShadow = true;
+            topScene.add(topSun);
+
+            const topHemi = new THREE.HemisphereLight(0x87CEEB, 0x545454, 0.8);
+            topScene.add(topHemi);
+
+            // Create the nacelle platform
+            createNacellePlatform();
+
+            // Create the spinning blades view
+            createTopViewBlades();
+
+            // Create surrounding environment
+            createTopViewEnvironment();
+
+            // Create safety railings
+            createSafetyRailings();
+
+            // Add wind effects
+            createTopWindEffects();
+        }
+
+        function createNacellePlatform() {
+            // Nacelle top surface
+            const platformGeometry = new THREE.BoxGeometry(8, 0.5, 25);
+            const platformMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xcccccc,
+                roughness: 0.9
+            });
+            const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+            platform.position.y = 0;
+            platform.receiveShadow = true;
+            topScene.add(platform);
+
+            // Add grip texture pattern
+            for (let i = -10; i < 10; i += 2) {
+                for (let j = -3; j < 3; j += 2) {
+                    const gripGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.1, 8);
+                    const gripMaterial = new THREE.MeshLambertMaterial({ color: 0x666666 });
+                    const grip = new THREE.Mesh(gripGeometry, gripMaterial);
+                    grip.position.set(j, 0.3, i);
+                    topScene.add(grip);
+                }
+            }
+
+            // Hatch/access door
+            const hatchGeometry = new THREE.BoxGeometry(2, 0.1, 2);
+            const hatchMaterial = new THREE.MeshLambertMaterial({ color: 0xffaa00 });
+            const hatch = new THREE.Mesh(hatchGeometry, hatchMaterial);
+            hatch.position.set(0, 0.3, -8);
+            topScene.add(hatch);
+
+            // Warning stripes
+            const stripeGeometry = new THREE.PlaneGeometry(8, 0.5);
+            const stripeMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xffff00,
+                side: THREE.DoubleSide
+            });
+            
+            for (let i = -12; i < 13; i += 4) {
+                const stripe = new THREE.Mesh(stripeGeometry, stripeMaterial);
+                stripe.rotation.x = -Math.PI / 2;
+                stripe.position.set(0, 0.31, i);
+                topScene.add(stripe);
+            }
+        }
+
+        function createTopViewBlades() {
+            // Hub in front
+            const hubGeometry = new THREE.SphereGeometry(2.5, 32, 16);
+            const hubMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xe0e0e0
+            });
+            const hub = new THREE.Mesh(hubGeometry, hubMaterial);
+            hub.position.set(0, 2, 15);
+            hub.castShadow = true;
+            topScene.add(hub);
+
+            // Spinner cone
+            const spinnerGeometry = new THREE.ConeGeometry(1.5, 3, 16);
+            const spinnerMaterial = new THREE.MeshLambertMaterial({ color: 0xf0f0f0 });
+            const spinner = new THREE.Mesh(spinnerGeometry, spinnerMaterial);
+            spinner.position.set(0, 2, 17);
+            spinner.rotation.x = Math.PI / 2;
+            topScene.add(spinner);
+
+            // Create massive blades that will spin in front of viewer
+            const bladeGroup = new THREE.Group();
+            bladeGroup.position.set(0, 2, 15);
+
+            for (let i = 0; i < 3; i++) {
+                const blade = createRealisticBlade();
+                blade.rotation.z = (i * Math.PI * 2) / 3;
+                blade.scale.set(1.2, 1.2, 1.2); // Make them look even bigger
+                bladeGroup.add(blade);
+            }
+
+            topScene.add(bladeGroup);
+            
+            // Store reference for animation
+            topScene.userData.bladeGroup = bladeGroup;
+        }
+
+        function createSafetyRailings() {
+            const railMaterial = new THREE.MeshLambertMaterial({ color: 0xffaa00 });
+            
+            // Side railings
+            for (let side = -1; side <= 1; side += 2) {
+                for (let i = -10; i < 12; i += 3) {
+                    // Vertical posts
+                    const postGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1.2, 8);
+                    const post = new THREE.Mesh(postGeometry, railMaterial);
+                    post.position.set(side * 3.5, 0.6, i);
+                    topScene.add(post);
+                }
+                
+                // Horizontal rails
+                const railGeometry = new THREE.CylinderGeometry(0.08, 0.08, 23, 8);
+                const topRail = new THREE.Mesh(railGeometry, railMaterial);
+                topRail.position.set(side * 3.5, 1, 0);
+                topRail.rotation.x = Math.PI / 2;
+                topScene.add(topRail);
+                
+                const midRail = new THREE.Mesh(railGeometry, railMaterial);
+                midRail.position.set(side * 3.5, 0.5, 0);
+                midRail.rotation.x = Math.PI / 2;
+                topScene.add(midRail);
+            }
+
+            // Back railing
+            for (let i = -3; i <= 3; i += 1.5) {
+                const postGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1.2, 8);
+                const post = new THREE.Mesh(postGeometry, railMaterial);
+                post.position.set(i, 0.6, -11);
+                topScene.add(post);
+            }
+        }
+
+        function createTopViewEnvironment() {
+            // Ground far below
+            const groundGeometry = new THREE.PlaneGeometry(3000, 3000);
+            const groundMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x3a5f3a
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -120;
+            ground.receiveShadow = true;
+            topScene.add(ground);
+
+            // Tower extending down
+            const towerGeometry = new THREE.CylinderGeometry(1.5, 3, 120, 16);
+            const towerMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xf0f0f0
+            });
+            const tower = new THREE.Mesh(towerGeometry, towerMaterial);
+            tower.position.y = -60;
+            tower.castShadow = true;
+            topScene.add(tower);
+
+            // Other wind turbines in distance
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = 200 + Math.random() * 300;
+                
+                const distantTurbine = new THREE.Group();
+                
+                // Tower
+                const distantTower = new THREE.Mesh(
+                    new THREE.CylinderGeometry(1, 2, 100, 8),
+                    new THREE.MeshLambertMaterial({ color: 0xcccccc })
+                );
+                distantTower.position.y = -70;
+                distantTurbine.add(distantTower);
+                
+                // Simplified blades
+                const distantBlades = new THREE.Mesh(
+                    new THREE.BoxGeometry(80, 2, 0.5),
+                    new THREE.MeshLambertMaterial({ color: 0xffffff })
+                );
+                distantBlades.position.y = -20;
+                distantTurbine.add(distantBlades);
+                
+                distantTurbine.position.set(
+                    Math.cos(angle) * distance,
+                    0,
+                    Math.sin(angle) * distance
+                );
+                
+                topScene.add(distantTurbine);
+            }
+
+            // Sky
+            const skyGeometry = new THREE.SphereGeometry(1000, 32, 16);
+            const skyMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x87CEEB,
+                side: THREE.BackSide
+            });
+            const sky = new THREE.Mesh(skyGeometry, skyMaterial);
+            topScene.add(sky);
+
+            // Some clouds
+            for (let i = 0; i < 15; i++) {
+                const cloudGeometry = new THREE.SphereGeometry(20, 8, 6);
+                const cloudMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+                cloud.position.set(
+                    (Math.random() - 0.5) * 800,
+                    50 + Math.random() * 100,
+                    (Math.random() - 0.5) * 800
+                );
+                cloud.scale.set(
+                    2 + Math.random() * 3,
+                    1 + Math.random() * 1,
+                    2 + Math.random() * 3
+                );
+                topScene.add(cloud);
+            }
+        }
+
+        function createTopWindEffects() {
+            // Wind streaks to show the intense wind at this height
+            const windGeometry = new THREE.BufferGeometry();
+            const windCount = 500;
+            const positions = new Float32Array(windCount * 3);
+            const colors = new Float32Array(windCount * 3);
+
+            for (let i = 0; i < windCount; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 100;
+                positions[i3 + 1] = Math.random() * 20 - 5;
+                positions[i3 + 2] = (Math.random() - 0.5) * 100;
+
+                colors[i3] = 1;
+                colors[i3 + 1] = 1;
+                colors[i3 + 2] = 1;
+            }
+
+            windGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            windGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const windMaterial = new THREE.PointsMaterial({
+                size: 2,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.3
+            });
+
+            const windEffect = new THREE.Points(windGeometry, windMaterial);
+            topScene.add(windEffect);
+            
+            // Store for animation
+            topScene.userData.windEffect = windEffect;
+        }
+
+        function createWindFarm() {
+            const turbineCount = 15;
+            const spacing = 200;
+            
+            for (let i = 0; i < turbineCount; i++) {
+                const x = ((i % 5) - 2) * spacing;
+                const z = (Math.floor(i / 5) - 1) * spacing;
+                
+                const turbine = createEnhancedWindTurbine(i === 0);
+                turbine.position.set(x, 0, z);
+                scene.add(turbine);
+                windTurbines.push(turbine);
+            }
+        }
+
+        function createEnhancedWindTurbine(includeInterior = false) {
+            const turbineGroup = new THREE.Group();
+
+            // Tower with tapered design
+            const towerGeometry = new THREE.CylinderGeometry(1.5, 3, 120, 16);
+            const towerMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xf0f0f0
+            });
+            const tower = new THREE.Mesh(towerGeometry, towerMaterial);
+            tower.position.y = 60;
+            tower.castShadow = true;
+            tower.receiveShadow = true;
+            turbineGroup.add(tower);
+
+            // Nacelle
+            const nacelleGroup = new THREE.Group();
+            
+            const nacelleGeometry = new THREE.BoxGeometry(6, 5, 20);
+            const nacelleMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xffffff
+            });
+            const nacelle = new THREE.Mesh(nacelleGeometry, nacelleMaterial);
+            nacelle.position.z = 5;
+            nacelleGroup.add(nacelle);
+
+            // Nacelle cone front
+            const coneGeometry = new THREE.ConeGeometry(2.5, 6, 8);
+            const coneMesh = new THREE.Mesh(coneGeometry, nacelleMaterial);
+            coneMesh.rotation.x = Math.PI / 2;
+            coneMesh.position.z = 15;
+            nacelleGroup.add(coneMesh);
+
+            nacelleGroup.position.y = 120;
+            turbineGroup.add(nacelleGroup);
+
+            // Hub
+            const hubGeometry = new THREE.SphereGeometry(2.5, 16, 16);
+            const hubMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xe0e0e0
+            });
+            const hub = new THREE.Mesh(hubGeometry, hubMaterial);
+            hub.position.set(0, 120, 18);
+            hub.castShadow = true;
+            turbineGroup.add(hub);
+
+            // Realistic turbine blades
+            const bladeGroup = new THREE.Group();
+            bladeGroup.position.set(0, 120, 18);
+
+            for (let i = 0; i < 3; i++) {
+                const blade = createRealisticBlade();
+                blade.rotation.z = (i * Math.PI * 2) / 3;
+                bladeGroup.add(blade);
+            }
+
+            turbineGroup.add(bladeGroup);
+            turbineGroup.userData = { 
+                bladeGroup: bladeGroup, 
+                nacelle: nacelleGroup, 
+                hub: hub,
+                includeInterior: includeInterior 
+            };
+
+            return turbineGroup;
+        }
+
+        function createRealisticBlade() {
+            const bladeGroup = new THREE.Group();
+            
+            // Create a more realistic blade shape using multiple segments
+            const blade = new THREE.Group();
+            
+            // Blade segments from root to tip with decreasing width
+            const segments = [
+                { width: 3, height: 8, position: 4, taper: 1 },
+                { width: 2.8, height: 10, position: 12, taper: 0.9 },
+                { width: 2.3, height: 10, position: 22, taper: 0.8 },
+                { width: 1.8, height: 10, position: 32, taper: 0.7 },
+                { width: 1.2, height: 8, position: 40, taper: 0.6 },
+                { width: 0.6, height: 6, position: 46, taper: 0.5 },
+                { width: 0.2, height: 3, position: 49, taper: 0.3 }
+            ];
+            
+            segments.forEach((seg, index) => {
+                const segmentGeometry = new THREE.BoxGeometry(
+                    seg.width * seg.taper, 
+                    seg.height, 
+                    0.8 - (index * 0.1)
+                );
+                const segmentMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0xffffff
+                });
+                const segment = new THREE.Mesh(segmentGeometry, segmentMaterial);
+                segment.position.y = seg.position;
+                segment.castShadow = true;
+                
+                // Add twist to blade for aerodynamic shape
+                segment.rotation.x = (index * 0.02);
+                
+                blade.add(segment);
+            });
+            
+            // Add rounded tip
+            const tipGeometry = new THREE.ConeGeometry(0.3, 2, 8);
+            const tipMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
+            const tip = new THREE.Mesh(tipGeometry, tipMaterial);
+            tip.position.y = 51;
+            tip.castShadow = true;
+            blade.add(tip);
+            
+            // Add slight pitch angle to blade
+            blade.rotation.x = 0.1;
+            
+            bladeGroup.add(blade);
+            return bladeGroup;
+        }
+
+        function createInteriorScene() {
+            // Create a separate scene for the interior
+            interiorScene = new THREE.Scene();
+            interiorScene.background = new THREE.Color(0x1a1a1a);
+            interiorScene.fog = null;
+            
+            // Interior camera - positioned to see the main control panel
+            interiorCamera = new THREE.PerspectiveCamera(
+                75, 
+                window.innerWidth / window.innerHeight, 
+                0.1, 
+                100
+            );
+            interiorCamera.position.set(0, 0, 0);
+            interiorCamera.lookAt(0, 0, -10);
+
+            // Interior lighting
+            const interiorAmbient = new THREE.AmbientLight(0x404040, 0.6);
+            interiorScene.add(interiorAmbient);
+
+            // Main interior lights
+            const interiorLight1 = new THREE.PointLight(0xffffff, 1, 50);
+            interiorLight1.position.set(0, 3, 0);
+            interiorLight1.castShadow = true;
+            interiorScene.add(interiorLight1);
+
+            const interiorLight2 = new THREE.PointLight(0xffffff, 0.5, 30);
+            interiorLight2.position.set(0, 0, -5);
+            interiorScene.add(interiorLight2);
+
+            // Work lights
+            const workLight1 = new THREE.PointLight(0xffffff, 0.5, 20);
+            workLight1.position.set(-3, 2, -6);
+            interiorScene.add(workLight1);
+
+            const workLight2 = new THREE.PointLight(0xffffff, 0.5, 20);
+            workLight2.position.set(3, 2, -6);
+            interiorScene.add(workLight2);
+
+            // Create interior structure
+            createNacelleInteriorStructure();
+
+            // Create machinery
+            createInteriorMachinery();
+
+            // Create main control panel with meters and warning lights
+            createMainControlPanel();
+
+            // Create additional status displays
+            createStatusDisplays();
+        }
+
+        function createNacelleInteriorStructure() {
+            // Floor
+            const floorGeometry = new THREE.PlaneGeometry(10, 25);
+            const floorMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x404040,
+                metalness: 0.8,
+                roughness: 0.2
+            });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.y = -3.5;
+            floor.receiveShadow = true;
+            interiorScene.add(floor);
+
+            // Walls
+            const wallMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x808080,
+                metalness: 0.3,
+                roughness: 0.7
+            });
+
+            // Side walls
+            const sideWallGeometry = new THREE.PlaneGeometry(25, 7);
+            
+            const leftWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
+            leftWall.rotation.y = Math.PI / 2;
+            leftWall.position.x = -5;
+            interiorScene.add(leftWall);
+
+            const rightWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
+            rightWall.rotation.y = -Math.PI / 2;
+            rightWall.position.x = 5;
+            interiorScene.add(rightWall);
+
+            // Curved ceiling
+            const ceilingGeometry = new THREE.CylinderGeometry(5, 5, 25, 32, 1, true, 0, Math.PI);
+            const ceiling = new THREE.Mesh(ceilingGeometry, wallMaterial);
+            ceiling.rotation.z = Math.PI / 2;
+            ceiling.position.y = 3.5;
+            interiorScene.add(ceiling);
+
+            // Support beams
+            const beamMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x606060,
+                metalness: 0.6,
+                roughness: 0.3
+            });
+            
+            for (let i = -10; i <= 10; i += 5) {
+                const beamGeometry = new THREE.BoxGeometry(0.3, 7, 0.3);
+                const beam = new THREE.Mesh(beamGeometry, beamMaterial);
+                beam.position.set(-4.8, 0, i);
+                interiorScene.add(beam);
+                
+                const beam2 = beam.clone();
+                beam2.position.x = 4.8;
+                interiorScene.add(beam2);
+            }
+        }
+
+        function createInteriorMachinery() {
+            // Main shaft
+            const shaftGeometry = new THREE.CylinderGeometry(0.8, 0.8, 15, 32);
+            const shaftMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x444444,
+                metalness: 0.9,
+                roughness: 0.1
+            });
+            const mainShaft = new THREE.Mesh(shaftGeometry, shaftMaterial);
+            mainShaft.rotation.z = Math.PI / 2;
+            mainShaft.position.set(0, 0, 8);
+            mainShaft.castShadow = true;
+            interiorScene.add(mainShaft);
+
+            // Gearbox
+            const gearboxGroup = new THREE.Group();
+            
+            const gearboxGeometry = new THREE.BoxGeometry(4, 3.5, 6);
+            const gearboxMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x2d5a3d,
+                metalness: 0.4,
+                roughness: 0.6
+            });
+            const gearbox = new THREE.Mesh(gearboxGeometry, gearboxMaterial);
+            gearbox.castShadow = true;
+            gearboxGroup.add(gearbox);
+
+            // Gearbox details
+            const gearDetailGeometry = new THREE.CylinderGeometry(0.5, 0.5, 4, 16);
+            const gearDetailMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x666666,
+                metalness: 0.8,
+                roughness: 0.2
+            });
+            
+            for (let i = -1; i <= 1; i++) {
+                const gearDetail = new THREE.Mesh(gearDetailGeometry, gearDetailMaterial);
+                gearDetail.position.set(i * 1.2, 0, 3.2);
+                gearboxGroup.add(gearDetail);
+            }
+
+            gearboxGroup.position.set(-1, -1, 0);
+            interiorScene.add(gearboxGroup);
+
+            // Generator
+            const generatorGroup = new THREE.Group();
+            
+            const generatorGeometry = new THREE.CylinderGeometry(2, 2, 8, 32);
+            const generatorMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x4a6cb7,
+                metalness: 0.5,
+                roughness: 0.4
+            });
+            const generator = new THREE.Mesh(generatorGeometry, generatorMaterial);
+            generator.rotation.z = Math.PI / 2;
+            generator.castShadow = true;
+            generatorGroup.add(generator);
+
+            // Generator fins
+            for (let i = 0; i < 8; i++) {
+                const finGeometry = new THREE.BoxGeometry(0.1, 2.5, 0.5);
+                const fin = new THREE.Mesh(finGeometry, generatorMaterial);
+                fin.position.x = Math.sin(i * Math.PI / 4) * 2.1;
+                fin.position.y = Math.cos(i * Math.PI / 4) * 2.1;
+                generatorGroup.add(fin);
+            }
+
+            generatorGroup.position.set(2, 0, -6);
+            interiorScene.add(generatorGroup);
+
+            // Hydraulic systems
+            const hydraulicMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xcc6600,
+                metalness: 0.6,
+                roughness: 0.3
+            });
+
+            const hydraulicCylinder = new THREE.CylinderGeometry(0.3, 0.3, 3, 16);
+            
+            for (let i = 0; i < 4; i++) {
+                const hydraulic = new THREE.Mesh(hydraulicCylinder, hydraulicMaterial);
+                hydraulic.position.set(
+                    3,
+                    -2,
+                    -8 + i * 2
+                );
+                interiorScene.add(hydraulic);
+            }
+
+            // Cooling system
+            const coolingGeometry = new THREE.BoxGeometry(2, 2, 1);
+            const coolingMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x6666aa,
+                metalness: 0.3,
+                roughness: 0.7
+            });
+            const coolingUnit = new THREE.Mesh(coolingGeometry, coolingMaterial);
+            coolingUnit.position.set(3, 2, -2);
+            interiorScene.add(coolingUnit);
+
+            // Add rotating fan to cooling unit
+            const fanGeometry = new THREE.CircleGeometry(0.8, 8);
+            const fanMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x333333,
+                side: THREE.DoubleSide
+            });
+            const fan = new THREE.Mesh(fanGeometry, fanMaterial);
+            fan.position.set(3, 2, -1.4);
+            interiorScene.add(fan);
+            
+            // Store reference for animation
+            interiorScene.userData.coolingFan = fan;
+        }
+
+        function createMainControlPanel() {
+            // Create a large control panel directly in front of the camera
+            const panelGroup = new THREE.Group();
+            
+            // Main panel backing
+            const panelGeometry = new THREE.BoxGeometry(8, 5, 0.5);
+            const panelMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x1a1a1a,
+                metalness: 0.8,
+                roughness: 0.2
+            });
+            const mainPanel = new THREE.Mesh(panelGeometry, panelMaterial);
+            mainPanel.position.z = -8;
+            panelGroup.add(mainPanel);
+
+            // Panel frame
+            const frameMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x444444,
+                metalness: 0.9,
+                roughness: 0.1
+            });
+            
+            // Create frame edges
+            const frameThickness = 0.2;
+            const frameDepth = 0.6;
+            
+            // Top frame
+            const topFrame = new THREE.Mesh(
+                new THREE.BoxGeometry(8.2, frameThickness, frameDepth),
+                frameMaterial
+            );
+            topFrame.position.set(0, 2.6, -8);
+            panelGroup.add(topFrame);
+            
+            // Bottom frame
+            const bottomFrame = new THREE.Mesh(
+                new THREE.BoxGeometry(8.2, frameThickness, frameDepth),
+                frameMaterial
+            );
+            bottomFrame.position.set(0, -2.6, -8);
+            panelGroup.add(bottomFrame);
+
+            // Create large analog meters
+            createAnalogMeter(panelGroup, -2.5, 1, -7.7, 'TEMP', 0, 100, '°C');
+            createAnalogMeter(panelGroup, 0, 1, -7.7, 'RPM', 0, 30, '');
+            createAnalogMeter(panelGroup, 2.5, 1, -7.7, 'POWER', 0, 3, 'MW');
+
+            // Create warning lights panel
+            createWarningLightsPanel(panelGroup, 0, -1.5, -7.7);
+
+            // Create digital displays
+            createDigitalDisplay(panelGroup, -2.5, -0.5, -7.7, 'VIBRATION');
+            createDigitalDisplay(panelGroup, 0, -0.5, -7.7, 'WIND SPEED');
+            createDigitalDisplay(panelGroup, 2.5, -0.5, -7.7, 'BLADE PITCH');
+
+            // Store references for updates
+            interiorScene.userData.mainPanel = panelGroup;
+            interiorScene.add(panelGroup);
+        }
+
+        function createAnalogMeter(parent, x, y, z, label, min, max, unit) {
+            const meterGroup = new THREE.Group();
+            
+            // Meter housing
+            const housingGeometry = new THREE.CylinderGeometry(0.8, 0.8, 0.3, 32);
+            const housingMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x333333,
+                metalness: 0.7,
+                roughness: 0.3
+            });
+            const housing = new THREE.Mesh(housingGeometry, housingMaterial);
+            housing.rotation.x = Math.PI / 2;
+            meterGroup.add(housing);
+
+            // Meter face
+            const faceGeometry = new THREE.CircleGeometry(0.75, 32);
+            const faceMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xf0f0f0
+            });
+            const face = new THREE.Mesh(faceGeometry, faceMaterial);
+            face.position.z = 0.16;
+            meterGroup.add(face);
+
+            // Glass cover
+            const glassGeometry = new THREE.CircleGeometry(0.78, 32);
+            const glassMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.9,
+                shininess: 100
+            });
+            const glass = new THREE.Mesh(glassGeometry, glassMaterial);
+            glass.position.z = 0.18;
+            meterGroup.add(glass);
+
+            // Meter needle
+            const needleGeometry = new THREE.BoxGeometry(0.05, 0.6, 0.02);
+            const needleMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff0000,
+                emissive: 0xff0000,
+                emissiveIntensity: 0.5
+            });
+            const needle = new THREE.Mesh(needleGeometry, needleMaterial);
+            needle.position.z = 0.17;
+            needle.geometry.translate(0, 0.3, 0);
+            meterGroup.add(needle);
+
+            // Scale markings (simplified - in production would add text)
+            for (let i = 0; i <= 10; i++) {
+                const angle = -135 + (i * 27); // 270 degree sweep
+                const markGeometry = new THREE.BoxGeometry(0.02, 0.1, 0.01);
+                const markMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+                const mark = new THREE.Mesh(markGeometry, markMaterial);
+                mark.position.x = Math.cos(angle * Math.PI / 180) * 0.65;
+                mark.position.y = Math.sin(angle * Math.PI / 180) * 0.65;
+                mark.position.z = 0.165;
+                mark.rotation.z = angle * Math.PI / 180;
+                meterGroup.add(mark);
+            }
+
+            // Label background
+            const labelBg = new THREE.Mesh(
+                new THREE.PlaneGeometry(1.2, 0.3),
+                new THREE.MeshBasicMaterial({ color: 0x000000 })
+            );
+            labelBg.position.y = -1.1;
+            labelBg.position.z = 0.16;
+            meterGroup.add(labelBg);
+
+            meterGroup.position.set(x, y, z);
+            parent.add(meterGroup);
+
+            // Store reference for updates
+            if (!statusPanels.meters) statusPanels.meters = {};
+            statusPanels.meters[label] = {
+                needle: needle,
+                min: min,
+                max: max,
+                unit: unit,
+                label: label
+            };
+        }
+
+        function createWarningLightsPanel(parent, x, y, z) {
+            const lightsGroup = new THREE.Group();
+            
+            // Panel background
+            const panelGeometry = new THREE.BoxGeometry(6, 1, 0.1);
+            const panelMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x222222,
+                metalness: 0.6,
+                roughness: 0.4
+            });
+            const panel = new THREE.Mesh(panelGeometry, panelMaterial);
+            lightsGroup.add(panel);
+
+            // Warning lights configuration
+            const warnings = [
+                { id: 'TEMP_WARNING', label: 'HIGH TEMP', color: 0xff0000, x: -2 },
+                { id: 'VIBRATION_WARNING', label: 'VIBRATION', color: 0xff8800, x: -0.8 },
+                { id: 'GRID_FAULT', label: 'GRID FAULT', color: 0xffff00, x: 0.4 },
+                { id: 'ICE_DETECTED', label: 'ICE ALERT', color: 0x00ffff, x: 1.6 },
+                { id: 'BRAKE_WARNING', label: 'BRAKE FAIL', color: 0xff00ff, x: 2.8 }
+            ];
+
+            statusPanels.warningLights = {};
+
+            warnings.forEach(warning => {
+                // Light housing
+                const housingGeometry = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 16);
+                const housingMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0x333333,
+                    metalness: 0.7,
+                    roughness: 0.3
+                });
+                const housing = new THREE.Mesh(housingGeometry, housingMaterial);
+                housing.rotation.x = Math.PI / 2;
+                housing.position.x = warning.x;
+                housing.position.z = 0.06;
+                lightsGroup.add(housing);
+
+                // Light bulb
+                const lightGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+                const lightMaterial = new THREE.MeshPhongMaterial({ 
+                    color: warning.color,
+                    emissive: warning.color,
+                    emissiveIntensity: 0.1,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                const light = new THREE.Mesh(lightGeometry, lightMaterial);
+                light.position.x = warning.x;
+                light.position.z = 0.1;
+                lightsGroup.add(light);
+
+                // Point light for glow effect
+                const pointLight = new THREE.PointLight(warning.color, 0, 2);
+                pointLight.position.x = warning.x;
+                pointLight.position.z = 0.3;
+                lightsGroup.add(pointLight);
+
+                // Store reference
+                statusPanels.warningLights[warning.id] = {
+                    mesh: light,
+                    material: lightMaterial,
+                    pointLight: pointLight,
+                    color: warning.color,
+                    active: false
+                };
+            });
+
+            lightsGroup.position.set(x, y, z);
+            parent.add(lightsGroup);
+        }
+
+        function createDigitalDisplay(parent, x, y, z, label) {
+            const displayGroup = new THREE.Group();
+            
+            // Display frame
+            const frameGeometry = new THREE.BoxGeometry(1.5, 0.4, 0.15);
+            const frameMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x222222,
+                metalness: 0.6,
+                roughness: 0.4
+            });
+            const frame = new THREE.Mesh(frameGeometry, frameMaterial);
+            displayGroup.add(frame);
+
+            // Display screen
+            const screenGeometry = new THREE.PlaneGeometry(1.3, 0.3);
+            const screenMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x00ff00,
+                emissive: 0x00ff00,
+                emissiveIntensity: 0.2
+            });
+            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+            screen.position.z = 0.08;
+            displayGroup.add(screen);
+
+            // Create dot matrix display effect
+            const dotsGroup = new THREE.Group();
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const dotGeometry = new THREE.CircleGeometry(0.02, 8);
+                    const dotMaterial = new THREE.MeshBasicMaterial({ 
+                        color: 0x003300,
+                        transparent: true,
+                        opacity: 0.5
+                    });
+                    const dot = new THREE.Mesh(dotGeometry, dotMaterial);
+                    dot.position.x = -0.5 + i * 0.15;
+                    dot.position.y = -0.08 + j * 0.08;
+                    dot.position.z = 0.09;
+                    dotsGroup.add(dot);
+                }
+            }
+            displayGroup.add(dotsGroup);
+
+            displayGroup.position.set(x, y, z);
+            parent.add(displayGroup);
+
+            // Store reference
+            if (!statusPanels.digitalDisplays) statusPanels.digitalDisplays = {};
+            statusPanels.digitalDisplays[label] = {
+                screen: screen,
+                material: screenMaterial,
+                dots: dotsGroup
+            };
+        }
+
+        function createStatusDisplays() {
+            // Side monitors for additional information
+            const monitorPositions = [
+                { x: -4.5, y: 1.5, z: -3, rotation: { y: Math.PI / 4 } },
+                { x: 4.5, y: 1.5, z: -3, rotation: { y: -Math.PI / 4 } }
+            ];
+
+            monitorPositions.forEach((pos, index) => {
+                const monitorGroup = new THREE.Group();
+                
+                // Monitor frame
+                const frameGeometry = new THREE.BoxGeometry(2, 1.5, 0.2);
+                const frameMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0x222222,
+                    metalness: 0.6,
+                    roughness: 0.4
+                });
+                const frame = new THREE.Mesh(frameGeometry, frameMaterial);
+                monitorGroup.add(frame);
+
+                // Monitor screen
+                const screenGeometry = new THREE.PlaneGeometry(1.8, 1.3);
+                const screenMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0x001122,
+                    emissive: 0x001122,
+                    emissiveIntensity: 0.3
+                });
+                const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+                screen.position.z = 0.11;
+                monitorGroup.add(screen);
+
+                // Add grid lines for tech look
+                const gridGroup = new THREE.Group();
+                for (let i = 0; i < 10; i++) {
+                    const lineGeometry = new THREE.PlaneGeometry(1.8, 0.01);
+                    const lineMaterial = new THREE.MeshBasicMaterial({ 
+                        color: 0x003366,
+                        transparent: true,
+                        opacity: 0.5
+                    });
+                    const line = new THREE.Mesh(lineGeometry, lineMaterial);
+                    line.position.y = -0.6 + i * 0.15;
+                    line.position.z = 0.12;
+                    gridGroup.add(line);
+                }
+                monitorGroup.add(gridGroup);
+
+                monitorGroup.position.set(pos.x, pos.y, pos.z);
+                monitorGroup.rotation.y = pos.rotation.y;
+                interiorScene.add(monitorGroup);
+            });
+
+            // Emergency procedures panel
+            const proceduresPanel = new THREE.Group();
+            const panelGeom = new THREE.BoxGeometry(3, 2, 0.1);
+            const panelMat = new THREE.MeshStandardMaterial({ 
+                color: 0xffff00,
+                metalness: 0.3,
+                roughness: 0.7
+            });
+            const panel = new THREE.Mesh(panelGeom, panelMat);
+            proceduresPanel.add(panel);
+
+            // Black stripes for warning look
+            for (let i = 0; i < 4; i++) {
+                const stripeGeom = new THREE.PlaneGeometry(3, 0.2);
+                const stripeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+                const stripe = new THREE.Mesh(stripeGeom, stripeMat);
+                stripe.position.y = -0.6 + i * 0.4;
+                stripe.position.z = 0.06;
+                proceduresPanel.add(stripe);
+            }
+
+            proceduresPanel.position.set(0, 2.5, -8);
+            interiorScene.add(proceduresPanel);
+        }
+
+        function createEnhancedWindParticles() {
+            const particleCount = 1000; // Reduced from 8000
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                
+                // Random positions
+                positions[i3] = (Math.random() - 0.5) * 1000;
+                positions[i3 + 1] = Math.random() * 200;
+                positions[i3 + 2] = (Math.random() - 0.5) * 1000;
+
+                // Simple white color
+                colors[i3] = 1;
+                colors[i3 + 1] = 1;
+                colors[i3 + 2] = 1;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 3,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.5
+            });
+
+            windParticles = new THREE.Points(geometry, material);
+            scene.add(windParticles);
+            
+            // Store velocities separately to avoid buffer attribute issues
+            windParticles.userData.velocities = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                windParticles.userData.velocities[i3] = windSpeed * 0.5;
+                windParticles.userData.velocities[i3 + 1] = 0;
+                windParticles.userData.velocities[i3 + 2] = windSpeed * 0.3;
+            }
+        }
+
+        function setupControls() {
+            let mouseDown = false;
+            let mouseX = 0;
+            let mouseY = 0;
+            let cameraRadius = 400;
+            let cameraTheta = 0;
+            let cameraPhi = Math.PI / 4;
+
+            document.addEventListener('mousedown', (event) => {
+                if (event.target.tagName !== 'CANVAS') return;
+                mouseDown = true;
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            document.addEventListener('mouseup', () => {
+                mouseDown = false;
+            });
+
+            document.addEventListener('mousemove', (event) => {
+                if (!mouseDown) return;
+
+                const deltaX = event.clientX - mouseX;
+                const deltaY = event.clientY - mouseY;
+
+                if (currentView === 'nacelle') {
+                    // Interior view controls - allow looking around
+                    const rotationSpeed = 0.005;
+                    interiorCamera.rotation.y -= deltaX * rotationSpeed;
+                    interiorCamera.rotation.x -= deltaY * rotationSpeed;
+                    
+                    // Limit vertical rotation
+                    interiorCamera.rotation.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, interiorCamera.rotation.x));
+                    
+                    // Allow some movement to explore the interior
+                    const moveSpeed = 0.02;
+                    if (event.shiftKey) {
+                        // Hold shift to move around
+                        interiorCamera.position.x += deltaX * moveSpeed;
+                        interiorCamera.position.y -= deltaY * moveSpeed;
+                        
+                        // Keep within nacelle bounds
+                        interiorCamera.position.x = Math.max(-3, Math.min(3, interiorCamera.position.x));
+                        interiorCamera.position.y = Math.max(-2, Math.min(2, interiorCamera.position.y));
+                        interiorCamera.position.z = Math.max(-3, Math.min(3, interiorCamera.position.z));
+                    }
+                } else if (currentView === 'maintenance') {
+                    // Top of turbine view - restricted movement for safety
+                    const rotationSpeed = 0.003;
+                    topCamera.rotation.y -= deltaX * rotationSpeed;
+                    topCamera.rotation.x -= deltaY * rotationSpeed;
+                    
+                    // Limit rotation
+                    topCamera.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, topCamera.rotation.x));
+                    
+                    // Very limited position movement
+                    if (event.shiftKey) {
+                        const moveSpeed = 0.01;
+                        topCamera.position.x += deltaX * moveSpeed;
+                        topCamera.position.z += deltaY * moveSpeed;
+                        
+                        // Stay on the platform
+                        topCamera.position.x = Math.max(-2, Math.min(2, topCamera.position.x));
+                        topCamera.position.z = Math.max(-10, Math.min(0, topCamera.position.z));
+                        topCamera.position.y = 3; // Keep at standing height
+                    }
+                } else {
+                    // Normal camera controls
+                    cameraTheta -= deltaX * 0.01;
+                    cameraPhi -= deltaY * 0.01;
+                    cameraPhi = Math.max(0.1, Math.min(Math.PI - 0.1, cameraPhi));
+                    
+                    camera.position.x = cameraRadius * Math.sin(cameraPhi) * Math.cos(cameraTheta);
+                    camera.position.y = cameraRadius * Math.cos(cameraPhi);
+                    camera.position.z = cameraRadius * Math.sin(cameraPhi) * Math.sin(cameraTheta);
+                    
+                    camera.lookAt(0, 50, 0);
+                }
+
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            // Zoom controls
+            document.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                
+                if (currentView === 'nacelle') {
+                    // Move forward/backward in interior view
+                    const zoomSpeed = 0.3;
+                    interiorCamera.position.z -= event.deltaY * 0.001 * zoomSpeed;
+                    
+                    // Keep within nacelle bounds
+                    interiorCamera.position.z = Math.max(-5, Math.min(5, interiorCamera.position.z));
+                } else if (currentView === 'maintenance') {
+                    // Limited movement on top of turbine
+                    const moveSpeed = 0.1;
+                    topCamera.position.z -= event.deltaY * 0.001 * moveSpeed;
+                    
+                    // Stay within safe bounds on platform
+                    topCamera.position.z = Math.max(-10, Math.min(0, topCamera.position.z));
+                } else {
+                    // Normal zoom
+                    cameraRadius *= 1 + event.deltaY * 0.001;
+                    cameraRadius = Math.max(100, Math.min(1000, cameraRadius));
+                    
+                    camera.position.x = cameraRadius * Math.sin(cameraPhi) * Math.cos(cameraTheta);
+                    camera.position.y = cameraRadius * Math.cos(cameraPhi);
+                    camera.position.z = cameraRadius * Math.sin(cameraPhi) * Math.sin(cameraTheta);
+                }
+            });
+        }
+
+        function setupEventListeners() {
+            // Wind speed slider
+            document.getElementById('windSlider').addEventListener('input', (e) => {
+                windSpeed = parseFloat(e.target.value);
+                document.getElementById('windValue').textContent = windSpeed;
+                updateWindParticles();
+                updateTurbinePerformance();
+            });
+
+            // Time slider
+            document.getElementById('timeSlider').addEventListener('input', (e) => {
+                timeOfDay = parseFloat(e.target.value);
+                const hours = Math.floor(timeOfDay);
+                const minutes = Math.round((timeOfDay - hours) * 60);
+                document.getElementById('timeValue').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+                updateLighting();
+            });
+
+            // Weather select
+            document.getElementById('weatherSelect').addEventListener('change', (e) => {
+                updateWeather(e.target.value);
+            });
+
+            // View buttons
+            document.getElementById('overviewBtn').addEventListener('click', () => setView('overview'));
+            document.getElementById('turbineBtn').addEventListener('click', () => setView('turbine'));
+            document.getElementById('nacelleBtn').addEventListener('click', () => setView('nacelle'));
+            document.getElementById('maintenanceBtn').addEventListener('click', () => setView('maintenance'));
+
+            // Maintenance alert button
+            document.getElementById('alertBtn').addEventListener('click', () => {
+                triggerRandomProblem();
+            });
+
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                resetEnvironment();
+            });
+
+            // Window resize
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function resetEnvironment() {
+            // Reset all values to defaults
+            const defaults = {
+                windSpeed: 12,
+                timeOfDay: 12,
+                weather: 'clear',
+                temperature: 42,
+                vibration: 2.1,
+                powerOutput: 2.1,
+                rotorSpeed: 18,
+                bladePitch: 3.2
+            };
+
+            // Reset wind speed
+            windSpeed = defaults.windSpeed;
+            document.getElementById('windSlider').value = windSpeed;
+            document.getElementById('windValue').textContent = windSpeed;
+
+            // Reset time of day
+            timeOfDay = defaults.timeOfDay;
+            document.getElementById('timeSlider').value = timeOfDay;
+            document.getElementById('timeValue').textContent = '12:00';
+
+            // Reset weather
+            document.getElementById('weatherSelect').value = defaults.weather;
+            updateWeather(defaults.weather);
+
+            // Reset turbine parameters
+            turbineParams.powerOutput = defaults.powerOutput;
+            turbineParams.targetRPM = defaults.rotorSpeed;
+            turbineParams.currentRPM = defaults.rotorSpeed;
+
+            // Reset status displays
+            document.getElementById('powerOutput').textContent = defaults.powerOutput.toFixed(1) + ' MW';
+            document.getElementById('rotorSpeed').textContent = defaults.rotorSpeed + ' RPM';
+            
+            // Reset temperature
+            const tempElement = document.getElementById('nacelleTemp');
+            tempElement.textContent = defaults.temperature + '°C';
+            tempElement.className = 'status-value';
+            tempElement.style.animation = '';
+            tempElement.style.color = '#22C55E';
+
+            // Reset vibration
+            const vibrationElement = document.getElementById('vibration');
+            vibrationElement.textContent = defaults.vibration.toFixed(1) + ' mm/s';
+            vibrationElement.className = 'status-value';
+            vibrationElement.style.animation = '';
+            vibrationElement.style.color = '#22C55E';
+
+            // Reset blade pitch
+            document.getElementById('bladePitch').textContent = defaults.bladePitch.toFixed(1) + '°';
+            document.getElementById('bladePitch').className = 'status-value';
+
+            // Update daily generation
+            const dailyGen = defaults.powerOutput * 24;
+            document.getElementById('dailyGen').textContent = dailyGen.toFixed(1) + ' MWh';
+
+            // Hide any maintenance alerts
+            const maintenanceAlert = document.getElementById('maintenanceAlert');
+            if (maintenanceAlert) {
+                maintenanceAlert.style.display = 'none';
+            }
+
+            // Update environment
+            updateLighting();
+            updateWindParticles();
+            updateTurbinePerformance();
+
+            // Show confirmation
+            showResetConfirmation();
+        }
+
+        function showResetConfirmation() {
+            // Create temporary confirmation message
+            const confirmDiv = document.createElement('div');
+            confirmDiv.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(34, 197, 94, 0.95);
+                color: white;
+                padding: 20px 40px;
+                border-radius: 15px;
+                font-size: 18px;
+                font-weight: bold;
+                z-index: 1000;
+                pointer-events: none;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            `;
+            confirmDiv.textContent = '✓ Environment Reset to Normal Conditions';
+            document.querySelector('.ui-overlay').appendChild(confirmDiv);
+
+            // Fade out and remove after 2 seconds
+            setTimeout(() => {
+                confirmDiv.style.transition = 'opacity 1s ease';
+                confirmDiv.style.opacity = '0';
+                setTimeout(() => confirmDiv.remove(), 1000);
+            }, 2000);
+        }
+
+        function setView(view) {
+            currentView = view;
+            
+            // Update button states
+            document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(view + 'Btn').classList.add('active');
+
+            // Update UI overlay
+            if (view === 'nacelle') {
+                document.querySelector('.ui-overlay').classList.add('interior-mode');
+            } else {
+                document.querySelector('.ui-overlay').classList.remove('interior-mode');
+            }
+
+            // Reset camera perspectives when switching views
+            resetCameraPerspective(view);
+
+            // Animate camera to new position (for main scene views)
+            animateCamera(view);
+        }
+
+        function resetCameraPerspective(view) {
+            switch (view) {
+                case 'nacelle':
+                    // Reset interior camera to default position
+                    interiorCamera.position.set(0, 0, 0);
+                    interiorCamera.rotation.set(0, 0, 0);
+                    interiorCamera.lookAt(0, 0, -10);
+                    break;
+                case 'maintenance':
+                    // Reset top camera to default position
+                    topCamera.position.set(0, 3, -5);
+                    topCamera.rotation.set(0, 0, 0);
+                    topCamera.lookAt(0, 2, 10);
+                    break;
+            }
+        }
+
+        function animateCamera(view) {
+            const duration = 2000;
+            const startPosition = camera.position.clone();
+            const startTime = Date.now();
+
+            let targetPosition, targetLookAt;
+
+            switch (view) {
+                case 'overview':
+                    targetPosition = new THREE.Vector3(0, 150, 500);
+                    targetLookAt = new THREE.Vector3(0, 50, 0);
+                    break;
+                case 'turbine':
+                    targetPosition = new THREE.Vector3(80, 100, 150);
+                    targetLookAt = new THREE.Vector3(0, 80, 0);
+                    break;
+                case 'nacelle':
+                    // For nacelle view, we'll switch to the interior scene
+                    // No camera animation needed
+                    return;
+                case 'maintenance':
+                    // For top view, we'll switch to the top scene
+                    // No camera animation needed
+                    return;
+            }
+
+            function animateStep() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+
+                camera.position.lerpVectors(startPosition, targetPosition, eased);
+                camera.lookAt(targetLookAt);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateStep);
+                }
+            }
+
+            animateStep();
+        }
+
+        function updateWindParticles() {
+            if (!windParticles || !windParticles.userData.velocities) return;
+
+            const velocities = windParticles.userData.velocities;
+
+            for (let i = 0; i < velocities.length; i += 3) {
+                velocities[i] = windSpeed * 0.5 + (Math.random() - 0.5) * 2;
+                velocities[i + 1] = (Math.random() - 0.5) * 0.5;
+                velocities[i + 2] = windSpeed * 0.3 + (Math.random() - 0.5) * 1;
+            }
+
+            document.getElementById('particleCount').textContent = velocities.length / 3;
+        }
+
+        function updateTurbinePerformance() {
+            if (windSpeed < 3) {
+                turbineParams.targetRPM = 0;
+                turbineParams.powerOutput = 0;
+            } else if (windSpeed > 25) {
+                turbineParams.targetRPM = 0;
+                turbineParams.powerOutput = 0;
+            } else {
+                turbineParams.targetRPM = Math.min(25, windSpeed * 1.5);
+                turbineParams.powerOutput = Math.min(2.5, Math.pow(windSpeed / 15, 3) * 2.5);
+            }
+
+            document.getElementById('powerOutput').textContent = 
+                turbineParams.powerOutput.toFixed(1) + ' MW';
+            document.getElementById('rotorSpeed').textContent = 
+                turbineParams.currentRPM.toFixed(0) + ' RPM';
+            
+            const dailyGen = turbineParams.powerOutput * 24;
+            document.getElementById('dailyGen').textContent = 
+                dailyGen.toFixed(1) + ' MWh';
+        }
+
+        function updateLighting() {
+            const sunIntensity = Math.max(0.2, Math.sin((timeOfDay - 6) * Math.PI / 12));
+            const sunColor = new THREE.Color().setHSL(0.1, 0.5, sunIntensity);
+            
+            scene.traverse((child) => {
+                if (child.type === 'DirectionalLight') {
+                    child.intensity = sunIntensity * 1.2;
+                    child.color = sunColor;
+                }
+                if (child.type === 'HemisphereLight') {
+                    child.intensity = 0.3 + sunIntensity * 0.3;
+                }
+            });
+
+            // Update sky color based on time
+            const skyMaterial = scene.children.find(child => 
+                child.material && child.material.uniforms && child.material.uniforms.topColor
+            );
+            if (skyMaterial) {
+                const nightColor = new THREE.Color(0x000033);
+                const dayColor = new THREE.Color(0x0077ff);
+                skyMaterial.material.uniforms.topColor.value.lerpColors(nightColor, dayColor, sunIntensity);
+            }
+        }
+
+        function updateWeather(weather) {
+            // Store current weather
+            currentWeather = weather;
+            
+            switch (weather) {
+                case 'storm':
+                    windSpeed = Math.max(windSpeed, 20);
+                    document.getElementById('windSlider').value = windSpeed;
+                    document.getElementById('windValue').textContent = windSpeed;
+                    scene.fog.near = 100;
+                    scene.fog.far = 1500;
+                    if (topScene) {
+                        topScene.fog.near = 30;
+                        topScene.fog.far = 500;
+                    }
+                    break;
+                case 'cloudy':
+                    scene.fog.near = 150;
+                    scene.fog.far = 2000;
+                    if (topScene) {
+                        topScene.fog.near = 40;
+                        topScene.fog.far = 800;
+                    }
+                    break;
+                case 'maintenance':
+                    maintenanceMode = true;
+                    turbineParams.targetRPM = 0;
+                    break;
+                default: // clear
+                    scene.fog.near = 200;
+                    scene.fog.far = 3000;
+                    if (topScene) {
+                        topScene.fog.near = 50;
+                        topScene.fog.far = 1000;
+                    }
+                    maintenanceMode = false;
+            }
+            
+            updateWindParticles();
+            updateTurbinePerformance();
+        }
+
+        function getCurrentWeatherFromConditions() {
+            // Read current weather values and determine appropriate weather setting
+            const currentWindSpeed = parseFloat(document.getElementById('windValue').textContent);
+            const currentTime = parseFloat(document.getElementById('timeSlider').value);
+            
+            // Auto-select weather based on conditions
+            if (currentWindSpeed >= 20) {
+                return 'storm';
+            } else if (currentTime >= 19 || currentTime <= 6) {
+                return 'clear'; // Clear nights for star viewing
+            } else if (currentWindSpeed >= 15) {
+                return 'cloudy';
+            } else {
+                return 'clear';
+            }
+        }
+
+        function updateHeightIndicator() {
+            let height, reference;
+            
+            if (currentView === 'maintenance') {
+                height = 120; // Fixed height on top of nacelle
+                reference = '⚠️ ON TOP OF NACELLE - 120m';
+                document.getElementById('currentHeight').textContent = height + 'm';
+                document.getElementById('heightRef').textContent = reference;
+                document.getElementById('heightRef').style.color = '#ff6600';
+            } else if (currentView === 'nacelle') {
+                height = 120;
+                reference = 'Inside Nacelle';
+                document.getElementById('currentHeight').textContent = height + 'm';
+                document.getElementById('heightRef').textContent = reference;
+                document.getElementById('heightRef').style.color = '#ffffff';
+            } else {
+                height = Math.max(0, camera.position.y);
+                document.getElementById('currentHeight').textContent = height.toFixed(0) + 'm';
+                
+                reference = 'Ground Level';
+                if (height > 100) reference = 'Hub Height';
+                if (height > 140) reference = 'Nacelle Level';
+                if (height > 160) reference = 'Above Turbine';
+                
+                document.getElementById('heightRef').textContent = reference;
+                document.getElementById('heightRef').style.color = '#ffffff';
+            }
+        }
+
+        function updateInteriorStatusLights() {
+            if (!statusPanels.meters || !statusPanels.warningLights) return;
+
+            // Get current values
+            const temp = parseFloat(document.getElementById('nacelleTemp').textContent);
+            const vibration = parseFloat(document.getElementById('vibration').textContent);
+            const power = parseFloat(document.getElementById('powerOutput').textContent);
+            const rpm = parseFloat(document.getElementById('rotorSpeed').textContent);
+
+            // Update analog meters
+            if (statusPanels.meters.TEMP) {
+                const tempMeter = statusPanels.meters.TEMP;
+                const tempNormalized = (temp - tempMeter.min) / (tempMeter.max - tempMeter.min);
+                const tempAngle = -135 + (tempNormalized * 270); // 270 degree sweep
+                tempMeter.needle.rotation.z = tempAngle * Math.PI / 180;
+            }
+
+            if (statusPanels.meters.RPM) {
+                const rpmMeter = statusPanels.meters.RPM;
+                const rpmNormalized = (rpm - rpmMeter.min) / (rpmMeter.max - rpmMeter.min);
+                const rpmAngle = -135 + (rpmNormalized * 270);
+                rpmMeter.needle.rotation.z = rpmAngle * Math.PI / 180;
+            }
+
+            if (statusPanels.meters.POWER) {
+                const powerMeter = statusPanels.meters.POWER;
+                const powerNormalized = (power - powerMeter.min) / (powerMeter.max - powerMeter.min);
+                const powerAngle = -135 + (powerNormalized * 270);
+                powerMeter.needle.rotation.z = powerAngle * Math.PI / 180;
+            }
+
+            // Update warning lights
+            const warnings = statusPanels.warningLights;
+            
+            // Temperature warning
+            if (warnings.TEMP_WARNING) {
+                const tempWarning = temp > 75 || temp < 0;
+                warnings.TEMP_WARNING.active = tempWarning;
+                if (tempWarning) {
+                    const pulse = Math.sin(Date.now() * 0.01) * 0.5 + 0.5;
+                    warnings.TEMP_WARNING.material.opacity = 0.5 + pulse * 0.5;
+                    warnings.TEMP_WARNING.material.emissiveIntensity = 0.5 + pulse * 0.5;
+                    warnings.TEMP_WARNING.pointLight.intensity = pulse * 0.5;
+                } else {
+                    warnings.TEMP_WARNING.material.opacity = 0.2;
+                    warnings.TEMP_WARNING.material.emissiveIntensity = 0.1;
+                    warnings.TEMP_WARNING.pointLight.intensity = 0;
+                }
+            }
+
+            // Vibration warning
+            if (warnings.VIBRATION_WARNING) {
+                const vibrationWarning = vibration > 4;
+                warnings.VIBRATION_WARNING.active = vibrationWarning;
+                if (vibrationWarning) {
+                    const pulse = Math.sin(Date.now() * 0.008) * 0.5 + 0.5;
+                    warnings.VIBRATION_WARNING.material.opacity = 0.5 + pulse * 0.5;
+                    warnings.VIBRATION_WARNING.material.emissiveIntensity = 0.5 + pulse * 0.5;
+                    warnings.VIBRATION_WARNING.pointLight.intensity = pulse * 0.3;
+                } else {
+                    warnings.VIBRATION_WARNING.material.opacity = 0.2;
+                    warnings.VIBRATION_WARNING.material.emissiveIntensity = 0.1;
+                    warnings.VIBRATION_WARNING.pointLight.intensity = 0;
+                }
+            }
+
+            // Grid fault warning
+            if (warnings.GRID_FAULT) {
+                const gridFault = power === 0 && windSpeed > 5;
+                warnings.GRID_FAULT.active = gridFault;
+                if (gridFault) {
+                    warnings.GRID_FAULT.material.opacity = 1;
+                    warnings.GRID_FAULT.material.emissiveIntensity = 1;
+                    warnings.GRID_FAULT.pointLight.intensity = 0.4;
+                } else {
+                    warnings.GRID_FAULT.material.opacity = 0.2;
+                    warnings.GRID_FAULT.material.emissiveIntensity = 0.1;
+                    warnings.GRID_FAULT.pointLight.intensity = 0;
+                }
+            }
+
+            // Ice warning (activated at low temps)
+            if (warnings.ICE_DETECTED) {
+                const iceWarning = temp < 0;
+                warnings.ICE_DETECTED.active = iceWarning;
+                if (iceWarning) {
+                    const pulse = Math.sin(Date.now() * 0.006) * 0.5 + 0.5;
+                    warnings.ICE_DETECTED.material.opacity = 0.5 + pulse * 0.5;
+                    warnings.ICE_DETECTED.material.emissiveIntensity = 0.5 + pulse * 0.5;
+                    warnings.ICE_DETECTED.pointLight.intensity = pulse * 0.3;
+                } else {
+                    warnings.ICE_DETECTED.material.opacity = 0.2;
+                    warnings.ICE_DETECTED.material.emissiveIntensity = 0.1;
+                    warnings.ICE_DETECTED.pointLight.intensity = 0;
+                }
+            }
+
+            // Brake warning
+            if (warnings.BRAKE_WARNING) {
+                const brakeWarning = rpm > 25;
+                warnings.BRAKE_WARNING.active = brakeWarning;
+                if (brakeWarning) {
+                    const pulse = Math.sin(Date.now() * 0.015) * 0.5 + 0.5;
+                    warnings.BRAKE_WARNING.material.opacity = 0.5 + pulse * 0.5;
+                    warnings.BRAKE_WARNING.material.emissiveIntensity = 0.5 + pulse * 0.5;
+                    warnings.BRAKE_WARNING.pointLight.intensity = pulse * 0.4;
+                } else {
+                    warnings.BRAKE_WARNING.material.opacity = 0.2;
+                    warnings.BRAKE_WARNING.material.emissiveIntensity = 0.1;
+                    warnings.BRAKE_WARNING.pointLight.intensity = 0;
+                }
+            }
+
+            // Update digital displays
+            if (statusPanels.digitalDisplays) {
+                if (statusPanels.digitalDisplays.VIBRATION) {
+                    const display = statusPanels.digitalDisplays.VIBRATION;
+                    if (vibration > 6) {
+                        display.material.color = new THREE.Color(0xff0000);
+                        display.material.emissive = new THREE.Color(0xff0000);
+                    } else if (vibration > 4) {
+                        display.material.color = new THREE.Color(0xffaa00);
+                        display.material.emissive = new THREE.Color(0xffaa00);
+                    } else {
+                        display.material.color = new THREE.Color(0x00ff00);
+                        display.material.emissive = new THREE.Color(0x00ff00);
+                    }
+                }
+
+                if (statusPanels.digitalDisplays['WIND SPEED']) {
+                    const display = statusPanels.digitalDisplays['WIND SPEED'];
+                    if (windSpeed > 25 || windSpeed < 3) {
+                        display.material.color = new THREE.Color(0xff0000);
+                        display.material.emissive = new THREE.Color(0xff0000);
+                    } else if (windSpeed > 20) {
+                        display.material.color = new THREE.Color(0xffaa00);
+                        display.material.emissive = new THREE.Color(0xffaa00);
+                    } else {
+                        display.material.color = new THREE.Color(0x00ff00);
+                        display.material.emissive = new THREE.Color(0x00ff00);
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            try {
+                animationId = requestAnimationFrame(animate);
+
+                // Update turbine rotation
+                if (turbineParams.currentRPM < turbineParams.targetRPM) {
+                    turbineParams.currentRPM += 0.1;
+                } else if (turbineParams.currentRPM > turbineParams.targetRPM) {
+                    turbineParams.currentRPM = Math.max(0, turbineParams.currentRPM - 0.2);
+                }
+
+                turbineParams.bladeRotation += turbineParams.currentRPM * 0.01;
+
+                // Update all turbines
+                windTurbines.forEach(turbine => {
+                    if (turbine.userData.bladeGroup) {
+                        turbine.userData.bladeGroup.rotation.z = turbineParams.bladeRotation;
+                    }
+                });
+
+                // Update top scene blades if in maintenance view
+                if (currentView === 'maintenance' && topScene.userData.bladeGroup) {
+                    topScene.userData.bladeGroup.rotation.z = turbineParams.bladeRotation;
+                    
+                    // Update wind effect on top
+                    if (topScene.userData.windEffect) {
+                        const positions = topScene.userData.windEffect.geometry.attributes.position.array;
+                        for (let i = 0; i < positions.length; i += 3) {
+                            positions[i] -= windSpeed * 0.2;
+                            if (positions[i] < -50) positions[i] = 50;
+                        }
+                        topScene.userData.windEffect.geometry.attributes.position.needsUpdate = true;
+                    }
+                }
+
+                // Update wind particles
+                if (windParticles && windParticles.userData.velocities && currentView !== 'nacelle') {
+                    const positions = windParticles.geometry.attributes.position.array;
+                    const velocities = windParticles.userData.velocities;
+
+                    for (let i = 0; i < positions.length; i += 3) {
+                        positions[i] += velocities[i] * 0.1;
+                        positions[i + 1] += velocities[i + 1] * 0.1;
+                        positions[i + 2] += velocities[i + 2] * 0.1;
+
+                        if (positions[i] > 500) positions[i] = -500;
+                        if (positions[i] < -500) positions[i] = 500;
+                        if (positions[i + 2] > 500) positions[i + 2] = -500;
+                        if (positions[i + 2] < -500) positions[i + 2] = 500;
+                        if (positions[i + 1] > 250) positions[i + 1] = 0;
+                        if (positions[i + 1] < 0) positions[i + 1] = 250;
+                    }
+
+                    windParticles.geometry.attributes.position.needsUpdate = true;
+                }
+
+                // Animate interior elements
+                if (currentView === 'nacelle' && interiorScene.userData.coolingFan) {
+                    interiorScene.userData.coolingFan.rotation.z += 0.05;
+                }
+
+                // Update status values
+                const tempVariation = 40 + Math.sin(Date.now() * 0.001) * 5 + turbineParams.currentRPM * 0.5;
+                document.getElementById('nacelleTemp').textContent = tempVariation.toFixed(0) + '°C';
+                
+                const vibration = 2.0 + Math.sin(Date.now() * 0.002) * 0.5 + turbineParams.currentRPM * 0.05;
+                document.getElementById('vibration').textContent = vibration.toFixed(1) + ' mm/s';
+                
+                const bladePitch = 3 + Math.sin(windSpeed * 0.5) * 2;
+                document.getElementById('bladePitch').textContent = bladePitch.toFixed(1) + '°';
+
+                // Update interior status lights only if in nacelle view
+                if (currentView === 'nacelle') {
+                    updateInteriorStatusLights();
+                }
+
+                // Update height indicator
+                updateHeightIndicator();
+
+                // Render the appropriate scene
+                if (currentView === 'nacelle') {
+                    renderer.render(interiorScene, interiorCamera);
+                } else if (currentView === 'maintenance') {
+                    renderer.render(topScene, topCamera);
+                } else {
+                    renderer.render(scene, camera);
+                }
+            } catch (error) {
+                console.error('Animation error:', error);
+                // Don't stop the animation loop on errors
+            }
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            
+            interiorCamera.aspect = window.innerWidth / window.innerHeight;
+            interiorCamera.updateProjectionMatrix();
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function handleMaintenanceAction(action) {
+            const alert = document.getElementById('maintenanceAlert');
+            const currentProblem = alert.dataset.currentProblem;
+            
+            let outcome = evaluateAction(currentProblem, action);
+            
+            alert.style.display = 'none';
+            
+            if (outcome.stopTurbine) {
+                turbineParams.targetRPM = 0;
+            }
+            if (outcome.reducePower) {
+                turbineParams.powerOutput *= 0.5;
+            }
+            
+            setTimeout(() => {
+                showOutcomeMessage(outcome.html);
+            }, 500);
+        }
+
+        function showOutcomeMessage(html) {
+            const outcomeDiv = document.createElement('div');
+            outcomeDiv.className = 'maintenance-alert';
+            outcomeDiv.style.display = 'block';
+            outcomeDiv.innerHTML = html + '<br><button class="alert-button" onclick="this.parentElement.remove()">Continue</button>';
+            
+            document.querySelector('.ui-overlay').appendChild(outcomeDiv);
+            
+            setTimeout(() => {
+                if (outcomeDiv.parentElement) {
+                    outcomeDiv.remove();
+                }
+            }, 5000);
+        }
+
+        function triggerRandomProblem() {
+            const problems = [
+                {
+                    id: 'gearbox_temp',
+                    title: 'GEARBOX OVERHEATING',
+                    description: 'Gearbox bearing temperature: 85°C (max safe: 75°C)',
+                    consequence: 'Continued operation could cause bearing failure and $500K+ repair',
+                    conditions: {
+                        windSpeed: 18,
+                        timeOfDay: 14.5,
+                        weather: 'clear',
+                        nacelleTemp: 85,
+                        vibration: 4.2,
+                        powerOutput: 2.3,
+                        rotorSpeed: 22
+                    },
+                    actions: {
+                        action1: { text: 'Reduce Load to 50%', correct: true },
+                        action2: { text: 'Emergency Stop', correct: false },
+                        action3: { text: 'Monitor & Continue', correct: false }
+                    }
+                },
+                {
+                    id: 'blade_ice',
+                    title: 'ICE ACCUMULATION DETECTED',
+                    description: 'Ice building up on blade leading edges - vibration increasing',
+                    consequence: 'Ice throw risk to personnel and equipment below',
+                    conditions: {
+                        windSpeed: 8,
+                        timeOfDay: 6.0,
+                        weather: 'storm',
+                        nacelleTemp: -2,
+                        vibration: 6.8,
+                        powerOutput: 0.8,
+                        rotorSpeed: 12,
+                        bladePitch: 8.5
+                    },
+                    actions: {
+                        action1: { text: 'Activate De-icing System', correct: true },
+                        action2: { text: 'Increase Rotor Speed', correct: false },
+                        action3: { text: 'Continue Normal Operation', correct: false }
+                    }
+                },
+                {
+                    id: 'grid_fault',
+                    title: 'GRID CONNECTION FAULT',
+                    description: 'Power quality issues detected - voltage fluctuations',
+                    consequence: 'Could damage electrical systems or cause grid instability',
+                    conditions: {
+                        windSpeed: 15,
+                        timeOfDay: 19.0,
+                        weather: 'clear',
+                        nacelleTemp: 58,
+                        vibration: 2.8,
+                        powerOutput: 0.0,
+                        rotorSpeed: 20,
+                        bladePitch: 12.0
+                    },
+                    actions: {
+                        action1: { text: 'Switch to Backup Connection', correct: false },
+                        action2: { text: 'Disconnect from Grid', correct: true },
+                        action3: { text: 'Boost Output to Compensate', correct: false }
+                    }
+                },
+                {
+                    id: 'wind_shear',
+                    title: 'EXTREME WIND SHEAR',
+                    description: 'Wind speed difference: 15 m/s between top and bottom of rotor',
+                    consequence: 'Uneven loading could cause structural fatigue damage',
+                    conditions: {
+                        windSpeed: 22,
+                        timeOfDay: 16.0,
+                        weather: 'storm',
+                        nacelleTemp: 72,
+                        vibration: 8.5,
+                        powerOutput: 1.8,
+                        rotorSpeed: 25,
+                        bladePitch: 15.2
+                    },
+                    actions: {
+                        action1: { text: 'Adjust Blade Pitch Individually', correct: true },
+                        action2: { text: 'Lock All Blades at 0°', correct: false },
+                        action3: { text: 'Increase Generator Load', correct: false }
+                    }
+                },
+                {
+                    id: 'brake_failure',
+                    title: 'BRAKE SYSTEM WARNING',
+                    description: 'Hydraulic pressure in brake system dropping rapidly',
+                    consequence: 'Loss of emergency braking capability - safety critical',
+                    conditions: {
+                        windSpeed: 24,
+                        timeOfDay: 21.5,
+                        weather: 'storm',
+                        nacelleTemp: 68,
+                        vibration: 5.2,
+                        powerOutput: 2.5,
+                        rotorSpeed: 26,
+                        bladePitch: 2.1
+                    },
+                    actions: {
+                        action1: { text: 'Test Backup Brake System', correct: false },
+                        action2: { text: 'Immediate Controlled Stop', correct: true },
+                        action3: { text: 'Switch to Aerodynamic Braking', correct: false }
+                    }
+                }
+            ];
+
+            const problem = problems[Math.floor(Math.random() * problems.length)];
+            
+            applyProblemConditions(problem.conditions);
+            
+            const alert = document.getElementById('maintenanceAlert');
+            
+            alert.innerHTML = `
+                <h2 style="color: #FFF; margin-bottom: 25px; font-size: 28px;">⚠️ ${problem.title}</h2>
+                <p id="problemDescription" style="margin-bottom: 25px; font-size: 20px; line-height: 1.5;">${problem.description}</p>
+                <p id="problemConsequence" style="margin-bottom: 35px; font-size: 16px; opacity: 0.9;">${problem.consequence}</p>
+                <div id="actionButtons">
+                    <button class="alert-button" onclick="handleMaintenanceAction('action1')">${problem.actions.action1.text}</button>
+                    <button class="alert-button" onclick="handleMaintenanceAction('action2')">${problem.actions.action2.text}</button>
+                    <button class="alert-button" onclick="handleMaintenanceAction('action3')">${problem.actions.action3.text}</button>
+                </div>
+            `;
+            
+            alert.dataset.currentProblem = problem.id;
+            window.currentProblemData = problem;
+            alert.style.display = 'block';
+        }
+
+        function applyProblemConditions(conditions) {
+            windSpeed = conditions.windSpeed;
+            document.getElementById('windSlider').value = windSpeed;
+            document.getElementById('windValue').textContent = windSpeed;
+            
+            timeOfDay = conditions.timeOfDay;
+            document.getElementById('timeSlider').value = timeOfDay;
+            const hours = Math.floor(timeOfDay);
+            const minutes = Math.round((timeOfDay - hours) * 60);
+            document.getElementById('timeValue').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            
+            document.getElementById('weatherSelect').value = conditions.weather;
+            updateWeather(conditions.weather);
+            
+            turbineParams.powerOutput = conditions.powerOutput;
+            turbineParams.currentRPM = conditions.rotorSpeed;
+            turbineParams.targetRPM = conditions.rotorSpeed;
+            
+            document.getElementById('powerOutput').textContent = conditions.powerOutput.toFixed(1) + ' MW';
+            document.getElementById('rotorSpeed').textContent = conditions.rotorSpeed.toFixed(0) + ' RPM';
+            
+            const tempElement = document.getElementById('nacelleTemp');
+            tempElement.textContent = conditions.nacelleTemp.toFixed(0) + '°C';
+            if (conditions.nacelleTemp > 75) {
+                tempElement.className = 'status-critical';
+                tempElement.style.animation = 'pulse 1s infinite';
+            } else if (conditions.nacelleTemp > 60) {
+                tempElement.className = 'status-warning';
+                tempElement.style.animation = '';
+            } else if (conditions.nacelleTemp < 0) {
+                tempElement.className = 'status-warning';
+                tempElement.style.animation = 'pulse 1s infinite';
+            } else {
+                tempElement.className = 'status-value';
+                tempElement.style.animation = '';
+            }
+            
+            const vibrationElement = document.getElementById('vibration');
+            vibrationElement.textContent = conditions.vibration.toFixed(1) + ' mm/s';
+            if (conditions.vibration > 6.0) {
+                vibrationElement.className = 'status-critical';
+                vibrationElement.style.animation = 'pulse 1s infinite';
+            } else if (conditions.vibration > 4.0) {
+                vibrationElement.className = 'status-warning';
+                vibrationElement.style.animation = '';
+            } else {
+                vibrationElement.className = 'status-value';
+                vibrationElement.style.animation = '';
+            }
+            
+            if (conditions.bladePitch !== undefined) {
+                document.getElementById('bladePitch').textContent = conditions.bladePitch.toFixed(1) + '°';
+                if (conditions.bladePitch > 10) {
+                    document.getElementById('bladePitch').className = 'status-warning';
+                }
+            }
+            
+            const dailyGen = conditions.powerOutput * 24;
+            document.getElementById('dailyGen').textContent = dailyGen.toFixed(1) + ' MWh';
+            
+            updateWindParticles();
+            updateLighting();
+        }
+
+        function evaluateAction(problemId, action) {
+            const problem = window.currentProblemData;
+            const isCorrect = problem.actions[action].correct;
+            
+            if (isCorrect) {
+                const resolutionEffects = getResolutionEffects(problemId, action);
+                applyResolutionEffects(resolutionEffects);
+                
+                return {
+                    html: `<h2 style="color: #22C55E;">✅ CORRECT DECISION!</h2>
+                           <p style="margin-bottom: 15px;">Expert Action: ${problem.actions[action].text}</p>
+                           <p>${resolutionEffects.description}</p>
+                           <div style="margin-top: 20px; font-size: 14px; color: #A3A3A3;">
+                               Score: +100 points | Safety Rating: Excellent
+                           </div>`,
+                    stopTurbine: false,
+                    reducePower: false
+                };
+            } else {
+                let consequence = '';
+                let effects = { stopTurbine: false, reducePower: false };
+                
+                switch (problemId) {
+                    case 'gearbox_temp':
+                        if (action === 'action2') {
+                            consequence = 'Unnecessary emergency stop caused grid disruption and lost revenue.';
+                            effects.stopTurbine = true;
+                        } else {
+                            consequence = 'Gearbox bearing seized! $500,000 repair needed. Turbine offline 3 weeks.';
+                            effects.stopTurbine = true;
+                            setTimeout(() => {
+                                const tempElement = document.getElementById('nacelleTemp');
+                                tempElement.textContent = '95°C';
+                                tempElement.style.color = '#DC2626';
+                                tempElement.style.animation = 'pulse 0.5s infinite';
+                            }, 1000);
+                        }
+                        break;
+                    case 'blade_ice':
+                        if (action === 'action2') {
+                            consequence = 'Increased speed made ice worse! Ice throw injured ground crew.';
+                            effects.stopTurbine = true;
+                        } else {
+                            consequence = 'Ice chunks fell near maintenance shed. Safety incident reported.';
+                            effects.reducePower = true;
+                        }
+                        break;
+                    case 'grid_fault':
+                        consequence = 'Electrical damage to generator and transformer. $200,000 repair.';
+                        effects.stopTurbine = true;
+                        break;
+                    case 'wind_shear':
+                        consequence = 'Blade root fatigue damage detected. Early blade replacement needed.';
+                        effects.reducePower = true;
+                        break;
+                    case 'brake_failure':
+                        if (action === 'action1') {
+                            consequence = 'Backup brakes also failed. Runaway turbine damaged gearbox.';
+                            effects.stopTurbine = true;
+                        } else {
+                            consequence = 'Aerodynamic braking insufficient. Turbine overspeed triggered shutdown.';
+                            effects.stopTurbine = true;
+                        }
+                        break;
+                }
+                
+                return {
+                    html: `<h2 style="color: #EF4444;">❌ INCORRECT DECISION</h2>
+                           <p style="margin-bottom: 15px;">Your Action: ${problem.actions[action].text}</p>
+                           <p style="margin-bottom: 15px;">${consequence}</p>
+                           <p style="color: #22C55E;">Correct Answer: ${Object.values(problem.actions).find(a => a.correct).text}</p>
+                           <div style="margin-top: 20px; font-size: 14px; color: #A3A3A3;">
+                               Score: -50 points | Learn from mistakes!
+                           </div>`,
+                    stopTurbine: effects.stopTurbine,
+                    reducePower: effects.reducePower
+                };
+            }
+        }
+
+        function getResolutionEffects(problemId, action) {
+            switch (problemId) {
+                case 'gearbox_temp':
+                    return {
+                        description: 'Load reduced to 50%. Gearbox temperature dropping to safe levels.',
+                        nacelleTemp: 68,
+                        vibration: 2.1,
+                        powerOutput: 1.15,
+                        rotorSpeed: 16,
+                        bladePitch: 8.5
+                    };
+                case 'blade_ice':
+                    return {
+                        description: 'De-icing system activated. Ice melting, vibration normalizing.',
+                        nacelleTemp: 15,
+                        vibration: 2.3,
+                        powerOutput: 1.2,
+                        rotorSpeed: 15,
+                        bladePitch: 4.2
+                    };
+                case 'grid_fault':
+                    return {
+                        description: 'Safely disconnected from grid. Turbine protected, awaiting grid repair.',
+                        powerOutput: 0.0,
+                        vibration: 1.8,
+                        bladePitch: 15.0,
+                        rotorSpeed: 8
+                    };
+                case 'wind_shear':
+                    return {
+                        description: 'Individual blade pitch control activated. Loading balanced across rotor.',
+                        vibration: 3.2,
+                        bladePitch: 12.8,
+                        powerOutput: 2.1,
+                        nacelleTemp: 58
+                    };
+                case 'brake_failure':
+                    return {
+                        description: 'Controlled stop initiated. Aerodynamic braking reducing rotor speed safely.',
+                        rotorSpeed: 5,
+                        powerOutput: 0.2,
+                        bladePitch: 25.0,
+                        vibration: 2.8
+                    };
+            }
+        }
+
+        function applyResolutionEffects(effects) {
+            // Store original values before problem
+            const originalWindSpeed = 12; // Default wind speed
+            const originalWeather = 'clear'; // Default weather
+            const originalTime = 12; // Default time
+            
+            // Animate the improvements over 3 seconds
+            const duration = 3000;
+            const steps = 60;
+            const stepTime = duration / steps;
+            
+            // Get current values
+            const currentTemp = parseFloat(document.getElementById('nacelleTemp').textContent);
+            const currentVibration = parseFloat(document.getElementById('vibration').textContent);
+            const currentPower = parseFloat(document.getElementById('powerOutput').textContent);
+            const currentRPM = parseFloat(document.getElementById('rotorSpeed').textContent);
+            const currentPitch = parseFloat(document.getElementById('bladePitch').textContent);
+            
+            let step = 0;
+            
+            const animateImprovement = () => {
+                step++;
+                const progress = step / steps;
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                // Interpolate values
+                if (effects.nacelleTemp !== undefined) {
+                    const newTemp = currentTemp + (effects.nacelleTemp - currentTemp) * easeOut;
+                    const tempElement = document.getElementById('nacelleTemp');
+                    tempElement.textContent = newTemp.toFixed(0) + '°C';
+                    
+                    if (newTemp <= 75) {
+                        tempElement.className = 'status-value';
+                        tempElement.style.animation = '';
+                    }
+                }
+                
+                if (effects.vibration !== undefined) {
+                    const newVibration = currentVibration + (effects.vibration - currentVibration) * easeOut;
+                    const vibrationElement = document.getElementById('vibration');
+                    vibrationElement.textContent = newVibration.toFixed(1) + ' mm/s';
+                    
+                    if (newVibration <= 4.0) {
+                        vibrationElement.className = 'status-value';
+                        vibrationElement.style.animation = '';
+                    }
+                }
+                
+                if (effects.powerOutput !== undefined) {
+                    const newPower = currentPower + (effects.powerOutput - currentPower) * easeOut;
+                    document.getElementById('powerOutput').textContent = newPower.toFixed(1) + ' MW';
+                    turbineParams.powerOutput = newPower;
+                }
+                
+                if (effects.rotorSpeed !== undefined) {
+                    const newRPM = currentRPM + (effects.rotorSpeed - currentRPM) * easeOut;
+                    document.getElementById('rotorSpeed').textContent = newRPM.toFixed(0) + ' RPM';
+                    turbineParams.currentRPM = newRPM;
+                    turbineParams.targetRPM = newRPM;
+                }
+                
+                if (effects.bladePitch !== undefined) {
+                    const newPitch = currentPitch + (effects.bladePitch - currentPitch) * easeOut;
+                    document.getElementById('bladePitch').textContent = newPitch.toFixed(1) + '°';
+                }
+                
+                const dailyGen = (effects.powerOutput || currentPower) * 24;
+                document.getElementById('dailyGen').textContent = dailyGen.toFixed(1) + ' MWh';
+                
+                if (step < steps) {
+                    setTimeout(animateImprovement, stepTime);
+                } else {
+                    // Final cleanup - ensure exact target values
+                    if (effects.nacelleTemp !== undefined) {
+                        document.getElementById('nacelleTemp').textContent = effects.nacelleTemp.toFixed(0) + '°C';
+                    }
+                    if (effects.vibration !== undefined) {
+                        document.getElementById('vibration').textContent = effects.vibration.toFixed(1) + ' mm/s';
+                    }
+                    if (effects.powerOutput !== undefined) {
+                        document.getElementById('powerOutput').textContent = effects.powerOutput.toFixed(1) + ' MW';
+                    }
+                    if (effects.rotorSpeed !== undefined) {
+                        document.getElementById('rotorSpeed').textContent = effects.rotorSpeed.toFixed(0) + ' RPM';
+                    }
+                    if (effects.bladePitch !== undefined) {
+                        document.getElementById('bladePitch').textContent = effects.bladePitch.toFixed(1) + '°';
+                    }
+                    
+                    // Reset weather conditions to normal after problem is resolved
+                    setTimeout(() => {
+                        // Reset wind speed
+                        windSpeed = originalWindSpeed;
+                        document.getElementById('windSlider').value = windSpeed;
+                        document.getElementById('windValue').textContent = windSpeed;
+                        
+                        // Reset weather
+                        document.getElementById('weatherSelect').value = originalWeather;
+                        updateWeather(originalWeather);
+                        
+                        // Reset time if it was changed
+                        if (Math.abs(timeOfDay - originalTime) > 6) {
+                            timeOfDay = originalTime;
+                            document.getElementById('timeSlider').value = timeOfDay;
+                            document.getElementById('timeValue').textContent = '12:00';
+                            updateLighting();
+                        }
+                        
+                        updateWindParticles();
+                        updateTurbinePerformance();
+                    }, 1000);
+                }
+            };
+            
+            setTimeout(animateImprovement, 500);
+        }
+    </script>
