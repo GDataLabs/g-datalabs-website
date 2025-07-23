@@ -711,36 +711,52 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
-        .research-card:hover .research-image img {
-            opacity: 1 !important;
-        }
-        
-        .research-card:hover .research-image i {
-            opacity: 0 !important;
-        }
-        
-        /* Ensure images are properly positioned */
-        .research-image {
+        /* Research image hover system using background images */
+        .research-image-hover {
             position: relative;
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: all 0.4s ease;
+            margin-bottom: 1rem;
             overflow: hidden;
         }
         
-        .research-image img {
+        .research-image-hover i {
+            font-size: 3rem;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+        
+        /* Default state - show icon */
+        .research-image-hover {
+            background-image: none;
+        }
+        
+        /* Hover state - show background image and hide icon */
+        .research-card:hover .research-image-hover {
+            background-image: var(--hover-bg-image);
+        }
+        
+        .research-card:hover .research-image-hover i {
+            opacity: 0;
+        }
+        
+        .research-card:hover .research-image-hover::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
             z-index: 1;
-        }
-        
-        .research-image i {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
         }
 
         /* Dark mode research card accent colors */
@@ -1185,60 +1201,54 @@
             </div>
             
             <div class="research-grid">
-                <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/terms_condition', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem; height: 120px; border-radius: 10px;">
-                        <img src="images/Industry-First_Informed_Consent.png" alt="Industry-First Informed Consent" style="opacity: 0; transition: opacity 0.4s ease;">
-                        <i class="fas fa-file-contract" style="font-size: 3rem; color: var(--color-workshops); opacity: 0.8; transition: opacity 0.4s ease;"></i>
+                <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/terms_condition', '_blank')" style="--hover-bg-image: url('images/Industry-First_Informed_Consent.png');">
+                    <div class="research-image-hover">
+                        <i class="fas fa-file-contract" style="color: var(--color-workshops); opacity: 0.8;"></i>
                     </div>
                     <h4>Industry-First Informed Consent</h4>
                     <div class="research-stat">2022</div>
                     <p>First to use LLMs to translate company policies, ensuring truly informed consent for AI data usage.</p>
                 </div>
                 
-                <div class="research-card fade-in" onclick="window.open('https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem; height: 120px; border-radius: 10px;">
-                        <img src="images/iMotions_Biometric_Study.png" alt="Biometric AI Feedback" style="opacity: 0; transition: opacity 0.4s ease;">
-                        <i class="fas fa-brain" style="font-size: 3rem; color: var(--color-integration); opacity: 0.8; transition: opacity 0.4s ease;"></i>
+                <div class="research-card fade-in" onclick="window.open('https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true', '_blank')" style="--hover-bg-image: url('images/iMotions_Biometric_Study.png');">
+                    <div class="research-image-hover">
+                        <i class="fas fa-brain" style="color: var(--color-integration); opacity: 0.8;"></i>
                     </div>
                     <h4>Biometric AI Feedback</h4>
                     <div class="research-stat">EEG + FEA</div>
                     <p>Pioneering research using biometric data as human feedback for training more ethical, personalized AI systems.</p>
                 </div>
                 
-                <div class="research-card fade-in" onclick="window.open('https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem; height: 120px; border-radius: 10px;">
-                        <img src="images/GenAI_Diversity_Study.png" alt="Diversity in Media Study" style="opacity: 0; transition: opacity 0.4s ease;">
-                        <i class="fas fa-users" style="font-size: 3rem; color: var(--color-research); opacity: 0.8; transition: opacity 0.4s ease;"></i>
+                <div class="research-card fade-in" onclick="window.open('https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media', '_blank')" style="--hover-bg-image: url('images/GenAI_Diversity_Study.png');">
+                    <div class="research-image-hover">
+                        <i class="fas fa-users" style="color: var(--color-research); opacity: 0.8;"></i>
                     </div>
                     <h4>Diversity in Media Study</h4>
                     <div class="research-stat">83%</div>
-                    <p>Groundbreaking research showing 83% believe GenAI can promote diversity and inclusion in media.</p>
+                    <p>Groundbreaking research showing GenAI can promote diversity and inclusion in media.</p>
                 </div>
                 
-                <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/blog/blog-post-2', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem; height: 120px; border-radius: 10px;">
-                        <img src="images/SAG-AFTRA_Strike_Analysis.png" alt="SAG-AFTRA Analysis" style="opacity: 0; transition: opacity 0.4s ease;">
-                        <i class="fas fa-theater-masks" style="font-size: 3rem; color: var(--color-workshops); opacity: 0.8; transition: opacity 0.4s ease;"></i>
+                <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/blog/blog-post-2', '_blank')" style="--hover-bg-image: url('images/SAG-AFTRA_Strike_Analysis.png');">
+                    <div class="research-image-hover">
+                        <i class="fas fa-theater-masks" style="color: var(--color-workshops); opacity: 0.8;"></i>
                     </div>
                     <h4>SAG-AFTRA Analysis</h4>
                     <div class="research-stat">100 Days</div>
                     <p>Real-time analysis of entertainment industry strikes, informing consent and compensation frameworks.</p>
                 </div>
                 
-                <div class="research-card fade-in" onclick="window.open('https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem; height: 120px; border-radius: 10px;">
-                        <img src="images/AI_Relaxation_Study.png" alt="AI Relaxation Study" style="opacity: 0; transition: opacity 0.4s ease;">
-                        <i class="fas fa-spa" style="font-size: 3rem; color: var(--color-integration); opacity: 0.8; transition: opacity 0.4s ease;"></i>
+                <div class="research-card fade-in" onclick="window.open('https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a', '_blank')" style="--hover-bg-image: url('images/AI_Relaxation_Study.png');">
+                    <div class="research-image-hover">
+                        <i class="fas fa-spa" style="color: var(--color-integration); opacity: 0.8;"></i>
                     </div>
                     <h4>AI Relaxation Study</h4>
                     <div class="research-stat">2024</div>
                     <p>EEG-based study comparing relaxation levels between AI-generated content and traditional therapy methods.</p>
                 </div>
                 
-                <div class="research-card fade-in" onclick="window.open('https://youtu.be/ngWUBlO2iHg', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem; height: 120px; border-radius: 10px;">
-                        <img src="images/NMSBA_World_Forum_Presentation.png" alt="Conference Presentations" style="opacity: 0; transition: opacity 0.4s ease;">
-                        <i class="fas fa-presentation" style="font-size: 3rem; color: var(--color-research); opacity: 0.8; transition: opacity 0.4s ease;"></i>
+                <div class="research-card fade-in" onclick="window.open('https://youtu.be/ngWUBlO2iHg', '_blank')" style="--hover-bg-image: url('images/NMSBA_World_Forum_Presentation.png');">
+                    <div class="research-image-hover">
+                        <i class="fas fa-presentation" style="color: var(--color-research); opacity: 0.8;"></i>
                     </div>
                     <h4>Conference Presentations</h4>
                     <div class="research-stat">NMSBA</div>
