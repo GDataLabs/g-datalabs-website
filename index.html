@@ -710,6 +710,14 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
+        
+        .research-card:hover .research-image img {
+            opacity: 1;
+        }
+        
+        .research-card:hover .research-image i {
+            opacity: 0;
+        }
 
         /* Dark mode research card accent colors */
         [data-theme="dark"] .research-card:nth-child(1) {
@@ -1154,8 +1162,9 @@
             
             <div class="research-grid">
                 <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/terms_condition', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
-                        <i class="fas fa-file-contract" style="font-size: 3rem; color: var(--color-workshops); opacity: 0.8;"></i>
+                    <div class="research-image" style="position: relative; text-align: center; margin-bottom: 1rem; height: 120px; overflow: hidden; border-radius: 10px;">
+                        <img src="images/Industry-First_Informed_Consent.png" alt="Industry-First Informed Consent" style="width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease;">
+                        <i class="fas fa-file-contract" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: var(--color-workshops); opacity: 0.8; transition: opacity 0.4s ease;"></i>
                     </div>
                     <h4>Industry-First Informed Consent</h4>
                     <div class="research-stat">2022</div>
@@ -1163,8 +1172,9 @@
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
-                        <i class="fas fa-brain" style="font-size: 3rem; color: var(--color-integration); opacity: 0.8;"></i>
+                    <div class="research-image" style="position: relative; text-align: center; margin-bottom: 1rem; height: 120px; overflow: hidden; border-radius: 10px;">
+                        <img src="images/iMotions_Biometric_Study.png" alt="Biometric AI Feedback" style="width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease;">
+                        <i class="fas fa-brain" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: var(--color-integration); opacity: 0.8; transition: opacity 0.4s ease;"></i>
                     </div>
                     <h4>Biometric AI Feedback</h4>
                     <div class="research-stat">EEG + FEA</div>
@@ -1172,8 +1182,9 @@
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
-                        <i class="fas fa-users" style="font-size: 3rem; color: var(--color-research); opacity: 0.8;"></i>
+                    <div class="research-image" style="position: relative; text-align: center; margin-bottom: 1rem; height: 120px; overflow: hidden; border-radius: 10px;">
+                        <img src="images/GenAI_Diversity_Study.png" alt="Diversity in Media Study" style="width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease;">
+                        <i class="fas fa-users" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: var(--color-research); opacity: 0.8; transition: opacity 0.4s ease;"></i>
                     </div>
                     <h4>Diversity in Media Study</h4>
                     <div class="research-stat">83%</div>
@@ -1181,8 +1192,9 @@
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://www.g-datalabs.com/blog/blog-post-2', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
-                        <i class="fas fa-theater-masks" style="font-size: 3rem; color: var(--color-workshops); opacity: 0.8;"></i>
+                    <div class="research-image" style="position: relative; text-align: center; margin-bottom: 1rem; height: 120px; overflow: hidden; border-radius: 10px;">
+                        <img src="images/SAG-AFTRA_Strike_Analysis.png" alt="SAG-AFTRA Analysis" style="width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease;">
+                        <i class="fas fa-theater-masks" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: var(--color-workshops); opacity: 0.8; transition: opacity 0.4s ease;"></i>
                     </div>
                     <h4>SAG-AFTRA Analysis</h4>
                     <div class="research-stat">100 Days</div>
@@ -1190,8 +1202,9 @@
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
-                        <i class="fas fa-spa" style="font-size: 3rem; color: var(--color-integration); opacity: 0.8;"></i>
+                    <div class="research-image" style="position: relative; text-align: center; margin-bottom: 1rem; height: 120px; overflow: hidden; border-radius: 10px;">
+                        <img src="images/AI_Relaxation_Study.png" alt="AI Relaxation Study" style="width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease;">
+                        <i class="fas fa-spa" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: var(--color-integration); opacity: 0.8; transition: opacity 0.4s ease;"></i>
                     </div>
                     <h4>AI Relaxation Study</h4>
                     <div class="research-stat">2024</div>
@@ -1199,8 +1212,9 @@
                 </div>
                 
                 <div class="research-card fade-in" onclick="window.open('https://youtu.be/ngWUBlO2iHg', '_blank')">
-                    <div class="research-image" style="text-align: center; margin-bottom: 1rem;">
-                        <i class="fas fa-presentation" style="font-size: 3rem; color: var(--color-research); opacity: 0.8;"></i>
+                    <div class="research-image" style="position: relative; text-align: center; margin-bottom: 1rem; height: 120px; overflow: hidden; border-radius: 10px;">
+                        <img src="images/NMSBA_World_Forum_Presentation.png" alt="Conference Presentations" style="width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease;">
+                        <i class="fas fa-presentation" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: var(--color-research); opacity: 0.8; transition: opacity 0.4s ease;"></i>
                     </div>
                     <h4>Conference Presentations</h4>
                     <div class="research-stat">NMSBA</div>
