@@ -181,6 +181,33 @@
         .nav-links a:hover {
             color: var(--accent-primary);
         }
+        
+        .auth-links {
+            display: flex;
+            gap: 1rem;
+            margin-left: 1rem;
+        }
+        
+        .auth-link {
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Login link hover */
+        .auth-link[href*="login"]:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+        
+        /* Sign up link hover */
+        .auth-link[href*="signup"]:hover {
+            background: var(--accent-secondary);
+        }
 
         /* Hero Section */
         .hero {
@@ -1001,9 +1028,19 @@
             .nav-links {
                 display: none;
             }
+            
+            .auth-links {
+                margin-left: 0;
+                gap: 0.5rem;
+            }
+            
+            .auth-link {
+                font-size: 0.8rem;
+                padding: 6px 12px !important;
+            }
 
             .nav-right {
-                gap: 1rem;
+                gap: 0.5rem;
             }
 
             .theme-toggle {
@@ -1058,12 +1095,18 @@
             <div class="nav-right">
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
+                    <li><a href="https://ai.g-datalabs.com/" target="_blank">G-Data Labs</a></li>
+                    <li><a href="/blog">Blogs</a></li>
                     <li><a href="#mission">Mission</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#research">Research</a></li>
                     <li><a href="#team">Team</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <div class="auth-links" style="display: flex; gap: 1rem; margin-left: 1rem;">
+                    <a href="https://ai.g-datalabs.com/login" class="auth-link" style="color: var(--text-header); text-decoration: none; font-weight: 500; padding: 8px 16px; border: 1px solid var(--accent-primary); border-radius: 20px; transition: all 0.3s ease;">Log In</a>
+                    <a href="https://ai.g-datalabs.com/signup" class="auth-link" style="color: var(--bg-primary); background: var(--accent-primary); text-decoration: none; font-weight: 500; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease;">Sign Up</a>
+                </div>
                 <button class="theme-toggle" id="theme-toggle">
                     <i class="fas fa-moon"></i>
                     <span>Night</span>
