@@ -120,30 +120,6 @@
         }
 
 
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--accent-primary);
-            border-radius: 50%;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            color: var(--text-header);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
-
-        .theme-toggle:hover {
-            background: var(--accent-primary);
-            color: var(--bg-gradient-start);
-        }
-
-        .theme-toggle i {
-            font-size: 1rem;
-        }
 
         .logo {
             font-size: 1.8rem;
@@ -215,11 +191,6 @@
         .nav-links .signup-btn:hover {
             background: var(--accent-secondary);
             border-color: var(--accent-secondary);
-        }
-        
-        .theme-toggle-item {
-            display: flex;
-            align-items: center;
         }
         
 
@@ -1029,12 +1000,6 @@
                 padding: 6px 12px;
             }
             
-            .theme-toggle {
-                width: 35px;
-                height: 35px;
-                padding: 8px;
-                font-size: 1rem;
-            }
 
             .hero {
                 padding: 140px 0 40px;
@@ -1152,11 +1117,6 @@
                 <li><a href="ai-workflow-integration.html">Workflows</a></li>
                 <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
                 <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
-                <li class="theme-toggle-item">
-                    <button class="theme-toggle" id="theme-toggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </li>
             </ul>
         </nav>
     </header>
@@ -1530,147 +1490,6 @@
             }
         });
 
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = themeToggle.querySelector('i');
-        const logoImg = document.getElementById('logo-img');
-
-        // Check for saved theme preference or default to light
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        
-        // Update UI based on saved theme
-        if (savedTheme === 'dark') {
-            themeIcon.className = 'fas fa-sun';
-            logoImg.src = 'logos/gdata_night_trans.png';
-        }
-
-        // Function to update Venn diagram colors
-        function updateVennColors(theme) {
-            const vennCircles = document.querySelectorAll('.venn-circle');
-            const vennLabels = document.querySelectorAll('.venn-label');
-            
-            if (theme === 'dark') {
-                // Night mode colors from night logo
-                const nightColors = {
-                    workshops: '#E62431',
-                    integration: '#046C98', 
-                    research: '#F5B11A'
-                };
-                
-                // Update CSS variables
-                document.documentElement.style.setProperty('--color-workshops', nightColors.workshops);
-                document.documentElement.style.setProperty('--color-workshops-bg', 'rgba(230, 36, 49, 0.15)');
-                document.documentElement.style.setProperty('--color-workshops-border', 'rgba(230, 36, 49, 0.6)');
-                document.documentElement.style.setProperty('--color-workshops-hover-bg', 'rgba(230, 36, 49, 0.3)');
-                document.documentElement.style.setProperty('--color-workshops-hover-border', 'rgba(230, 36, 49, 0.9)');
-                
-                document.documentElement.style.setProperty('--color-integration', nightColors.integration);
-                document.documentElement.style.setProperty('--color-integration-bg', 'rgba(4, 108, 152, 0.15)');
-                document.documentElement.style.setProperty('--color-integration-border', 'rgba(4, 108, 152, 0.6)');
-                document.documentElement.style.setProperty('--color-integration-hover-bg', 'rgba(4, 108, 152, 0.3)');
-                document.documentElement.style.setProperty('--color-integration-hover-border', 'rgba(4, 108, 152, 0.9)');
-                
-                document.documentElement.style.setProperty('--color-research', nightColors.research);
-                document.documentElement.style.setProperty('--color-research-bg', 'rgba(245, 177, 26, 0.15)');
-                document.documentElement.style.setProperty('--color-research-border', 'rgba(245, 177, 26, 0.6)');
-                document.documentElement.style.setProperty('--color-research-hover-bg', 'rgba(245, 177, 26, 0.3)');
-                document.documentElement.style.setProperty('--color-research-hover-border', 'rgba(245, 177, 26, 0.9)');
-                
-                // Update Venn circle icons to night colors
-                vennCircles.forEach(circle => {
-                    const icon = circle.querySelector('i');
-                    if (circle.classList.contains('left')) {
-                        icon.style.color = nightColors.workshops;
-                    } else if (circle.classList.contains('right')) {
-                        icon.style.color = nightColors.integration;
-                    } else if (circle.classList.contains('center')) {
-                        icon.style.color = nightColors.research;
-                    }
-                });
-                
-                // Update Venn labels to night colors
-                vennLabels.forEach(label => {
-                    if (label.classList.contains('left')) {
-                        label.style.color = nightColors.workshops;
-                    } else if (label.classList.contains('right')) {
-                        label.style.color = nightColors.integration;
-                    } else if (label.classList.contains('center')) {
-                        label.style.color = nightColors.research;
-                    }
-                });
-                
-            } else {
-                // Light mode colors
-                const lightColors = {
-                    workshops: '#ff4b4b',
-                    integration: '#4b96ff',
-                    research: '#ffd700'
-                };
-                
-                // Update CSS variables
-                document.documentElement.style.setProperty('--color-workshops', lightColors.workshops);
-                document.documentElement.style.setProperty('--color-workshops-bg', 'rgba(255, 75, 75, 0.15)');
-                document.documentElement.style.setProperty('--color-workshops-border', 'rgba(255, 75, 75, 0.6)');
-                document.documentElement.style.setProperty('--color-workshops-hover-bg', 'rgba(255, 75, 75, 0.3)');
-                document.documentElement.style.setProperty('--color-workshops-hover-border', 'rgba(255, 75, 75, 0.9)');
-                
-                document.documentElement.style.setProperty('--color-integration', lightColors.integration);
-                document.documentElement.style.setProperty('--color-integration-bg', 'rgba(75, 150, 255, 0.15)');
-                document.documentElement.style.setProperty('--color-integration-border', 'rgba(75, 150, 255, 0.6)');
-                document.documentElement.style.setProperty('--color-integration-hover-bg', 'rgba(75, 150, 255, 0.3)');
-                document.documentElement.style.setProperty('--color-integration-hover-border', 'rgba(75, 150, 255, 0.9)');
-                
-                document.documentElement.style.setProperty('--color-research', lightColors.research);
-                document.documentElement.style.setProperty('--color-research-bg', 'rgba(255, 215, 0, 0.15)');
-                document.documentElement.style.setProperty('--color-research-border', 'rgba(255, 215, 0, 0.6)');
-                document.documentElement.style.setProperty('--color-research-hover-bg', 'rgba(255, 215, 0, 0.3)');
-                document.documentElement.style.setProperty('--color-research-hover-border', 'rgba(255, 215, 0, 0.9)');
-                
-                // Update Venn circle icons to light colors
-                vennCircles.forEach(circle => {
-                    const icon = circle.querySelector('i');
-                    if (circle.classList.contains('left')) {
-                        icon.style.color = lightColors.workshops;
-                    } else if (circle.classList.contains('right')) {
-                        icon.style.color = lightColors.integration;
-                    } else if (circle.classList.contains('center')) {
-                        icon.style.color = lightColors.research;
-                    }
-                });
-                
-                // Update Venn labels to light colors
-                vennLabels.forEach(label => {
-                    if (label.classList.contains('left')) {
-                        label.style.color = lightColors.workshops;
-                    } else if (label.classList.contains('right')) {
-                        label.style.color = lightColors.integration;
-                    } else if (label.classList.contains('center')) {
-                        label.style.color = lightColors.research;
-                    }
-                });
-            }
-        }
-
-        themeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateVennColors(newTheme);
-            
-            if (newTheme === 'dark') {
-                themeIcon.className = 'fas fa-sun';
-                logoImg.src = 'logos/gdata_night_trans.png';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-                logoImg.src = 'logos/light_logo.png';
-            }
-        });
-
-        // Initialize colors on page load
-        updateVennColors(savedTheme);
     </script>
 </body>
 </html>
