@@ -669,10 +669,13 @@
         </div>
     </main>
 
+    <script src="js/policy-api.js"></script>
     <script>
+        // Initialize API for Cookie Policy
+        const policyAPI = new PolicyAPI('cookies');
 
         // LLM Chat functionality
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('user-input');
             const messagesContainer = document.getElementById('chat-messages');
             const userMessage = input.value.trim();
@@ -688,16 +691,38 @@
             // Clear input
             input.value = '';
             
-            // Simulate AI response (in real implementation, this would call your LLM API)
-            setTimeout(() => {
+            // Show typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message assistant typing-indicator';
+            typingDiv.innerHTML = '<p>Thinking...</p>';
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            try {
+                // Call real OpenAI API
+                const response = await policyAPI.askQuestion(userMessage);
+                
+                // Remove typing indicator
+                messagesContainer.removeChild(typingDiv);
+                
+                // Add AI response
                 const assistantDiv = document.createElement('div');
                 assistantDiv.className = 'message assistant';
-                assistantDiv.innerHTML = `<p>${generateResponse(userMessage)}</p>`;
+                assistantDiv.innerHTML = `<p>${response}</p>`;
                 messagesContainer.appendChild(assistantDiv);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }, 1000);
-            
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+            } catch (error) {
+                // Remove typing indicator
+                messagesContainer.removeChild(typingDiv);
+                
+                // Show error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message assistant';
+                errorDiv.innerHTML = '<p>Sorry, I encountered an error. Please try again or contact support at cookies@g-datalabs.com.</p>';
+                messagesContainer.appendChild(errorDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
         }
 
         // Enter key support
@@ -706,29 +731,6 @@
                 sendMessage();
             }
         });
-
-        // Simulate AI responses (replace with actual LLM integration)
-        function generateResponse(question) {
-            const responses = {
-                'essential': "Essential cookies are required for the site to work properly - like keeping you logged in and protecting against security attacks. You can't disable these without breaking the website functionality.",
-                'functional': "Functional cookies remember your preferences like theme (light/dark mode) and language settings. These make your experience better but aren't required - you can disable them in your browser.",
-                'analytics': "Analytics cookies help us understand how people use our site so we can improve it. They track things like which pages are popular and if there are any technical issues. You can opt out of these.",
-                'research': "Research cookies are only used with your explicit consent for our AI studies. They might connect your web activity with biometric data if you're participating in research. You can withdraw consent anytime.",
-                'manage': "You can manage cookies through your browser settings or our cookie preference center. You can block all cookies, just third-party ones, or choose specific categories. Just remember some features might not work without cookies.",
-                'disable': "If you disable cookies: Essential ones will break core features, functional ones remove personalization, analytics ones prevent us from improving the site, and research ones stop your contribution to AI studies.",
-                'security': "We secure cookies with HTTPS-only transmission, HttpOnly flags to prevent JavaScript access, SameSite protection against attacks, and encryption for sensitive data.",
-                'third': "We minimize third-party cookies and only use trusted partners for CDN, error monitoring, and research tools. You can control these through browser settings."
-            };
-
-            const lowerQuestion = question.toLowerCase();
-            for (const [key, response] of Object.entries(responses)) {
-                if (lowerQuestion.includes(key)) {
-                    return response;
-                }
-            }
-
-            return "I'd be happy to help with that! Could you be more specific about what you'd like to know about cookies? You can ask about essential cookies, managing preferences, security, third-party cookies, or any other cookie topic.";
-        }
     </script>
 </body>
 </html>
