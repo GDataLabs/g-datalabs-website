@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy - G-Data Labs</title>
+    <link rel="icon" type="image/png" href="logos/light_logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-header: #4a3c28;
+            --accent-primary: #8b7355;
+            --accent-secondary: #a08c69;
+            --bg-gradient-start: #f4f1e8;
+            --bg-gradient-end: #e8e0d0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --text-header: #f0f0f0;
+            --accent-primary: #F5B11A;
+            --accent-secondary: #d4af37;
+            --bg-gradient-start: #2d2d2d;
+            --bg-gradient-end: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-header);
+            transition: color 0.3s ease;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-header);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links .auth-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links .login-btn {
+            color: var(--text-header);
+            border: 1px solid var(--accent-primary);
+            background: transparent;
+        }
+
+        .nav-links .signup-btn {
+            color: var(--bg-primary);
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .nav-links .auth-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            color: inherit;
+        }
+
+        .nav-links .login-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .nav-links .signup-btn:hover {
+            background: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+        }
+
+        .theme-toggle-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--text-header);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: var(--bg-gradient-start);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .cookie-content {
+            background: var(--bg-secondary);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .llm-assistant {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .llm-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .llm-header i {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-right: 1rem;
+        }
+
+        .llm-header h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .llm-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chat-interface {
+            border: 2px solid var(--accent-primary);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: var(--bg-primary);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: var(--accent-primary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.assistant {
+            background: rgba(139, 115, 85, 0.1);
+            color: var(--text-primary);
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid var(--accent-primary);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            font-size: 0.9rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .chat-input input:focus {
+            outline: none;
+        }
+
+        .chat-input button {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: var(--accent-secondary);
+        }
+
+        .cookie-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .cookie-section h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .cookie-section h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .cookie-section p {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cookie-section ul, .cookie-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cookie-section li {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cookie-table th,
+        .cookie-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--accent-primary);
+        }
+
+        .cookie-table th {
+            background: var(--accent-primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .cookie-table tr:hover {
+            background: rgba(139, 115, 85, 0.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0.5rem 0;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .content-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .llm-assistant {
+                position: static;
+            }
+
+            .cookie-content {
+                padding: 2rem;
+            }
+
+            .cookie-table {
+                font-size: 0.9rem;
+            }
+
+            .cookie-table th,
+            .cookie-table td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html#home" class="logo">
+                <img id="logo-img" src="logos/light_logo.png" alt="G-Data" style="height: 50px;">
+                G-Data
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="https://ai.g-datalabs.com/" target="_blank">G-Data Labs</a></li>
+                <li><a href="ai-research-consulting.html">Research</a></li>
+                <li><a href="ai-literacy-workshops.html">Workshops</a></li>
+                <li><a href="ai-workflow-integration.html">Workflows</a></li>
+                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
+                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+                <li class="theme-toggle-item">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Cookie Policy</h1>
+                <p class="page-subtitle">Understanding how we use cookies to enhance your experience. Learn about cookie types, purposes, and how to manage your preferences with our AI assistant.</p>
+            </div>
+
+            <div class="content-layout">
+                <div class="cookie-content">
+                    <div class="cookie-section">
+                        <h2>1. What Are Cookies</h2>
+                        <p>Cookies are small text files that are stored on your device when you visit websites. They help websites remember your preferences, analyze traffic, and provide personalized experiences.</p>
+                        
+                        <h3>Types of Cookies We Use</h3>
+                        <p>G-Data Labs uses different types of cookies to enhance your experience while maintaining transparency about our data collection practices.</p>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>2. Cookie Categories</h2>
+                        
+                        <h3>Essential Cookies</h3>
+                        <p>These cookies are necessary for the website to function properly and cannot be disabled.</p>
+                        <ul>
+                            <li><strong>Authentication:</strong> Keep you logged in to your account</li>
+                            <li><strong>Security:</strong> Protect against unauthorized access</li>
+                            <li><strong>Session Management:</strong> Maintain your session across pages</li>
+                            <li><strong>Load Balancing:</strong> Distribute server requests efficiently</li>
+                        </ul>
+
+                        <h3>Functional Cookies</h3>
+                        <p>These cookies enhance functionality and personalization but are not essential.</p>
+                        <ul>
+                            <li><strong>Language Preferences:</strong> Remember your language settings</li>
+                            <li><strong>Theme Preferences:</strong> Save your light/dark mode choice</li>
+                            <li><strong>Form Data:</strong> Remember form inputs to prevent data loss</li>
+                            <li><strong>Accessibility Settings:</strong> Store accessibility preferences</li>
+                        </ul>
+
+                        <h3>Analytics Cookies</h3>
+                        <p>These cookies help us understand how visitors interact with our website.</p>
+                        <ul>
+                            <li><strong>Usage Analytics:</strong> Track page views and user interactions</li>
+                            <li><strong>Performance Monitoring:</strong> Monitor site speed and performance</li>
+                            <li><strong>Error Tracking:</strong> Identify and fix technical issues</li>
+                            <li><strong>A/B Testing:</strong> Test different features and improvements</li>
+                        </ul>
+
+                        <h3>Research Cookies (With Consent)</h3>
+                        <p>Used for our ethical AI research with explicit user consent.</p>
+                        <ul>
+                            <li><strong>Interaction Patterns:</strong> Study human-AI interaction behaviors</li>
+                            <li><strong>Feature Usage:</strong> Understand which features are most valuable</li>
+                            <li><strong>Research Participation:</strong> Track consent and participation status</li>
+                            <li><strong>Biometric Integration:</strong> Connect web activity with biometric data (consent required)</li>
+                        </ul>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>3. Detailed Cookie Information</h2>
+                        
+                        <table class="cookie-table">
+                            <thead>
+                                <tr>
+                                    <th>Cookie Name</th>
+                                    <th>Purpose</th>
+                                    <th>Duration</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>session_token</td>
+                                    <td>Maintains user authentication</td>
+                                    <td>Session</td>
+                                    <td>Essential</td>
+                                </tr>
+                                <tr>
+                                    <td>csrf_token</td>
+                                    <td>Security protection against attacks</td>
+                                    <td>Session</td>
+                                    <td>Essential</td>
+                                </tr>
+                                <tr>
+                                    <td>theme_preference</td>
+                                    <td>Remembers light/dark mode choice</td>
+                                    <td>1 year</td>
+                                    <td>Functional</td>
+                                </tr>
+                                <tr>
+                                    <td>language_setting</td>
+                                    <td>Stores language preference</td>
+                                    <td>1 year</td>
+                                    <td>Functional</td>
+                                </tr>
+                                <tr>
+                                    <td>analytics_id</td>
+                                    <td>Tracks anonymous usage statistics</td>
+                                    <td>2 years</td>
+                                    <td>Analytics</td>
+                                </tr>
+                                <tr>
+                                    <td>research_consent</td>
+                                    <td>Tracks research participation consent</td>
+                                    <td>5 years</td>
+                                    <td>Research</td>
+                                </tr>
+                                <tr>
+                                    <td>biometric_session</td>
+                                    <td>Links biometric data with web session</td>
+                                    <td>Session</td>
+                                    <td>Research</td>
+                                </tr>
+                                <tr>
+                                    <td>performance_metrics</td>
+                                    <td>Monitors site performance</td>
+                                    <td>30 days</td>
+                                    <td>Analytics</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>4. Third-Party Cookies</h2>
+                        <p>We may use third-party services that set their own cookies. We carefully select partners who share our commitment to privacy.</p>
+                        
+                        <h3>Current Third-Party Services</h3>
+                        <ul>
+                            <li><strong>CDN Services:</strong> For fast content delivery (minimal tracking)</li>
+                            <li><strong>Error Monitoring:</strong> For technical issue detection</li>
+                            <li><strong>Research Tools:</strong> For ethical AI research (with consent)</li>
+                        </ul>
+
+                        <h3>Third-Party Cookie Control</h3>
+                        <p>We minimize third-party cookies and provide you with control over which services can set cookies through your browser settings.</p>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>5. Managing Your Cookie Preferences</h2>
+                        
+                        <h3>Browser Settings</h3>
+                        <p>You can control cookies through your browser settings:</p>
+                        <ul>
+                            <li><strong>Block All Cookies:</strong> Prevent all cookies (may break site functionality)</li>
+                            <li><strong>Block Third-Party Cookies:</strong> Allow only first-party cookies</li>
+                            <li><strong>Clear Existing Cookies:</strong> Delete all stored cookies</li>
+                            <li><strong>Cookie Notifications:</strong> Get notified when cookies are set</li>
+                        </ul>
+
+                        <h3>Our Cookie Settings</h3>
+                        <p>We provide a cookie preference center where you can:</p>
+                        <ul>
+                            <li>Choose which cookie categories to allow</li>
+                            <li>Update your consent for research cookies</li>
+                            <li>View detailed information about each cookie</li>
+                            <li>Withdraw consent for non-essential cookies</li>
+                        </ul>
+
+                        <h3>Impact of Disabling Cookies</h3>
+                        <ul>
+                            <li><strong>Essential Cookies:</strong> Disabling these will break core functionality</li>
+                            <li><strong>Functional Cookies:</strong> You'll lose personalization features</li>
+                            <li><strong>Analytics Cookies:</strong> We can't improve the site based on usage data</li>
+                            <li><strong>Research Cookies:</strong> You won't contribute to AI research studies</li>
+                        </ul>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>6. Cookie Security</h2>
+                        <p>We implement strong security measures for all cookies to protect your information.</p>
+                        
+                        <h3>Security Features</h3>
+                        <ul>
+                            <li><strong>Secure Flag:</strong> Cookies only transmitted over HTTPS</li>
+                            <li><strong>HttpOnly Flag:</strong> Prevents JavaScript access to sensitive cookies</li>
+                            <li><strong>SameSite Attribute:</strong> Protects against cross-site request attacks</li>
+                            <li><strong>Encryption:</strong> Sensitive cookie data is encrypted</li>
+                        </ul>
+
+                        <h3>Regular Security Reviews</h3>
+                        <p>We regularly review our cookie implementation to ensure security best practices and compliance with privacy regulations.</p>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>7. Legal Basis and Consent</h2>
+                        
+                        <h3>Legal Basis for Cookie Use</h3>
+                        <ul>
+                            <li><strong>Essential Cookies:</strong> Legitimate interest (necessary for service provision)</li>
+                            <li><strong>Functional Cookies:</strong> Your explicit consent</li>
+                            <li><strong>Analytics Cookies:</strong> Your explicit consent</li>
+                            <li><strong>Research Cookies:</strong> Your explicit, informed consent</li>
+                        </ul>
+
+                        <h3>Consent Management</h3>
+                        <p>We provide clear, granular consent options and make it easy to withdraw consent at any time. Your consent choices are stored and respected across all sessions.</p>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>8. International Compliance</h2>
+                        <p>Our cookie practices comply with international privacy regulations:</p>
+                        
+                        <ul>
+                            <li><strong>GDPR (EU):</strong> Explicit consent and right to withdraw</li>
+                            <li><strong>CCPA (California):</strong> Right to opt-out and delete</li>
+                            <li><strong>ePrivacy Directive:</strong> Cookie consent requirements</li>
+                            <li><strong>PIPEDA (Canada):</strong> Transparent cookie practices</li>
+                        </ul>
+                    </div>
+
+                    <div class="cookie-section">
+                        <h2>9. Contact Us About Cookies</h2>
+                        <p>For questions about our cookie practices or to exercise your rights:</p>
+                        <ul>
+                            <li><strong>Email:</strong> cookies@g-datalabs.com</li>
+                            <li><strong>Privacy Team:</strong> privacy@g-datalabs.com</li>
+                            <li><strong>Cookie Settings:</strong> Available in your account preferences</li>
+                            <li><strong>Support:</strong> Via our help center</li>
+                        </ul>
+                    </div>
+
+                    <div class="cookie-section">
+                        <p><strong>Last Updated:</strong> January 2025</p>
+                        <p><em>This cookie policy is part of our commitment to transparent data practices. Our AI assistant can help explain how specific cookies work and how to manage them.</em></p>
+                    </div>
+                </div>
+
+                <div class="llm-assistant">
+                    <div class="llm-header">
+                        <i class="fas fa-cookie-bite"></i>
+                        <div>
+                            <h3>Cookie Assistant</h3>
+                        </div>
+                    </div>
+                    <p class="llm-description">Ask me anything about our cookies! I'll explain what they do, how to manage them, and help you understand your privacy choices.</p>
+                    
+                    <div class="chat-interface">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message assistant">
+                                <p>🍪 Hi! I'm here to help you understand our cookie policy. Ask me about cookie types, how to manage them, or any privacy concerns!</p>
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="user-input" placeholder="Ask about cookie types, managing preferences..." />
+                            <button onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const logoImg = document.getElementById('logo-img');
+
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Update UI based on saved theme
+        if (savedTheme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            logoImg.src = 'logos/gdata_night_trans.png';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                logoImg.src = 'logos/gdata_night_trans.png';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                logoImg.src = 'logos/light_logo.png';
+            }
+        });
+
+        // LLM Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const messagesContainer = document.getElementById('chat-messages');
+            const userMessage = input.value.trim();
+            
+            if (!userMessage) return;
+            
+            // Add user message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerHTML = `<p>${userMessage}</p>`;
+            messagesContainer.appendChild(userDiv);
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate AI response (in real implementation, this would call your LLM API)
+            setTimeout(() => {
+                const assistantDiv = document.createElement('div');
+                assistantDiv.className = 'message assistant';
+                assistantDiv.innerHTML = `<p>${generateResponse(userMessage)}</p>`;
+                messagesContainer.appendChild(assistantDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Enter key support
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Simulate AI responses (replace with actual LLM integration)
+        function generateResponse(question) {
+            const responses = {
+                'essential': "Essential cookies are required for the site to work properly - like keeping you logged in and protecting against security attacks. You can't disable these without breaking the website functionality.",
+                'functional': "Functional cookies remember your preferences like theme (light/dark mode) and language settings. These make your experience better but aren't required - you can disable them in your browser.",
+                'analytics': "Analytics cookies help us understand how people use our site so we can improve it. They track things like which pages are popular and if there are any technical issues. You can opt out of these.",
+                'research': "Research cookies are only used with your explicit consent for our AI studies. They might connect your web activity with biometric data if you're participating in research. You can withdraw consent anytime.",
+                'manage': "You can manage cookies through your browser settings or our cookie preference center. You can block all cookies, just third-party ones, or choose specific categories. Just remember some features might not work without cookies.",
+                'disable': "If you disable cookies: Essential ones will break core features, functional ones remove personalization, analytics ones prevent us from improving the site, and research ones stop your contribution to AI studies.",
+                'security': "We secure cookies with HTTPS-only transmission, HttpOnly flags to prevent JavaScript access, SameSite protection against attacks, and encryption for sensitive data.",
+                'third': "We minimize third-party cookies and only use trusted partners for CDN, error monitoring, and research tools. You can control these through browser settings."
+            };
+
+            const lowerQuestion = question.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerQuestion.includes(key)) {
+                    return response;
+                }
+            }
+
+            return "I'd be happy to help with that! Could you be more specific about what you'd like to know about cookies? You can ask about essential cookies, managing preferences, security, third-party cookies, or any other cookie topic.";
+        }
+    </script>
+</body>
+</html>

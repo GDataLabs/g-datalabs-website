@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - G-Data Labs</title>
+    <link rel="icon" type="image/png" href="logos/light_logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-header: #4a3c28;
+            --accent-primary: #8b7355;
+            --accent-secondary: #a08c69;
+            --bg-gradient-start: #f4f1e8;
+            --bg-gradient-end: #e8e0d0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --text-header: #f0f0f0;
+            --accent-primary: #F5B11A;
+            --accent-secondary: #d4af37;
+            --bg-gradient-start: #2d2d2d;
+            --bg-gradient-end: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-header);
+            transition: color 0.3s ease;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-header);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links .auth-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links .login-btn {
+            color: var(--text-header);
+            border: 1px solid var(--accent-primary);
+            background: transparent;
+        }
+
+        .nav-links .signup-btn {
+            color: var(--bg-primary);
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .nav-links .auth-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            color: inherit;
+        }
+
+        .nav-links .login-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .nav-links .signup-btn:hover {
+            background: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+        }
+
+        .theme-toggle-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--text-header);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: var(--bg-gradient-start);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .privacy-content {
+            background: var(--bg-secondary);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .llm-assistant {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .llm-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .llm-header i {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-right: 1rem;
+        }
+
+        .llm-header h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .llm-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chat-interface {
+            border: 2px solid var(--accent-primary);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: var(--bg-primary);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: var(--accent-primary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.assistant {
+            background: rgba(139, 115, 85, 0.1);
+            color: var(--text-primary);
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid var(--accent-primary);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            font-size: 0.9rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .chat-input input:focus {
+            outline: none;
+        }
+
+        .chat-input button {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: var(--accent-secondary);
+        }
+
+        .privacy-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .privacy-section h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .privacy-section h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .privacy-section p {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .privacy-section ul, .privacy-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-section li {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0.5rem 0;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .content-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .llm-assistant {
+                position: static;
+            }
+
+            .privacy-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html#home" class="logo">
+                <img id="logo-img" src="logos/light_logo.png" alt="G-Data" style="height: 50px;">
+                G-Data
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="https://ai.g-datalabs.com/" target="_blank">G-Data Labs</a></li>
+                <li><a href="ai-research-consulting.html">Research</a></li>
+                <li><a href="ai-literacy-workshops.html">Workshops</a></li>
+                <li><a href="ai-workflow-integration.html">Workflows</a></li>
+                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
+                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+                <li class="theme-toggle-item">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Privacy Policy</h1>
+                <p class="page-subtitle">Your privacy is our priority. Learn how we protect your data and respect your rights. Ask our AI assistant to explain any section in simple terms.</p>
+            </div>
+
+            <div class="content-layout">
+                <div class="privacy-content">
+                    <div class="privacy-section">
+                        <h2>1. Information We Collect</h2>
+                        <p>G-Data Labs collects information to provide and improve our services while maintaining the highest standards of privacy protection.</p>
+                        
+                        <h3>Personal Information</h3>
+                        <ul>
+                            <li><strong>Account Data:</strong> Name, email address, and account preferences</li>
+                            <li><strong>Contact Information:</strong> Communication data when you reach out to us</li>
+                            <li><strong>Profile Information:</strong> Information you choose to provide in your profile</li>
+                        </ul>
+
+                        <h3>Biometric and Research Data</h3>
+                        <ul>
+                            <li><strong>EEG Data:</strong> Brain activity patterns (only with explicit consent for research)</li>
+                            <li><strong>Facial Expression Data:</strong> Emotion recognition data for AI research</li>
+                            <li><strong>Eye Tracking Data:</strong> Gaze patterns and attention metrics</li>
+                            <li><strong>Galvanic Skin Response:</strong> Stress and arousal indicators</li>
+                        </ul>
+
+                        <h3>Usage Data</h3>
+                        <ul>
+                            <li>Platform interactions and feature usage</li>
+                            <li>Device information and browser data</li>
+                            <li>Session logs and performance metrics</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>2. How We Use Your Information</h2>
+                        <p>We use collected information for specific, transparent purposes that align with our mission of ethical AI development.</p>
+                        
+                        <h3>Service Provision</h3>
+                        <ul>
+                            <li>Account management and authentication</li>
+                            <li>Personalized AI literacy education</li>
+                            <li>Workshop and consultation scheduling</li>
+                            <li>Platform functionality and features</li>
+                        </ul>
+
+                        <h3>Research and Development</h3>
+                        <ul>
+                            <li>Advancing human-AI interaction research</li>
+                            <li>Developing ethical AI frameworks</li>
+                            <li>Improving biometric data analysis techniques</li>
+                            <li>Publishing anonymized research findings</li>
+                        </ul>
+
+                        <h3>Communication</h3>
+                        <ul>
+                            <li>Service updates and announcements</li>
+                            <li>Educational content and workshop notifications</li>
+                            <li>Support and customer service</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>3. Data Sharing and Disclosure</h2>
+                        <p>G-Data Labs maintains strict control over data sharing and only shares information under specific, transparent circumstances.</p>
+                        
+                        <h3>We DO NOT Share:</h3>
+                        <ul>
+                            <li>Personal information with third-party advertisers</li>
+                            <li>Biometric data with unauthorized parties</li>
+                            <li>Individual user data for commercial purposes</li>
+                            <li>Any data without proper consent and legal basis</li>
+                        </ul>
+
+                        <h3>We MAY Share:</h3>
+                        <ul>
+                            <li><strong>Anonymized Research Data:</strong> For academic publication and scientific advancement</li>
+                            <li><strong>Aggregated Statistics:</strong> Non-identifying data trends and insights</li>
+                            <li><strong>Legal Compliance:</strong> When required by law or legal process</li>
+                            <li><strong>Service Providers:</strong> With trusted partners under strict data processing agreements</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>4. Data Security</h2>
+                        <p>We implement comprehensive security measures to protect your information from unauthorized access, alteration, disclosure, or destruction.</p>
+                        
+                        <h3>Technical Safeguards</h3>
+                        <ul>
+                            <li>End-to-end encryption for sensitive data transmission</li>
+                            <li>Advanced encryption for data storage (AES-256)</li>
+                            <li>Regular security audits and penetration testing</li>
+                            <li>Multi-factor authentication requirements</li>
+                        </ul>
+
+                        <h3>Organizational Safeguards</h3>
+                        <ul>
+                            <li>Limited access on a need-to-know basis</li>
+                            <li>Employee training on data protection protocols</li>
+                            <li>Regular security awareness programs</li>
+                            <li>Incident response and breach notification procedures</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>5. Your Rights and Choices</h2>
+                        <p>You have significant control over your personal information and how it's used.</p>
+                        
+                        <h3>Data Rights</h3>
+                        <ul>
+                            <li><strong>Access:</strong> Request copies of your personal data</li>
+                            <li><strong>Correction:</strong> Update or correct inaccurate information</li>
+                            <li><strong>Deletion:</strong> Request removal of your personal data</li>
+                            <li><strong>Portability:</strong> Receive your data in a structured format</li>
+                            <li><strong>Restriction:</strong> Limit how we process your data</li>
+                        </ul>
+
+                        <h3>Consent Management</h3>
+                        <ul>
+                            <li>Withdraw consent for biometric data collection at any time</li>
+                            <li>Opt out of research participation</li>
+                            <li>Control marketing communications</li>
+                            <li>Manage data sharing preferences</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>6. Data Retention</h2>
+                        <p>We retain personal information only as long as necessary to fulfill the purposes outlined in this policy.</p>
+                        
+                        <h3>Retention Periods</h3>
+                        <ul>
+                            <li><strong>Account Data:</strong> Until account deletion plus 30 days</li>
+                            <li><strong>Biometric Data:</strong> 5 years for research purposes (with consent)</li>
+                            <li><strong>Usage Data:</strong> 2 years for service improvement</li>
+                            <li><strong>Communication Data:</strong> 3 years for support purposes</li>
+                        </ul>
+
+                        <h3>Secure Deletion</h3>
+                        <p>When data is deleted, we use secure deletion methods to ensure it cannot be recovered or reconstructed.</p>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>7. International Data Transfers</h2>
+                        <p>G-Data Labs operates globally and may transfer data across borders while maintaining privacy protections.</p>
+                        
+                        <h3>Transfer Safeguards</h3>
+                        <ul>
+                            <li>Standard Contractual Clauses for EU data transfers</li>
+                            <li>Adequacy decisions where applicable</li>
+                            <li>Additional safeguards for sensitive data</li>
+                            <li>Regular monitoring of transfer mechanisms</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>8. Children's Privacy</h2>
+                        <p>G-Data Labs does not knowingly collect personal information from children under 13 without parental consent.</p>
+                        
+                        <h3>Age Verification</h3>
+                        <ul>
+                            <li>Age verification during account creation</li>
+                            <li>Parental consent for users under 18 in research studies</li>
+                            <li>Special protections for educational programs</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>9. Contact Us</h2>
+                        <p>For privacy-related questions or to exercise your rights, contact us:</p>
+                        <ul>
+                            <li><strong>Email:</strong> privacy@g-datalabs.com</li>
+                            <li><strong>Data Protection Officer:</strong> dpo@g-datalabs.com</li>
+                            <li><strong>Address:</strong> G-Data Labs Privacy Department</li>
+                            <li><strong>Response Time:</strong> Within 30 days of verified requests</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <p><strong>Last Updated:</strong> January 2025</p>
+                        <p><em>This privacy policy reflects our commitment to transparent data practices and user empowerment. Our AI assistant can help explain any section in detail.</em></p>
+                    </div>
+                </div>
+
+                <div class="llm-assistant">
+                    <div class="llm-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h3>Privacy Assistant</h3>
+                        </div>
+                    </div>
+                    <p class="llm-description">Ask me anything about our Privacy Policy! I'll explain complex privacy terms in simple language and help you understand your rights.</p>
+                    
+                    <div class="chat-interface">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message assistant">
+                                <p>🔒 Hi! I'm your Privacy Assistant. Ask me about data collection, your rights, security measures, or any other privacy topic!</p>
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="user-input" placeholder="Ask about data collection, your rights, security..." />
+                            <button onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const logoImg = document.getElementById('logo-img');
+
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Update UI based on saved theme
+        if (savedTheme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            logoImg.src = 'logos/gdata_night_trans.png';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                logoImg.src = 'logos/gdata_night_trans.png';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                logoImg.src = 'logos/light_logo.png';
+            }
+        });
+
+        // LLM Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const messagesContainer = document.getElementById('chat-messages');
+            const userMessage = input.value.trim();
+            
+            if (!userMessage) return;
+            
+            // Add user message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerHTML = `<p>${userMessage}</p>`;
+            messagesContainer.appendChild(userDiv);
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate AI response (in real implementation, this would call your LLM API)
+            setTimeout(() => {
+                const assistantDiv = document.createElement('div');
+                assistantDiv.className = 'message assistant';
+                assistantDiv.innerHTML = `<p>${generateResponse(userMessage)}</p>`;
+                messagesContainer.appendChild(assistantDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Enter key support
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Simulate AI responses (replace with actual LLM integration)
+        function generateResponse(question) {
+            const responses = {
+                'collect': "We collect account information, biometric data (with consent), and usage data. Biometric data includes EEG, facial expressions, eye tracking, and skin response - but only for research with your explicit permission.",
+                'biometric': "Biometric data includes EEG brain activity, facial expressions, eye tracking, and galvanic skin response. We only collect this for research purposes with your explicit consent, and you can withdraw consent anytime.",
+                'share': "We don't share personal data with advertisers or for commercial purposes. We may share anonymized research data for scientific advancement and aggregated statistics, always protecting individual privacy.",
+                'security': "We use end-to-end encryption, AES-256 storage encryption, multi-factor authentication, and regular security audits. Our team has limited access on a need-to-know basis with comprehensive training.",
+                'rights': "You have the right to access, correct, delete, or restrict your data. You can also request data portability and withdraw consent for biometric data collection at any time. Contact privacy@g-datalabs.com to exercise these rights.",
+                'retention': "Account data is kept until deletion plus 30 days. Biometric data (with consent) for 5 years for research. Usage data for 2 years. We use secure deletion methods when removing data.",
+                'children': "We don't knowingly collect data from children under 13 without parental consent. For users under 18 in research studies, we require parental consent and provide special protections.",
+                'contact': "Contact privacy@g-datalabs.com for privacy questions or dpo@g-datalabs.com for our Data Protection Officer. We respond to verified requests within 30 days."
+            };
+
+            const lowerQuestion = question.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerQuestion.includes(key)) {
+                    return response;
+                }
+            }
+
+            return "I'd be happy to help clarify that! Could you be more specific about which aspect of our Privacy Policy you'd like me to explain? You can ask about data collection, biometric data, security, your rights, or any other privacy topic.";
+        }
+    </script>
+</body>
+</html>
