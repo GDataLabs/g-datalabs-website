@@ -879,6 +879,41 @@
             letter-spacing: 0.5px;
         }
 
+        /* Partners Section */
+        .partners {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+            transition: background 0.3s ease;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        .partner-logo {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            height: 60px;
+            object-fit: contain;
+        }
+
         /* Policy Section */
         .policy-section {
             background: var(--bg-primary);
@@ -1431,34 +1466,44 @@
         </div>
     </section>
 
-    <section class="policy-section">
+    <section class="partners">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Our Commitment to Transparency</h2>
-                <p class="section-subtitle">Industry-first informed consent through AI-powered policy explanations</p>
+                <h2 class="section-title">Our Partners</h2>
+                <p class="section-subtitle">Collaborating with leading organizations to maximize impact</p>
             </div>
             
-            <div class="policy-cards">
-                <a href="terms.html" class="policy-card">
-                    <i class="fas fa-file-contract"></i>
-                    <h3>Terms & Conditions</h3>
-                    <p>Understand your rights and our commitments. Our AI assistant helps explain complex legal language in simple terms.</p>
-                    <span class="learn-more">Read Terms →</span>
-                </a>
-                
-                <a href="privacy.html" class="policy-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Privacy Policy</h3>
-                    <p>Learn how we protect your data and respect your privacy. Get clear explanations about data collection and usage.</p>
-                    <span class="learn-more">Read Privacy Policy →</span>
-                </a>
-                
-                <a href="cookies.html" class="policy-card">
-                    <i class="fas fa-cookie-bite"></i>
-                    <h3>Cookie Policy</h3>
-                    <p>Discover how we use cookies and how to manage your preferences. Understand tracking in plain English.</p>
-                    <span class="learn-more">Read Cookie Policy →</span>
-                </a>
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="logos/ailp3_logo.png" alt="AILP3">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/gsu_logo.jpg" alt="Georgia State University">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/aps_logo.jpeg" alt="Atlanta Public Schools">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/cau_logo.jpg" alt="Clark Atlanta University">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/op_hope_logo.png" alt="Operation HOPE">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/camo_logo.png" alt="Camo">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/Google_Cloud_logo.svg.png" alt="Google Cloud">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/gaaim_logo.png" alt="GAAIM">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/gabta_logo.jpg" alt="GABTA">
+                </div>
+                <div class="partner-logo">
+                    <img src="logos/nvidia-inception-program-badge-rgb-for-screen.jpg" alt="NVIDIA Inception">
+                </div>
             </div>
         </div>
     </section>
@@ -1493,13 +1538,43 @@
             <div class="contact-details">
                 <h3>Get in Touch</h3>
                 <p class="contact-person">
-                    <strong>Morgan Jones</strong><br>
-                    Founder<br>
                     <i class="fas fa-envelope"></i> support@g-datalabs.com
                 </p>
                 <p class="contact-website">
                     <i class="fas fa-globe"></i> www.g-datalabs.com
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="policy-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Commitment to Transparency</h2>
+                <p class="section-subtitle">Industry-first informed consent through AI-powered policy explanations</p>
+            </div>
+            
+            <div class="policy-cards">
+                <a href="terms.html" class="policy-card">
+                    <i class="fas fa-file-contract"></i>
+                    <h3>Terms & Conditions</h3>
+                    <p>Understand your rights and our commitments. Our AI assistant helps explain complex legal language in simple terms.</p>
+                    <span class="learn-more">Read Terms →</span>
+                </a>
+                
+                <a href="privacy.html" class="policy-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Privacy Policy</h3>
+                    <p>Learn how we protect your data and respect your privacy. Get clear explanations about data collection and usage.</p>
+                    <span class="learn-more">Read Privacy Policy →</span>
+                </a>
+                
+                <a href="cookies.html" class="policy-card">
+                    <i class="fas fa-cookie-bite"></i>
+                    <h3>Cookie Policy</h3>
+                    <p>Discover how we use cookies and how to manage your preferences. Understand tracking in plain English.</p>
+                    <span class="learn-more">Read Cookie Policy →</span>
+                </a>
             </div>
         </div>
     </section>
