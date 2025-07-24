@@ -669,13 +669,9 @@
         </div>
     </main>
 
-    <script src="js/policy-api.js"></script>
     <script>
-        // Initialize API for Cookie Policy
-        const policyAPI = new PolicyAPI('cookies');
-
         // LLM Chat functionality
-        async function sendMessage() {
+        function sendMessage() {
             const input = document.getElementById('user-input');
             const messagesContainer = document.getElementById('chat-messages');
             const userMessage = input.value.trim();
@@ -691,38 +687,16 @@
             // Clear input
             input.value = '';
             
-            // Show typing indicator
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message assistant typing-indicator';
-            typingDiv.innerHTML = '<p>Thinking...</p>';
-            messagesContainer.appendChild(typingDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            
-            try {
-                // Call real OpenAI API
-                const response = await policyAPI.askQuestion(userMessage);
-                
-                // Remove typing indicator
-                messagesContainer.removeChild(typingDiv);
-                
-                // Add AI response
+            // Simulate AI response
+            setTimeout(() => {
                 const assistantDiv = document.createElement('div');
                 assistantDiv.className = 'message assistant';
-                assistantDiv.innerHTML = `<p>${response}</p>`;
+                assistantDiv.innerHTML = `<p>${generateResponse(userMessage)}</p>`;
                 messagesContainer.appendChild(assistantDiv);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                
-            } catch (error) {
-                // Remove typing indicator
-                messagesContainer.removeChild(typingDiv);
-                
-                // Show error message
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'message assistant';
-                errorDiv.innerHTML = '<p>Sorry, I encountered an error. Please try again or contact support at cookies@g-datalabs.com.</p>';
-                messagesContainer.appendChild(errorDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
+            }, 1000);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         // Enter key support
@@ -731,6 +705,31 @@
                 sendMessage();
             }
         });
+
+        // Simulate AI responses for cookie-related questions
+        function generateResponse(question) {
+            const responses = {
+                'essential': "Essential cookies are necessary for the site to work properly and can't be disabled. They include authentication (keeping you logged in), security (CSRF protection), session management, and load balancing cookies.",
+                'functional': "Functional cookies enhance your experience but aren't essential. They remember your language preferences, theme settings (light/dark mode), form data to prevent loss, and accessibility settings.",
+                'analytics': "Analytics cookies help us understand site usage through page views, user interactions, performance monitoring, error tracking, and A/B testing. All data is used to improve the site experience.",
+                'research': "Research cookies are only used with your explicit consent for our ethical AI research. They track interaction patterns, feature usage, research participation status, and can connect web activity with biometric data.",
+                'types': "We use four main types: Essential (required for functionality), Functional (enhance experience), Analytics (usage insights), and Research (AI studies with consent). Each serves a specific purpose.",
+                'managing': "You can manage cookies through browser settings (block all/third-party, clear existing, get notifications) or our preference center where you can choose categories and update consent. Essential cookies can't be disabled.",
+                'third party': "We use minimal third-party cookies from CDN services for fast content delivery, error monitoring tools for technical issues, and research tools for AI studies (with consent). We select partners carefully.",
+                'security': "All cookies use security features: Secure flag (HTTPS only), HttpOnly flag (prevents JavaScript access), SameSite attribute (prevents attacks), and encryption for sensitive data. We regularly review security practices.",
+                'duration': "Cookie durations vary: session cookies expire when you close the browser, functional cookies last 1 year, analytics cookies 2 years, and research consent cookies 5 years. Performance metrics cookies last 30 days.",
+                'disable': "Disabling cookies affects functionality: Essential cookies break core features, functional cookies remove personalization, analytics cookies prevent site improvements, and research cookies stop contribution to AI studies."
+            };
+
+            const lowerQuestion = question.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerQuestion.includes(key)) {
+                    return response;
+                }
+            }
+
+            return "I'd be happy to explain our cookie practices! You can ask me about cookie types (essential, functional, analytics, research), how to manage your preferences, third-party cookies, security measures, duration, or what happens when you disable them.";
+        }
     </script>
 </body>
 </html>

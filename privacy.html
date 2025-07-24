@@ -592,13 +592,9 @@
         </div>
     </main>
 
-    <script src="js/policy-api.js"></script>
     <script>
-        // Initialize API for Privacy Policy
-        const policyAPI = new PolicyAPI('privacy');
-
         // LLM Chat functionality
-        async function sendMessage() {
+        function sendMessage() {
             const input = document.getElementById('user-input');
             const messagesContainer = document.getElementById('chat-messages');
             const userMessage = input.value.trim();
@@ -614,38 +610,16 @@
             // Clear input
             input.value = '';
             
-            // Show typing indicator
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message assistant typing-indicator';
-            typingDiv.innerHTML = '<p>Thinking...</p>';
-            messagesContainer.appendChild(typingDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            
-            try {
-                // Call real OpenAI API
-                const response = await policyAPI.askQuestion(userMessage);
-                
-                // Remove typing indicator
-                messagesContainer.removeChild(typingDiv);
-                
-                // Add AI response
+            // Simulate AI response
+            setTimeout(() => {
                 const assistantDiv = document.createElement('div');
                 assistantDiv.className = 'message assistant';
-                assistantDiv.innerHTML = `<p>${response}</p>`;
+                assistantDiv.innerHTML = `<p>${generateResponse(userMessage)}</p>`;
                 messagesContainer.appendChild(assistantDiv);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                
-            } catch (error) {
-                // Remove typing indicator
-                messagesContainer.removeChild(typingDiv);
-                
-                // Show error message
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'message assistant';
-                errorDiv.innerHTML = '<p>Sorry, I encountered an error. Please try again or contact support at privacy@g-datalabs.com.</p>';
-                messagesContainer.appendChild(errorDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
+            }, 1000);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         // Enter key support
@@ -654,6 +628,30 @@
                 sendMessage();
             }
         });
+
+        // Simulate AI responses for privacy-related questions
+        function generateResponse(question) {
+            const responses = {
+                'data collection': "We collect personal info (name, email), biometric data (EEG, facial expressions, eye tracking) only with explicit consent, and usage data to improve our services. All collection is transparent and you have full control over your data.",
+                'biometric': "Biometric data includes EEG brain activity, facial expressions, eye tracking, and galvanic skin response. We only collect this for research purposes with your explicit consent. You can withdraw consent anytime and we'll delete your data.",
+                'sharing': "We DON'T share personal info with advertisers or sell your data. We MAY share anonymized research data for scientific advancement and aggregated statistics. Any sharing requires proper consent and legal basis.",
+                'security': "We use end-to-end encryption, AES-256 storage encryption, multi-factor authentication, and regular security audits. Our team has limited access on need-to-know basis with comprehensive training on data protection.",
+                'rights': "You have the right to access, correct, delete, and port your data. You can also restrict processing and withdraw consent for biometric data collection. Contact privacy@g-datalabs.com to exercise your rights.",
+                'retention': "Account data is kept until deletion plus 30 days, biometric data for 5 years (with consent), usage data for 2 years, and communication data for 3 years. We use secure deletion methods when data is removed.",
+                'international': "We may transfer data internationally with proper safeguards like Standard Contractual Clauses for EU transfers, adequacy decisions where applicable, and additional protections for sensitive data.",
+                'children': "We don't knowingly collect data from children under 13 without parental consent. We have age verification during account creation and require parental consent for users under 18 in research studies.",
+                'contact': "For privacy questions, email privacy@g-datalabs.com or our Data Protection Officer at dpo@g-datalabs.com. We respond within 30 days to verified requests."
+            };
+
+            const lowerQuestion = question.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerQuestion.includes(key)) {
+                    return response;
+                }
+            }
+
+            return "I'd be happy to help explain our privacy practices! You can ask me about data collection, biometric data, sharing policies, security measures, your rights, data retention, international transfers, children's privacy, or how to contact us.";
+        }
     </script>
 </body>
 </html>

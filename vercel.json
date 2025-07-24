@@ -1,15 +1,4 @@
 {
-  "functions": {
-    "api/**": {
-      "runtime": "@vercel/node"
-    }
-  },
-  "builds": [
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
-    }
-  ],
   "redirects": [
     {
       "source": "/terms",

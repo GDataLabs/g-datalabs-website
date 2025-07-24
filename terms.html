@@ -527,13 +527,9 @@
         </div>
     </main>
 
-    <script src="js/policy-api.js"></script>
     <script>
-        // Initialize API for Terms & Conditions
-        const policyAPI = new PolicyAPI('terms');
-
         // LLM Chat functionality
-        async function sendMessage() {
+        function sendMessage() {
             const input = document.getElementById('user-input');
             const messagesContainer = document.getElementById('chat-messages');
             const userMessage = input.value.trim();
@@ -549,38 +545,16 @@
             // Clear input
             input.value = '';
             
-            // Show typing indicator
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message assistant typing-indicator';
-            typingDiv.innerHTML = '<p>Thinking...</p>';
-            messagesContainer.appendChild(typingDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            
-            try {
-                // Call real OpenAI API
-                const response = await policyAPI.askQuestion(userMessage);
-                
-                // Remove typing indicator
-                messagesContainer.removeChild(typingDiv);
-                
-                // Add AI response
+            // Simulate AI response
+            setTimeout(() => {
                 const assistantDiv = document.createElement('div');
                 assistantDiv.className = 'message assistant';
-                assistantDiv.innerHTML = `<p>${response}</p>`;
+                assistantDiv.innerHTML = `<p>${generateResponse(userMessage)}</p>`;
                 messagesContainer.appendChild(assistantDiv);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                
-            } catch (error) {
-                // Remove typing indicator
-                messagesContainer.removeChild(typingDiv);
-                
-                // Show error message
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'message assistant';
-                errorDiv.innerHTML = '<p>Sorry, I encountered an error. Please try again or contact support at legal@g-datalabs.com.</p>';
-                messagesContainer.appendChild(errorDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
+            }, 1000);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         // Enter key support
@@ -589,6 +563,27 @@
                 sendMessage();
             }
         });
+
+        // Simulate AI responses
+        function generateResponse(question) {
+            const responses = {
+                'data': "Our data collection practices are designed with your privacy in mind. We collect account info, usage data, and biometric data (only with explicit consent). Our LLM system ensures you understand exactly what data we're collecting and why.",
+                'biometric': "Biometric data includes EEG brain activity, facial expressions, eye tracking, and skin response. We only collect this during research studies with your explicit consent. You maintain full control and can withdraw consent at any time.",
+                'payment': "We use secure payment processing and don't store your credit card info. For our data marketplace, you can actually earn money by choosing to share your data - all transactions are voluntary with clear compensation.",
+                'liability': "Our liability is limited to protect both parties. We provide services 'as is' and aren't responsible for indirect damages. This is standard legal protection while we work to provide the best service possible.",
+                'termination': "Either you or G-Data Labs can end the agreement anytime. If terminated, we'll handle your data according to our retention policy and you can request data deletion under privacy laws.",
+                'changes': "We may update these terms occasionally. We'll notify you of major changes via email or platform notifications. Continuing to use our services means you accept the updated terms."
+            };
+
+            const lowerQuestion = question.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerQuestion.includes(key)) {
+                    return response;
+                }
+            }
+
+            return "I'd be happy to help clarify that section! Could you be more specific about which part of the Terms & Conditions you'd like me to explain? You can ask about data collection, biometric data, payments, liability, termination, or any other section.";
+        }
     </script>
 </body>
 </html>
