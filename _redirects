@@ -1,0 +1,12 @@
+# Netlify redirects file
+/terms              /terms.html           200
+/privacy            /privacy.html         200
+/cookies            /cookies.html         200
+/terms/             /terms.html           200
+/privacy/           /privacy.html         200
+/cookies/           /cookies.html         200
+
+# Handle Flask app redirects
+/terms_condition    /terms.html           200
+/privacy_policy     /privacy.html         200
+/cookie_policy      /cookies.html         200

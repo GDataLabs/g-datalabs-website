@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - G-Data Labs</title>
+    <script>
+        // Simple client-side routing for GitHub Pages
+        const path = window.location.pathname;
+        
+        // Handle policy page redirects
+        if (path === '/terms' || path === '/terms/') {
+            window.location.replace('/terms.html');
+        } else if (path === '/privacy' || path === '/privacy/') {
+            window.location.replace('/privacy.html');
+        } else if (path === '/cookies' || path === '/cookies/') {
+            window.location.replace('/cookies.html');
+        } else {
+            // Redirect to home page for other 404s
+            window.location.replace('/');
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>
