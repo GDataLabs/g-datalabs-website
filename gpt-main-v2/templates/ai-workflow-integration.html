@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Workflow Integration - G-Data Labs</title>
+    <link rel="icon" type="image/png" href="logos/light_logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-header: #4a3c28;
+            --accent-primary: #8b7355;
+            --accent-secondary: #a08c69;
+            --bg-gradient-start: #f4f1e8;
+            --bg-gradient-end: #e8e0d0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --text-header: #f0f0f0;
+            --accent-primary: #F5B11A;
+            --accent-secondary: #d4af37;
+            --bg-gradient-start: #2d2d2d;
+            --bg-gradient-end: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-header);
+            transition: color 0.3s ease;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-header);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links .auth-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links .login-btn {
+            color: var(--text-header);
+            border: 1px solid var(--accent-primary);
+            background: transparent;
+        }
+
+        .nav-links .signup-btn {
+            color: var(--bg-primary);
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .nav-links .auth-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            color: inherit;
+        }
+
+        .nav-links .login-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .nav-links .signup-btn:hover {
+            background: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f4f1e8 0%, #e8e0d0 100%);
+            color: #4a3c28;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #8b7355;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: rgba(74, 60, 40, 0.8);
+        }
+
+        /* Key Features Section */
+        .key-features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f6f1 0%, #f0ede6 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #8b7355;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:nth-child(1) {
+            border-left-color: #4b96ff;
+        }
+
+        .feature-card:nth-child(1):hover {
+            background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
+            box-shadow: 0 10px 30px rgba(75, 150, 255, 0.2);
+        }
+
+        .feature-card:nth-child(2) {
+            border-left-color: #ff4b4b;
+        }
+
+        .feature-card:nth-child(2):hover {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
+        }
+
+        .feature-card:nth-child(3) {
+            border-left-color: #ffd700;
+        }
+
+        .feature-card:nth-child(3):hover {
+            background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #8b7355;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:nth-child(1):hover .feature-icon {
+            color: #4b96ff;
+        }
+
+        .feature-card:nth-child(2):hover .feature-icon {
+            color: #ff4b4b;
+        }
+
+        .feature-card:nth-child(3):hover .feature-icon {
+            color: #ffd700;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #8b7355;
+            font-weight: bold;
+        }
+
+        /* Time Savings Section */
+        .time-savings {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .savings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .savings-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .savings-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .savings-card:nth-child(1) {
+            border-top: 4px solid #4b96ff;
+        }
+
+        .savings-card:nth-child(2) {
+            border-top: 4px solid #ff4b4b;
+        }
+
+        .savings-card:nth-child(3) {
+            border-top: 4px solid #ffd700;
+        }
+
+        .savings-stat {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .savings-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #8b7355;
+            margin-bottom: 1rem;
+        }
+
+        .savings-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Integration Showcase */
+        .integration-showcase {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        .showcase-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .showcase-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .showcase-demo {
+            background: linear-gradient(135deg, #f8f6f1 0%, #f0ede6 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #8b7355;
+            min-height: 500px;
+        }
+
+        .demo-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #4b96ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-button {
+            display: inline-block;
+            background: #8b7355;
+            color: #f4f1e8;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.4);
+            background: #a08c69;
+        }
+
+        /* Case Studies */
+        .case-studies {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .case-study-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .case-study-card:nth-child(1) {
+            border-left: 5px solid #4b96ff;
+        }
+
+        .case-study-card:nth-child(2) {
+            border-left: 5px solid #ff4b4b;
+        }
+
+        .case-study-card:nth-child(3) {
+            border-left: 5px solid #ffd700;
+        }
+
+        .case-study-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .case-study-result {
+            background: #8b7355;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            color: #f4f1e8;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #f4f1e8;
+            color: #8b7355;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 241, 232, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 241, 232, 0.4);
+            background: #e8e0d0;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Customer Engagement Section */
+        .customer-engagement-section {
+            padding: 80px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .showcase-demo {
+                min-height: auto;
+                padding: 1.5rem;
+            }
+
+            .features-grid,
+            .savings-grid,
+            .case-studies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* RAG Demo Styles */
+        .rag-demo-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e0e0e0;
+        }
+
+        .search-input-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rag-search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .rag-search-input:focus {
+            border-color: #4b96ff;
+        }
+
+        .rag-search-btn {
+            background: #4b96ff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rag-search-btn:hover {
+            background: #3a7bd9;
+            transform: scale(1.05);
+        }
+
+        .quick-questions {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .question-tag {
+            background: #f0f0f0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+
+        .question-tag:hover {
+            background: #4b96ff;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .rag-response-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid #4b96ff;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .response-time {
+            margin-left: auto;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .rag-response-content {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .sources-section {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .sources-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .sources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .source-item {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border-left: 3px solid #8b7355;
+            font-size: 0.85rem;
+        }
+
+        .source-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .source-excerpt {
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e0e0e0;
+            border-top: 2px solid #4b96ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Dark mode footer */
+        [data-theme="dark"] footer {
+            background: #1a1a1a;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html#home" class="logo">
+                <img id="logo-img" src="{{ url_for('static', filename='logos/light_logo.png') }}" alt="G-Data Labs"
+                    style="height: 50px;">
+                G-Data Labs
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="/ai">GeGi AI</a></li>
+                <li><a href="ai-research-consulting.html">Research</a></li>
+                <li><a href="ai-literacy-workshops.html">Workshops</a></li>
+                <li><a href="ai-workflow-integration.html">Workflows</a></li>
+                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
+                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AI Workflow Integration</h1>
+            <p>Transform your organization's efficiency with intelligent automation. Our custom AI solutions seamlessly
+                integrate into your existing workflows, reducing manual tasks while enhancing productivity and
+                decision-making across all departments.</p>
+        </div>
+    </section>
+
+    <section class="key-features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Core Integration Solutions</h2>
+                <p class="section-subtitle">Powerful AI tools that revolutionize how your team works</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>RAG Database Integration</h3>
+                    <p>Retrieval-Augmented Generation systems that connect your organization's knowledge base with AI
+                        reasoning, enabling instant access to relevant information and context-aware responses.</p>
+                    <ul class="feature-list">
+                        <li>Custom knowledge base integration</li>
+                        <li>Real-time document processing</li>
+                        <li>Semantic search capabilities</li>
+                        <li>Multi-format data support</li>
+                        <li>Secure data handling and privacy</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>AI Spokesperson Integration</h3>
+                    <p>Intelligent virtual representatives that handle communications, customer service, and information
+                        dissemination with your organization's voice, tone, and expertise.</p>
+                    <ul class="feature-list">
+                        <li>Brand-consistent voice and messaging</li>
+                        <li>24/7 automated customer support</li>
+                        <li>Multi-language communication</li>
+                        <li>Escalation to human agents</li>
+                        <li>Performance analytics and insights</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Workflow Automation</h3>
+                    <p>Intelligent process automation that learns from your team's patterns, optimizes repetitive tasks,
+                        and creates seamless workflows across departments and systems.</p>
+                    <ul class="feature-list">
+                        <li>Process mapping and optimization</li>
+                        <li>Automated task scheduling</li>
+                        <li>Cross-platform integration</li>
+                        <li>Adaptive learning algorithms</li>
+                        <li>Real-time monitoring and alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="time-savings">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Proven Time Savings</h2>
+                <p class="section-subtitle">Real results from organizations that have implemented our AI workflow
+                    solutions</p>
+            </div>
+
+            <div class="savings-grid">
+                <div class="savings-card fade-in">
+                    <div class="savings-stat">33%</div>
+                    <div class="savings-label">Reduction in Manual Tasks</div>
+                    <p class="savings-description">Organizations report a 33% decrease in time spent on repetitive
+                        manual processes after implementing our AI automation solutions.</p>
+                </div>
+
+                <div class="savings-card fade-in">
+                    <div class="savings-stat">10hrs</div>
+                    <div class="savings-label">Weekly Time Savings</div>
+                    <p class="savings-description">Average team saves 10 hours per week through intelligent document
+                        processing, automated scheduling, and streamlined communications.</p>
+                </div>
+
+                <div class="savings-card fade-in">
+                    <div class="savings-stat">75%</div>
+                    <div class="savings-label">ROI Within 6 Months</div>
+                    <p class="savings-description">Clients typically see a 75% return on investment within six months
+                        through increased productivity and reduced operational costs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="integration-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">RAG Database in Action</h2>
+                <p class="section-subtitle">See how our Retrieval-Augmented Generation system transforms organizational
+                    knowledge</p>
+            </div>
+
+            <div class="showcase-grid">
+                <div class="showcase-content">
+                    <h3>Instant Knowledge Access</h3>
+                    <p>Our RAG system ingests your organization's documents, policies, and procedures, creating an
+                        intelligent knowledge base that provides instant, accurate responses to complex queries.</p>
+                    <p><strong>Key Benefits:</strong></p>
+                    <ul class="feature-list">
+                        <li>Reduces information search time by 90%</li>
+                        <li>Ensures consistency across all responses</li>
+                        <li>Maintains up-to-date information automatically</li>
+                        <li>Integrates with existing systems seamlessly</li>
+                    </ul>
+                </div>
+
+                <div class="showcase-demo">
+                    <div id="rag-demo-container" class="rag-demo-container">
+                        <div class="demo-header">
+                            <h4 style="margin-bottom: 1rem; color: #333;">
+                                <i class="fas fa-database" style="margin-right: 8px; color: #4b96ff;"></i>
+                                Interactive RAG Database Demo
+                            </h4>
+                            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                                Ask questions about G-Data Labs services, research, or AI integration
+                            </p>
+                        </div>
+
+                        <div class="search-section">
+                            <div class="search-input-container">
+                                <input type="text" id="rag-search-input"
+                                    placeholder="Ask anything about our services, research, or AI capabilities..."
+                                    class="rag-search-input">
+                                <button id="rag-search-btn" class="rag-search-btn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+
+                            <div class="quick-questions">
+                                <span style="font-size: 0.8rem; color: #666;">Quick questions:</span>
+                                <div class="question-tags">
+                                    <span class="question-tag" data-question="What is RAG database integration?">RAG
+                                        Integration</span>
+                                    <span class="question-tag" data-question="How does AI spokesperson work?">AI
+                                        Spokesperson</span>
+                                    <span class="question-tag"
+                                        data-question="What research has G-Data Labs conducted?">Our Research</span>
+                                    <span class="question-tag"
+                                        data-question="How much time can workflow automation save?">Time Savings</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="rag-response-container" class="rag-response-container" style="display: none;">
+                            <div class="response-header">
+                                <i class="fas fa-brain" style="color: #4b96ff; margin-right: 8px;"></i>
+                                <span style="font-weight: 600;">AI Response</span>
+                                <span class="response-time" id="response-time"></span>
+                            </div>
+                            <div id="rag-response-content" class="rag-response-content"></div>
+                            <div class="sources-section" id="sources-section" style="display: none;">
+                                <div class="sources-header">
+                                    <i class="fas fa-file-text" style="color: #8b7355; margin-right: 8px;"></i>
+                                    <span style="font-weight: 600;">Sources Referenced</span>
+                                </div>
+                                <div id="sources-list" class="sources-list"></div>
+                            </div>
+                        </div>
+
+                        <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                            <div class="loading-spinner"></div>
+                            <span>Searching knowledge base...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="customer-engagement-section" style="background: linear-gradient(135deg, #f9f8f5 0%, #f5f3ed 100%);">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+                <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 1rem; color: #333;">24/7 Customer
+                    Engagement</h2>
+                <p class="section-subtitle" style="font-size: 1.2rem; color: #8b7355; font-weight: 500;">Transform
+                    customer interactions with intelligent AI spokespersons</p>
+            </div>
+
+            <div class="engagement-intro" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+                <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: #333;">Your Digital Brand Ambassador</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #666;">Our AI spokespersons serve as the perfect
+                    digital ambassadors for your organization, providing consistent, knowledgeable, and empathetic
+                    interactions at scale. Available 24/7 across all channels, they ensure your customers always receive
+                    immediate, accurate assistance.</p>
+            </div>
+
+            <!-- Large Video Section -->
+            <div class="video-showcase" style="max-width: 1000px; margin: 0 auto 4rem;">
+                <div
+                    style="position: relative; overflow: hidden; aspect-ratio: 1920/1080; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
+                    <iframe src="https://share.synthesia.io/embeds/videos/674b0ef8-9b95-438f-99bc-d9d9a7926b65"
+                        loading="lazy" title="Synthesia video player - G-Data AI Spokesperson" allowfullscreen
+                        allow="encrypted-media; fullscreen;"
+                        style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;">
+                    </iframe>
+                </div>
+                <p style="text-align: center; margin-top: 1.5rem; color: #666; font-style: italic;">Experience our AI
+                    spokesperson delivering intelligent, brand-consistent communication</p>
+            </div>
+
+            <!-- Key Features Grid -->
+            <div class="engagement-features"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                <div class="feature-card"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
+                    <i class="fas fa-comments" style="font-size: 2.5rem; color: #ff4b4b; margin-bottom: 1rem;"></i>
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Natural Conversations</h4>
+                    <p style="color: #666;">Advanced NLP enables human-like interactions that understand context,
+                        emotion, and intent</p>
+                </div>
+
+                <div class="feature-card"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #4b96ff;">
+                    <i class="fas fa-globe" style="font-size: 2.5rem; color: #4b96ff; margin-bottom: 1rem;"></i>
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Omnichannel Presence</h4>
+                    <p style="color: #666;">Deploy across web, mobile, social media, and messaging platforms seamlessly
+                    </p>
+                </div>
+
+                <div class="feature-card"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ffd700;">
+                    <i class="fas fa-brain" style="font-size: 2.5rem; color: #ffd700; margin-bottom: 1rem;"></i>
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Continuous Learning</h4>
+                    <p style="color: #666;">Improves with every interaction, adapting to customer needs and preferences
+                    </p>
+                </div>
+            </div>
+
+            <!-- Industries and Implementation -->
+            <div class="implementation-section"
+                style="background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 4rem;">
+                <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 2rem; color: #333;">Enterprise-Ready
+                    Solutions</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+                    <div>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Industries We Serve</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Healthcare & Medical Services
+                            </li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Financial Services & Banking</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Education & E-Learning</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Retail & E-Commerce</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Government & Public Services</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Implementation Benefits</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> 90% reduction in response time
+                            </li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> 24/7 availability without
+                                staffing costs</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Consistent brand messaging</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Multilingual support capabilities
+                            </li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Seamless CRM integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="integration-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Workflow Automation Excellence</h2>
+                <p class="section-subtitle">Streamline operations with intelligent process automation</p>
+            </div>
+
+            <div class="showcase-grid">
+                <div class="showcase-content">
+                    <h3>End-to-End Process Optimization</h3>
+                    <p>Our workflow automation solutions learn from your existing processes and create intelligent
+                        workflows that adapt and improve over time.</p>
+                    <p><strong>Automation Capabilities:</strong></p>
+                    <ul class="feature-list">
+                        <li>Document processing and data extraction</li>
+                        <li>Automated report generation and distribution</li>
+                        <li>Smart scheduling and resource allocation</li>
+                        <li>Cross-platform system integration</li>
+                        <li>Predictive task prioritization</li>
+                        <li>Compliance monitoring and alerts</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;"><strong>Common Use Cases:</strong> Invoice processing, HR onboarding,
+                        Customer support ticketing, Inventory management, Quality assurance workflows</p>
+                </div>
+
+                <div class="showcase-demo">
+                    <video width="100%" height="300" controls style="border-radius: 10px; margin-bottom: 1.5rem;">
+                        <source src="{{ url_for('static', filename='videos/ai_training_vid_combined.mp4') }}"
+                            type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p style="margin-bottom: 1.5rem; color: #666;">See intelligent automation in action</p>
+                    <a href="#" class="demo-button">
+                        <i class="fas fa-play" style="margin-right: 8px;"></i>
+                        Launch Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-studies">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Success Stories</h2>
+                <p class="section-subtitle">How organizations transformed their operations with our AI workflow
+                    solutions</p>
+            </div>
+
+            <div class="case-studies-grid">
+                <div class="case-study-card fade-in">
+                    <h4>Healthcare System Integration</h4>
+                    <p>Implemented RAG database for medical records and AI spokesperson for patient inquiries, reducing
+                        administrative burden on medical staff.</p>
+                    <div class="case-study-result">
+                        <i class="fas fa-chart-line"></i>
+                        Result: 60% reduction in administrative tasks, 24/7 patient support coverage
+                    </div>
+                </div>
+
+                <div class="case-study-card fade-in">
+                    <h4>Manufacturing Workflow Optimization</h4>
+                    <p>Automated quality control processes and supply chain management with intelligent monitoring and
+                        predictive maintenance scheduling.</p>
+                    <div class="case-study-result">
+                        <i class="fas fa-industry"></i>
+                        Result: 35% increase in production efficiency, 50% reduction in downtime
+                    </div>
+                </div>
+
+                <div class="case-study-card fade-in">
+                    <h4>Educational Institution Support</h4>
+                    <p>Deployed AI spokesperson for student services and RAG system for academic resources, improving
+                        accessibility and response times.</p>
+                    <div class="case-study-result">
+                        <i class="fas fa-graduation-cap"></i>
+                        Result: 80% faster response to student inquiries, improved satisfaction scores
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Your Workflows?</h2>
+            <p>Let's discuss how our AI integration solutions can revolutionize your organization's efficiency and
+                productivity. Schedule a consultation to explore custom solutions tailored to your specific needs.</p>
+            <a href="index.html#contact" class="cta-button">Get Started Today</a>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // RAG Database Demo Functionality
+        const ragKnowledgeBase = {
+            "What is RAG database integration?": {
+                response: "RAG (Retrieval-Augmented Generation) database integration combines your organization's existing knowledge base with advanced AI reasoning capabilities. This creates an intelligent system that can instantly access relevant information from your documents, policies, and procedures to provide accurate, contextual responses to queries. Our RAG system ingests various data formats including PDFs, documents, spreadsheets, and web content, then uses semantic search to find the most relevant information before generating comprehensive answers.",
+                sources: [
+                    {
+                        title: "RAG Database Integration Overview",
+                        excerpt: "Retrieval-Augmented Generation systems that connect your organization's knowledge base with AI reasoning, enabling instant access to relevant information..."
+                    },
+                    {
+                        title: "G-Data Labs Core Integration Solutions",
+                        excerpt: "Custom knowledge base integration with real-time document processing and semantic search capabilities..."
+                    }
+                ]
+            },
+            "How does AI spokesperson work?": {
+                response: "Our AI spokesperson integration creates intelligent virtual representatives that handle communications with your organization's specific voice, tone, and expertise. The system uses advanced Natural Language Processing to understand context, emotion, and intent, providing human-like interactions that maintain brand consistency. Available 24/7 across web, mobile, social media, and messaging platforms, it can handle customer service inquiries, information dissemination, and escalate complex issues to human agents when needed.",
+                sources: [
+                    {
+                        title: "AI Spokesperson Integration Features",
+                        excerpt: "Intelligent virtual representatives that handle communications, customer service, and information dissemination with your organization's voice..."
+                    },
+                    {
+                        title: "24/7 Customer Engagement Solutions",
+                        excerpt: "Advanced NLP enables human-like interactions that understand context, emotion, and intent with omnichannel presence..."
+                    }
+                ]
+            },
+            "What research has G-Data Labs conducted?": {
+                response: "G-Data Labs has conducted groundbreaking research in several key areas: Industry-First Informed Consent (2022) - first to use LLMs to translate company policies for truly informed consent; Biometric AI Feedback research using EEG and Facial Expression Analysis for training more ethical AI systems; Diversity in Media Study showing 83% believe GenAI can promote diversity and inclusion; SAG-AFTRA Strike Analysis providing real-time insights during the 100-day entertainment industry strike; AI Relaxation Study using EEG data to compare relaxation levels between AI-generated content and traditional therapy methods; and featured presentations at NMSBA World Forum and Center for Reiki Research conferences.",
+                sources: [
+                    {
+                        title: "Industry-First Informed Consent Research",
+                        excerpt: "First to use LLMs to translate company policies, ensuring truly informed consent for AI data usage (2022)..."
+                    },
+                    {
+                        title: "Biometric AI Feedback Study",
+                        excerpt: "Pioneering research using EEG + FEA biometric data as human feedback for training more ethical, personalized AI systems..."
+                    },
+                    {
+                        title: "Diversity in Media Research",
+                        excerpt: "Groundbreaking study showing 83% believe GenAI can promote diversity and inclusion in media representation..."
+                    }
+                ]
+            },
+            "How much time can workflow automation save?": {
+                response: "Our workflow automation solutions deliver significant time savings across organizations: 33% reduction in manual tasks on average, with teams saving approximately 10 hours per week through intelligent document processing, automated scheduling, and streamlined communications. Clients typically see a 75% return on investment within six months through increased productivity and reduced operational costs. Specific benefits include 90% reduction in information search time, 60% reduction in administrative tasks in healthcare settings, 35% increase in production efficiency in manufacturing, and 80% faster response times to customer inquiries in educational institutions.",
+                sources: [
+                    {
+                        title: "Proven Time Savings Statistics",
+                        excerpt: "Organizations report 33% decrease in time spent on repetitive manual processes with 10 hours weekly savings per team..."
+                    },
+                    {
+                        title: "ROI and Efficiency Metrics",
+                        excerpt: "75% return on investment within six months through increased productivity and reduced operational costs..."
+                    },
+                    {
+                        title: "Case Study Results",
+                        excerpt: "Healthcare: 60% reduction in administrative tasks, Manufacturing: 35% increase in efficiency, Education: 80% faster responses..."
+                    }
+                ]
+            }
+        };
+
+        function searchRAGDatabase(query) {
+            // Simulate processing time
+            const searchTime = Math.random() * 1000 + 500; // 500-1500ms
+
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Find best match
+                    let bestMatch = null;
+                    let highestScore = 0;
+
+                    Object.keys(ragKnowledgeBase).forEach(key => {
+                        const score = calculateSimilarity(query.toLowerCase(), key.toLowerCase());
+                        if (score > highestScore) {
+                            highestScore = score;
+                            bestMatch = key;
+                        }
+                    });
+
+                    if (bestMatch && highestScore > 0.3) {
+                        resolve({
+                            success: true,
+                            response: ragKnowledgeBase[bestMatch].response,
+                            sources: ragKnowledgeBase[bestMatch].sources,
+                            searchTime: searchTime
+                        });
+                    } else {
+                        resolve({
+                            success: true,
+                            response: `I understand you're asking about "${query}". While I don't have specific information on that exact topic in my current knowledge base, G-Data Labs specializes in AI workflow integration, RAG database systems, AI spokespersons, and cutting-edge AI research. Our solutions help organizations reduce manual tasks by 33% and achieve 75% ROI within 6 months. Would you like to know more about any of our specific services or research areas?`,
+                            sources: [
+                                {
+                                    title: "G-Data Labs Service Overview",
+                                    excerpt: "Comprehensive AI literacy programs and workflow integration solutions designed to empower communities and organizations..."
+                                }
+                            ],
+                            searchTime: searchTime
+                        });
+                    }
+                }, searchTime);
+            });
+        }
+
+        function calculateSimilarity(str1, str2) {
+            // Simple similarity calculation based on common words
+            const words1 = str1.split(' ');
+            const words2 = str2.split(' ');
+            const commonWords = words1.filter(word => words2.includes(word));
+            return commonWords.length / Math.max(words1.length, words2.length);
+        }
+
+        function displayRAGResponse(result) {
+            const responseContainer = document.getElementById('rag-response-container');
+            const responseContent = document.getElementById('rag-response-content');
+            const responseTime = document.getElementById('response-time');
+            const sourcesSection = document.getElementById('sources-section');
+            const sourcesList = document.getElementById('sources-list');
+
+            responseContent.textContent = result.response;
+            responseTime.textContent = `(${(result.searchTime / 1000).toFixed(1)}s)`;
+
+            // Display sources
+            sourcesList.innerHTML = '';
+            result.sources.forEach(source => {
+                const sourceItem = document.createElement('div');
+                sourceItem.className = 'source-item';
+                sourceItem.innerHTML = `
+                    <div class="source-title">${source.title}</div>
+                    <div class="source-excerpt">${source.excerpt}</div>
+                `;
+                sourcesList.appendChild(sourceItem);
+            });
+
+            sourcesSection.style.display = 'block';
+            responseContainer.style.display = 'block';
+        }
+
+        function performRAGSearch(query) {
+            if (!query.trim()) return;
+
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const responseContainer = document.getElementById('rag-response-container');
+
+            // Show loading, hide previous results
+            loadingIndicator.style.display = 'flex';
+            responseContainer.style.display = 'none';
+
+            searchRAGDatabase(query).then(result => {
+                loadingIndicator.style.display = 'none';
+                displayRAGResponse(result);
+            });
+        }
+
+        // Event listeners for RAG demo
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('rag-search-input');
+            const searchBtn = document.getElementById('rag-search-btn');
+            const questionTags = document.querySelectorAll('.question-tag');
+
+            // Search button click
+            searchBtn.addEventListener('click', () => {
+                performRAGSearch(searchInput.value);
+            });
+
+            // Enter key in search input
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performRAGSearch(searchInput.value);
+                }
+            });
+
+            // Quick question tags
+            questionTags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const question = tag.getAttribute('data-question');
+                    searchInput.value = question;
+                    performRAGSearch(question);
+                });
+            });
+        });
+
+    </script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> G-Data Labs. All rights reserved. | Empowering Communities Through
+                AI & Data Literacy</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <a href="terms.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Terms &
+                    Conditions</a>
+                <a href="privacy.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Privacy
+                    Policy</a>
+                <a href="cookies.html" style="color: #ccc; text-decoration: none;">Cookie Policy</a>
+            </p>
+            <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
+        </div>
+    </footer>
+</body>
+
+</html>

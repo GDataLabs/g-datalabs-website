@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Literacy Workshops - G-Data Labs</title>
+    <link rel="icon" type="image/png" href="logos/light_logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-header: #4a3c28;
+            --accent-primary: #8b7355;
+            --accent-secondary: #a08c69;
+            --bg-gradient-start: #f4f1e8;
+            --bg-gradient-end: #e8e0d0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --text-header: #f0f0f0;
+            --accent-primary: #F5B11A;
+            --accent-secondary: #d4af37;
+            --bg-gradient-start: #2d2d2d;
+            --bg-gradient-end: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-header);
+            transition: color 0.3s ease;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-header);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links .auth-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links .login-btn {
+            color: var(--text-header);
+            border: 1px solid var(--accent-primary);
+            background: transparent;
+        }
+
+        .nav-links .signup-btn {
+            color: var(--bg-primary);
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .nav-links .auth-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            color: inherit;
+        }
+
+        .nav-links .login-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .nav-links .signup-btn:hover {
+            background: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f4f1e8 0%, #e8e0d0 100%);
+            color: #4a3c28;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #8b7355;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: rgba(74, 60, 40, 0.8);
+        }
+
+        /* Workshop Features */
+        .workshop-features {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+            border-left: 5px solid #8b7355;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: #8b7355;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card:nth-child(1) {
+            border-left-color: #ff4b4b;
+        }
+
+        .feature-card:nth-child(1):hover {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
+        }
+
+        .feature-card:nth-child(1) i {
+            color: #ff4b4b;
+        }
+
+        .feature-card:nth-child(2) {
+            border-left-color: #4b96ff;
+        }
+
+        .feature-card:nth-child(2):hover {
+            background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
+            box-shadow: 0 10px 30px rgba(75, 150, 255, 0.2);
+        }
+
+        .feature-card:nth-child(2) i {
+            color: #4b96ff;
+        }
+
+        .feature-card:nth-child(3) {
+            border-left-color: #ffd700;
+        }
+
+        .feature-card:nth-child(3):hover {
+            background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-card:nth-child(3) i {
+            color: #ffd700;
+        }
+
+        .feature-card:nth-child(4) {
+            border-left-color: #ff4b4b;
+        }
+
+        .feature-card:nth-child(4):hover {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
+        }
+
+        .feature-card:nth-child(4) i {
+            color: #ff4b4b;
+        }
+
+        .feature-card:nth-child(5) {
+            border-left-color: #4b96ff;
+        }
+
+        .feature-card:nth-child(5):hover {
+            background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
+            box-shadow: 0 10px 30px rgba(75, 150, 255, 0.2);
+        }
+
+        .feature-card:nth-child(5) i {
+            color: #4b96ff;
+        }
+
+        .feature-card:nth-child(6) {
+            border-left-color: #ffd700;
+        }
+
+        .feature-card:nth-child(6):hover {
+            background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-card:nth-child(6) i {
+            color: #ffd700;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Workshop Experience */
+        .workshop-experience {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .experience-card {
+            background: linear-gradient(135deg, #f8f6f1 0%, #f0ede6 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #8b7355;
+            transition: all 0.3s;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .experience-icon {
+            font-size: 2.5rem;
+            color: #8b7355;
+            margin-bottom: 1rem;
+        }
+
+        .experience-card:nth-child(1) {
+            border-left-color: #ff4b4b;
+        }
+
+        .experience-card:nth-child(1):hover {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
+        }
+
+        .experience-card:nth-child(1) .experience-icon {
+            color: #ff4b4b;
+        }
+
+        .experience-card:nth-child(2) {
+            border-left-color: #4b96ff;
+        }
+
+        .experience-card:nth-child(2):hover {
+            background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
+            box-shadow: 0 10px 30px rgba(75, 150, 255, 0.2);
+        }
+
+        .experience-card:nth-child(2) .experience-icon {
+            color: #4b96ff;
+        }
+
+        .experience-card:nth-child(3) {
+            border-left-color: #ffd700;
+        }
+
+        .experience-card:nth-child(3):hover {
+            background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .experience-card:nth-child(3) .experience-icon {
+            color: #ffd700;
+        }
+
+        .experience-card:nth-child(4) {
+            border-left-color: #ff4b4b;
+        }
+
+        .experience-card:nth-child(4):hover {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
+        }
+
+        .experience-card:nth-child(4) .experience-icon {
+            color: #ff4b4b;
+        }
+
+        .experience-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .experience-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .experience-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .experience-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #8b7355;
+            font-weight: bold;
+        }
+
+        .experience-card:nth-child(1) .experience-features li::before {
+            color: #ff4b4b;
+        }
+
+        .experience-card:nth-child(2) .experience-features li::before {
+            color: #4b96ff;
+        }
+
+        .experience-card:nth-child(3) .experience-features li::before {
+            color: #ffd700;
+        }
+
+        .experience-card:nth-child(4) .experience-features li::before {
+            color: #ff4b4b;
+        }
+
+        /* Data Insights */
+        .data-insights {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .chart-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .chart-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-btn {
+            padding: 12px 24px;
+            border: 2px solid #8b7355;
+            background: white;
+            color: #8b7355;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chart-btn:hover {
+            background: #8b7355;
+            color: white;
+        }
+
+        .chart-btn.active {
+            background: #8b7355;
+            color: white;
+        }
+
+        .chart-wrapper {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .chart-insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .insight-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-left: 4px solid #8b7355;
+        }
+
+        .insight-card:nth-child(1) {
+            border-left-color: #ff4b4b;
+        }
+
+        .insight-card:nth-child(2) {
+            border-left-color: #4b96ff;
+        }
+
+        .insight-card:nth-child(3) {
+            border-left-color: #ffd700;
+        }
+
+        .insight-icon {
+            background: #8b7355;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .insight-card:nth-child(1) .insight-icon {
+            background: #ff4b4b;
+        }
+
+        .insight-card:nth-child(2) .insight-icon {
+            background: #4b96ff;
+        }
+
+        .insight-card:nth-child(3) .insight-icon {
+            background: #ffd700;
+        }
+
+        .insight-content h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .insight-content p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* App Showcase */
+        .app-showcase {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        /* AI + 3D Learning Section */
+        .ai-3d-learning {
+            padding: 80px 0;
+            background: white;
+        }
+
+
+        .ai-3d-applications {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .ai-3d-applications h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .application-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 4px solid #8b7355;
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .application-card:nth-child(1) {
+            border-top-color: #ff4b4b;
+        }
+
+        .application-card:nth-child(2) {
+            border-top-color: #4b96ff;
+        }
+
+        .application-card:nth-child(3) {
+            border-top-color: #ffd700;
+        }
+
+        .application-card:nth-child(4) {
+            border-top-color: #ff4b4b;
+        }
+
+        .application-card i {
+            font-size: 2.5rem;
+            color: #8b7355;
+            margin-bottom: 1rem;
+        }
+
+        .application-card:nth-child(1) i {
+            color: #ff4b4b;
+        }
+
+        .application-card:nth-child(2) i {
+            color: #4b96ff;
+        }
+
+        .application-card:nth-child(3) i {
+            color: #ffd700;
+        }
+
+        .application-card:nth-child(4) i {
+            color: #ff4b4b;
+        }
+
+        .application-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .application-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .applications-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .showcase-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .showcase-text {
+            space-y: 1.5rem;
+        }
+
+        .showcase-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .showcase-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .showcase-features {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .showcase-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            color: #666;
+        }
+
+        .showcase-features li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #8b7355;
+            font-weight: bold;
+        }
+
+        .showcase-demo {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .demo-button {
+            display: inline-block;
+            background: #8b7355;
+            color: #f4f1e8;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.4);
+            background: #a08c69;
+        }
+
+        /* Mobile Lab Showcase */
+        .mobile-lab-showcase {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .lab-video-section {
+            margin: 4rem 0;
+        }
+
+        .video-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .video-description {
+            padding: 2rem;
+        }
+
+        .video-description h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .video-description p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .campaign-benefits {
+            margin: 4rem 0;
+        }
+
+        .benefits-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .benefits-header h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .benefits-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mobile-lab-benefits h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid #8b7355;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .benefit-card:nth-child(1),
+        .benefit-card:nth-child(4) {
+            border-left-color: #ff4b4b;
+        }
+
+        .benefit-card:nth-child(2),
+        .benefit-card:nth-child(5) {
+            border-left-color: #4b96ff;
+        }
+
+        .benefit-card:nth-child(3),
+        .benefit-card:nth-child(6) {
+            border-left-color: #ffd700;
+        }
+
+        .benefit-icon {
+            background: #8b7355;
+            color: white;
+            padding: 1.2rem;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .benefit-card:nth-child(1) .benefit-icon,
+        .benefit-card:nth-child(4) .benefit-icon {
+            background: #ff4b4b;
+        }
+
+        .benefit-card:nth-child(2) .benefit-icon,
+        .benefit-card:nth-child(5) .benefit-icon {
+            background: #4b96ff;
+        }
+
+        .benefit-card:nth-child(3) .benefit-icon,
+        .benefit-card:nth-child(6) .benefit-icon {
+            background: #ffd700;
+        }
+
+        .benefit-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .benefit-card p {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .campaign-stats {
+            margin-top: 4rem;
+            background: linear-gradient(135deg, #f8f6f1 0%, #f0ede6 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-highlight h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-item:nth-child(1) {
+            border-top: 4px solid #ff4b4b;
+        }
+
+        .stat-item:nth-child(2) {
+            border-top: 4px solid #4b96ff;
+        }
+
+        .stat-item:nth-child(3) {
+            border-top: 4px solid #ffd700;
+        }
+
+        .stat-item:nth-child(4) {
+            border-top: 4px solid #ff4b4b;
+        }
+
+        /* G-World Hackathon Styles */
+        .g-world-section {
+            margin: 5rem 0;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f9f8f5 0%, #f5f3ed 100%);
+            border-radius: 20px;
+        }
+
+        .g-world-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .g-world-header h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .g-world-header p {
+            font-size: 1.2rem;
+            color: #8b7355;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .g-world-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .g-world-intro h4 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .g-world-intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .g-world-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .g-world-features .feature-card {
+            background: linear-gradient(135deg, #f8f6f1 0%, #f0ede6 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #8b7355;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .g-world-features .feature-card:nth-child(1) {
+            border-left-color: #ffd700;
+        }
+
+        .g-world-features .feature-card:nth-child(1):hover {
+            background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .g-world-features .feature-card:nth-child(2) {
+            border-left-color: #ff4b4b;
+        }
+
+        .g-world-features .feature-card:nth-child(2):hover {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .g-world-features .feature-card:nth-child(3) {
+            border-left-color: #4b96ff;
+        }
+
+        .g-world-features .feature-card:nth-child(3):hover {
+            background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
+            box-shadow: 0 10px 30px rgba(75, 150, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #8b7355;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .g-world-features h5 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .g-world-vision {
+            margin: 4rem 0;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .vision-content {
+            text-align: center;
+        }
+
+        .vision-content h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .vision-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .vision-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .vision-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .vision-stat i {
+            font-size: 2.5rem;
+            color: #8b7355;
+            margin-bottom: 0.5rem;
+        }
+
+        .vision-stat:nth-child(1) i {
+            color: #ff4b4b;
+        }
+
+        .vision-stat:nth-child(2) i {
+            color: #ffd700;
+        }
+
+        .vision-stat:nth-child(3) i {
+            color: #4b96ff;
+        }
+
+        .vision-stat span {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .g-world-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .g-world-cta p {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .g-world-cta strong {
+            display: block;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Earth Component Styles */
+        .earth-container {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f6f1 0%, #f0ede6 100%);
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #8b7355;
+        }
+
+        .earth-container h5 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .earth-iframe-wrapper {
+            margin: 2rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .earth-description {
+            font-size: 1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 1rem auto 0;
+            line-height: 1.6;
+        }
+
+        /* Mobile Lab Responsive Design */
+        @media (max-width: 768px) {
+            .video-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .video-description {
+                padding: 1rem;
+            }
+
+            .video-description h3 {
+                font-size: 1.5rem;
+            }
+
+            /* Large video mobile adjustments */
+            .lab-video-section iframe {
+                border-radius: 15px !important;
+            }
+
+            .lab-video-section h3 {
+                font-size: 1.6rem !important;
+            }
+
+            .lab-video-section p {
+                font-size: 1rem !important;
+            }
+        }
+
+        .benefits-header h3 {
+            font-size: 1.6rem;
+        }
+
+        .benefits-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .stats-row {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        /* G-World Section Mobile */
+        .g-world-section {
+            padding: 2rem 1rem;
+            margin: 3rem 0;
+        }
+
+        .g-world-header h3 {
+            font-size: 1.8rem;
+        }
+
+        .g-world-header p {
+            font-size: 1rem;
+        }
+
+        .g-world-features {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .vision-stats {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .g-world-vision {
+            padding: 2rem 1.5rem;
+        }
+
+        .g-world-cta {
+            padding: 1.5rem;
+        }
+
+        .g-world-cta strong {
+            font-size: 1.2rem;
+        }
+
+        .g-world-cta p {
+            font-size: 1rem;
+        }
+
+        .earth-container {
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .earth-container h5 {
+            font-size: 1.2rem;
+        }
+
+        .earth-iframe-wrapper iframe {
+            height: 300px;
+        }
+
+        .earth-description {
+            font-size: 0.9rem;
+        }
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Impact Stats */
+        .impact-stats {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            color: #f4f1e8;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #f4f1e8;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        .partner-logo {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            color: #f4f1e8;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #f4f1e8;
+            color: #8b7355;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 241, 232, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 241, 232, 0.4);
+            background: #e8e0d0;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .showcase-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .features-grid,
+            .experience-grid,
+            .stats-grid,
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Dark mode footer */
+        [data-theme="dark"] footer {
+            background: #1a1a1a;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html#home" class="logo">
+                <img id="logo-img" src="{{ url_for('static', filename='logos/light_logo.png') }}" alt="G-Data Labs"
+                    style="height: 50px;">
+                G-Data Labs
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="/ai">GeGi AI</a></li>
+                <li><a href="ai-research-consulting.html">Research</a></li>
+                <li><a href="ai-literacy-workshops.html">Workshops</a></li>
+                <li><a href="ai-workflow-integration.html">Workflows</a></li>
+                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
+                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AI Literacy Workshops</h1>
+            <p>Empowering communities with hands-on AI education through interactive workshops, mobile labs, and
+                real-world applications that demystify artificial intelligence and create new opportunities for economic
+                participation.</p>
+        </div>
+    </section>
+
+    <section class="workshop-features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Workshop Features</h2>
+                <p class="section-subtitle">Interactive, hands-on learning experiences that make AI accessible to
+                    everyone</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>Hands-On Learning</h3>
+                    <p>Interactive demonstrations and practical exercises that let participants experience AI tools
+                        directly, building confidence through real-world applications.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile AI Lab</h3>
+                    <p>Our state-of-the-art mobile laboratory brings cutting-edge AI technology directly to schools and
+                        communities, making advanced learning accessible everywhere.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Data Ethics Focus</h3>
+                    <p>Comprehensive education on data privacy, digital rights, and ethical AI use, empowering
+                        participants to make informed decisions about their digital footprint.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Career Pathways</h3>
+                    <p>Guidance on AI-related career opportunities, skill development, and entrepreneurship, helping
+                        participants turn AI knowledge into economic opportunities.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <i class="fas fa-users"></i>
+                    <h3>Community Focused</h3>
+                    <p>Workshops designed specifically for diverse communities, with culturally relevant examples and
+                        applications that resonate with participants' lived experiences.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Age-Appropriate Content</h3>
+                    <p>Tailored curriculum for different age groups, from elementary students to adults, ensuring
+                        content is engaging and comprehensible for all learners.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="workshop-experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Workshop Experience</h2>
+                <p class="section-subtitle">What participants can expect from our comprehensive AI literacy program</p>
+            </div>
+
+            <div class="experience-grid">
+                <div class="experience-card fade-in">
+                    <div class="experience-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Fundamentals</h3>
+                    <p>Learn the basics of artificial intelligence, machine learning, and how AI systems work in simple,
+                        understandable terms.</p>
+                    <ul class="experience-features">
+                        <li>What is AI and how does it work?</li>
+                        <li>Machine learning basics</li>
+                        <li>AI vs. human intelligence</li>
+                        <li>Real-world AI applications</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Hands-On Tools</h3>
+                    <p>Practice with popular AI tools and platforms, gaining practical experience with technology that's
+                        shaping the future.</p>
+                    <ul class="experience-features">
+                        <li>ChatGPT and language models</li>
+                        <li>Image generation tools</li>
+                        <li>Voice assistants and AI apps</li>
+                        <li>Creative AI applications</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Data Value & Rights</h3>
+                    <p>Understand how your data creates value and learn about your rights in the digital economy.</p>
+                    <ul class="experience-features">
+                        <li>Data monetization concepts</li>
+                        <li>Privacy protection strategies</li>
+                        <li>Digital rights and consent</li>
+                        <li>Creating economic opportunities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="app-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Workshop Demo</h2>
+                <p class="section-subtitle">AI Financial Literacy: Your Data, Your Dollars, Your Dignity</p>
+            </div>
+
+            <div class="showcase-content">
+                <div class="showcase-text">
+                    <h3>Interactive Financial Education</h3>
+                    <p>Our flagship workshop application teaches students about AI, data value, and financial literacy
+                        through an engaging, interactive experience. Developed in partnership with Atlanta schools, this
+                        tool demonstrates how AI can make complex topics accessible and fun.</p>
+
+                    <ul class="showcase-features">
+                        <li>Real-time data visualization of student responses</li>
+                        <li>Interactive data dignity calculator</li>
+                        <li>AI bias scenarios and ethical discussions</li>
+                        <li>Hands-on AI tool demonstrations</li>
+                        <li>Collaborative design thinking activities</li>
+                        <li>Personalized action plans and next steps</li>
+                    </ul>
+                </div>
+
+                <div class="showcase-demo">
+                    <h4 style="margin-bottom: 1rem; color: #333;">Experience a Workshop</h4>
+                    <p style="margin-bottom: 2rem; color: #666;">Try our interactive AI Financial Literacy application
+                        used in workshops across Atlanta high schools.</p>
+                    <a href="https://gdatalabs.github.io/ai_financial_literacy_3/" target="_blank"
+                        class="workshop-image-link"
+                        style="display: block; margin-bottom: 1.5rem; text-decoration: none;">
+                        <img src="{{ url_for('static', filename='images/ailp3_image.png') }}"
+                            alt="AI Financial Literacy Workshop"
+                            style="width: 100%; max-width: 400px; height: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease; cursor: pointer;"
+                            onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.3)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)';">
+                    </a>
+                    <a href="mailto:contact@g-datalabs.com?subject=End-to-End%20Process%20Optimization%20Consultation&body=I'm%20interested%20in%20learning%20more%20about%20your%20end-to-end%20process%20optimization%20services."
+                        class="demo-button">
+                        <i class="fas fa-envelope" style="margin-right: 8px;"></i>
+                        Contact Us for Consultation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ai-3d-learning">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AI + 3D for Learning</h2>
+                <p class="section-subtitle">Experience how AI-powered 3D simulations transform education</p>
+            </div>
+
+            <div class="ai-3d-intro" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #333;">Immersive 3D Educational Environments
+                </h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #666;">Our cutting-edge AI technology creates
+                    interactive 3D simulations that make complex concepts tangible and engaging. Students can explore,
+                    experiment, and learn in virtual environments that adapt to their learning pace and style.</p>
+            </div>
+
+            <!-- Large Wind Turbine Simulator -->
+            <div class="simulator-showcase" style="max-width: 1200px; margin: 0 auto 4rem;">
+                <h4 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Try Our Wind
+                    Turbine Simulation</h4>
+                <p style="text-align: center; color: #666; margin-bottom: 2rem;">Explore renewable energy concepts
+                    through an interactive 3D wind turbine model</p>
+
+                <div
+                    style="position: relative; width: 100%; padding-bottom: 50%; overflow: hidden; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
+                    <iframe src="wind-turbine-vr.html"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 20px; background: #000;">
+                    </iframe>
+                </div>
+
+                <div class="simulator-controls" style="text-align: center; margin-top: 1rem;">
+                    <p style="color: #666; font-size: 0.9rem;"><i class="fas fa-info-circle"
+                            style="color: #8b7355; margin-right: 0.5rem;"></i> Use your mouse to rotate the view, scroll
+                        to zoom, and click on components to learn more</p>
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            <div class="ai-3d-features-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                <div class="feature-box"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
+                    <i class="fas fa-cube" style="font-size: 2.5rem; color: #ff4b4b; margin-bottom: 1rem;"></i>
+                    <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Interactive 3D Models</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Students manipulate and explore 3D objects to understand
+                        spatial relationships and scientific concepts</p>
+                </div>
+
+                <div class="feature-box"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #4b96ff;">
+                    <i class="fas fa-robot" style="font-size: 2.5rem; color: #4b96ff; margin-bottom: 1rem;"></i>
+                    <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">AI-Generated Environments</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Custom learning environments from historical
+                        reconstructions to future city planning</p>
+                </div>
+
+                <div class="feature-box"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ffd700;">
+                    <i class="fas fa-vr-cardboard" style="font-size: 2.5rem; color: #ffd700; margin-bottom: 1rem;"></i>
+                    <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">VR-Ready Experiences</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Compatible with VR headsets or accessible through any
+                        web browser</p>
+                </div>
+
+                <div class="feature-box"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
+                    <i class="fas fa-chart-line" style="font-size: 2.5rem; color: #ff4b4b; margin-bottom: 1rem;"></i>
+                    <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Real-Time Analytics</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Track engagement and comprehension to optimize learning
+                        outcomes</p>
+                </div>
+            </div>
+
+            <div class="ai-3d-applications">
+                <h3>Applications Across Disciplines</h3>
+                <div class="applications-grid">
+                    <div class="application-card">
+                        <i class="fas fa-atom"></i>
+                        <h4>Science & Engineering</h4>
+                        <p>Molecular structures, physics simulations, and engineering design principles come to life</p>
+                    </div>
+
+                    <div class="application-card">
+                        <i class="fas fa-landmark"></i>
+                        <h4>History & Culture</h4>
+                        <p>Walk through historical sites, explore ancient civilizations, and understand cultural
+                            heritage</p>
+                    </div>
+
+                    <div class="application-card">
+                        <i class="fas fa-heartbeat"></i>
+                        <h4>Medical & Health</h4>
+                        <p>Anatomy visualization, surgical training, and health education through interactive 3D models
+                        </p>
+                    </div>
+
+                    <div class="application-card">
+                        <i class="fas fa-city"></i>
+                        <h4>Architecture & Design</h4>
+                        <p>Urban planning, architectural concepts, and spatial design thinking in immersive environments
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="data-insights">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Pre-Workshop Assessment Data</h2>
+                <p class="section-subtitle">Real data from our Georgia Building Trade Academy workshops</p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-controls">
+                    <button id="studentBtn" class="chart-btn active">Student Data</button>
+                    <button id="staffBtn" class="chart-btn">Staff Data</button>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="assessmentChart"></canvas>
+                </div>
+
+                <div class="chart-insights">
+                    <div class="insight-card">
+                        <div class="insight-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Assessment Participants</h4>
+                            <p><strong>24 Students</strong> and <strong>9 Staff Members</strong> completed pre-workshop
+                                assessments</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Knowledge Levels</h4>
+                            <p>Most participants rated their AI knowledge as <strong>2-3 out of 5</strong>, showing
+                                clear room for growth</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Tool Usage</h4>
+                            <p><strong>65% of students</strong> have used AI tools, while <strong>89% of staff</strong>
+                                are ready to integrate them</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mobile-lab-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Mobile AI Lab: Bringing AI Literacy Everywhere</h2>
+                <p class="section-subtitle">Our state-of-the-art mobile laboratory makes AI education accessible to
+                    communities nationwide</p>
+            </div>
+
+            <!-- Mobile Lab Video Section -->
+            <div class="lab-video-section">
+                <!-- Large Featured Video Section -->
+                <div style="max-width: 1000px; margin: 0 auto; text-align: center; margin-bottom: 4rem;">
+                    <div
+                        style="position: relative; width: 100%; max-width: 800px; height: 0; padding-bottom: 56.25%; /* 16:9 aspect ratio */ margin: 2rem auto;">
+                        <iframe src="https://www.youtube.com/embed/6KTdPVELAcI" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen style="
+                                position: absolute; 
+                                top: 0; 
+                                left: 0; 
+                                width: 100%; 
+                                height: 100%; 
+                                border-radius: 20px;
+                                box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+                            ">
+                        </iframe>
+                    </div>
+                    <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+                        <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: #333;">Revolutionary Mobile Education
+                            Platform</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.8; color: #666;">Experience our cutting-edge mobile
+                            laboratory that brings AI education directly to communities everywhere. Equipped with the
+                            latest technology and staffed by expert educators, our mobile lab transforms any location
+                            into a world-class AI learning environment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile AI Literacy Campaign Benefits -->
+            <div class="campaign-benefits">
+                <div class="benefits-header">
+                    <h3>Why Communities Need Mobile AI Literacy Campaigns</h3>
+                    <p>The future of community prosperity depends on widespread AI literacy. Here's why mobile education
+                        initiatives are critical:</p>
+                </div>
+
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
+                        <i class="fas fa-graduation-cap"
+                            style="font-size: 2.5rem; color: #ff4b4b; margin-bottom: 1rem;"></i>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Bridge the Digital Divide</h4>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">AI literacy shouldn't be a
+                            privilege. Our mobile lab ensures every community, regardless of location or resources, has
+                            access to cutting-edge AI education.</p>
+                    </div>
+
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #4b96ff;">
+                        <i class="fas fa-briefcase" style="font-size: 2.5rem; color: #4b96ff; margin-bottom: 1rem;"></i>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Workforce Preparation</h4>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">As AI transforms every industry,
+                            workers need to understand and leverage these tools. National AI literacy prevents massive
+                            job displacement and creates new opportunities.</p>
+                    </div>
+
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ffd700;">
+                        <i class="fas fa-shield-alt"
+                            style="font-size: 2.5rem; color: #ffd700; margin-bottom: 1rem;"></i>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Digital Rights Protection</h4>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">Citizens must understand their
+                            data value and rights in the AI economy. Education empowers people to make informed
+                            decisions about their digital footprint.</p>
+                    </div>
+
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
+                        <i class="fas fa-globe" style="font-size: 2.5rem; color: #ff4b4b; margin-bottom: 1rem;"></i>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Economic Competitiveness</h4>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">Regions with AI-literate
+                            populations will lead the global economy. Communities need comprehensive AI education to
+                            maintain technological leadership and economic growth.</p>
+                    </div>
+
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #4b96ff;">
+                        <i class="fas fa-users" style="font-size: 2.5rem; color: #4b96ff; margin-bottom: 1rem;"></i>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Informed Participation</h4>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">AI governance requires informed
+                            citizens. Widespread AI literacy ensures community participation in shaping AI policies and
+                            understanding technological decisions.</p>
+                    </div>
+
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ffd700;">
+                        <i class="fas fa-lightbulb" style="font-size: 2.5rem; color: #ffd700; margin-bottom: 1rem;"></i>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Innovation Catalyst</h4>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">AI-literate communities become
+                            innovation hubs. When people understand AI, they create solutions for local challenges and
+                            contribute to national innovation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- G-World Hackathon Section -->
+            <div class="g-world-section">
+                <div class="g-world-header">
+                    <h3>G-World Hackathon: Where Innovation Meets Impact</h3>
+                    <p>Coming 2025 - The world's first AI-powered global problem-solving championship</p>
+                </div>
+
+                <div class="g-world-content">
+                    <div class="g-world-intro">
+                        <h4>A New Kind of Competition for a Better World</h4>
+                        <p>Imagine a global sporting event where teams compete not for trophies, but to solve humanity's
+                            most pressing challenges using AI. The G-World Hackathon brings together diverse
+                            communities, innovative minds, and cutting-edge AI technology in an exciting competition to
+                            create real-world solutions.</p>
+                    </div>
+
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                        <div
+                            style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ffd700;">
+                            <i class="fas fa-trophy"
+                                style="font-size: 2.5rem; color: #ffd700; margin-bottom: 1rem;"></i>
+                            <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Compete to Change the World
+                            </h4>
+                            <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">Teams tackle persistent global
+                                problems - from climate change to healthcare access - using AI as their primary tool for
+                                innovation.</p>
+                        </div>
+
+                        <div
+                            style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
+                            <i class="fas fa-users-cog"
+                                style="font-size: 2.5rem; color: #ff4b4b; margin-bottom: 1rem;"></i>
+                            <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">Community-Driven Solutions
+                            </h4>
+                            <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">Winners are chosen by
+                                community vote, ensuring solutions truly serve the people they're designed to help.
+                                Democracy meets innovation.</p>
+                        </div>
+
+                        <div
+                            style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #4b96ff;">
+                            <i class="fas fa-rocket"
+                                style="font-size: 2.5rem; color: #4b96ff; margin-bottom: 1rem;"></i>
+                            <h4 style="font-size: 1.2rem; margin-bottom: 1rem; color: #333;">From Idea to Implementation
+                            </h4>
+                            <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">Winning solutions receive
+                                partnership support for real-world implementation, turning brilliant ideas into tangible
+                                impact.</p>
+                        </div>
+                    </div>
+
+                    <div class="g-world-vision">
+                        <div class="vision-content">
+                            <!-- Interactive Earth Component -->
+                            <div class="earth-container">
+                                <h5>Imagine Your AI Solution Making a Difference Worldwide</h5>
+                                <div class="earth-iframe-wrapper">
+                                    <iframe src="earth.html" width="100%" height="400" frameborder="0"
+                                        style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"></iframe>
+                                </div>
+                                <p class="earth-description">Visualize how your AI-powered solution could impact
+                                    communities around the globe. Enter a location and see where your innovation could
+                                    make a difference.</p>
+                            </div>
+
+                            <div class="vision-stats">
+                                <div class="vision-stat">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Global Participation</span>
+                                </div>
+                                <div class="vision-stat">
+                                    <i class="fas fa-brain"></i>
+                                    <span>AI-Powered Solutions</span>
+                                </div>
+                                <div class="vision-stat">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                    <span>Community Impact</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="g-world-cta">
+                        <p><strong>Join the movement.</strong> Be part of the first G-World Hackathon where your AI
+                            skills can literally change the world.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaign Statistics -->
+            <div class="campaign-stats">
+                <div class="stat-highlight">
+                    <h3>The Scale of Opportunity</h3>
+                    <p>The numbers speak for themselves - communities worldwide need comprehensive AI literacy now:</p>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-number">328M</div>
+                            <div class="stat-label">People Need AI Literacy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">85%</div>
+                            <div class="stat-label">Jobs Will Be Transformed by AI</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">$13T</div>
+                            <div class="stat-label">AI Economic Impact by 2030</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">Mobile Lab Can Reach 50+ Communities</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="impact-stats">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" style="color: #f4f1e8;">Workshop Impact</h2>
+                <p class="section-subtitle" style="color: rgba(244,241,232,0.9);">Measurable outcomes from our AI
+                    literacy programs</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Students Educated</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Partner Schools</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Workshop Sessions</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="partners">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Partners</h2>
+                <p class="section-subtitle">Collaborating with leading organizations to maximize impact</p>
+            </div>
+
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/ailp3_logo.png') }}" alt="AILP3">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/gsu_logo.jpg') }}" alt="Georgia State University">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/aps_logo.jpeg') }}" alt="Atlanta Public Schools">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/cau_logo.jpg') }}" alt="Clark Atlanta University">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/op_hope_logo.png') }}" alt="Operation HOPE">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/camo_logo.png') }}" alt="Camo">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/Google_Cloud_logo.svg.png') }}" alt="Google Cloud">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/gaaim_logo.png') }}" alt="GAAIM">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/gabta_logo.jpg') }}" alt="GABTA">
+                </div>
+                <div class="partner-logo">
+                    <img src="{{ url_for('static', filename='logos/nvidia-inception-program-badge-rgb-for-screen.jpg') }}"
+                        alt="NVIDIA Inception">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Bring AI Literacy to Your Community</h2>
+            <p>Ready to empower your students or community members with AI knowledge and digital rights education? Let's
+                create a workshop experience tailored to your needs.</p>
+            <a href="index.html#contact" class="cta-button">Schedule a Workshop</a>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0.2s';
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Interactive Chart for Assessment Data
+        const ctx = document.getElementById('assessmentChart').getContext('2d');
+        let currentChart = null;
+
+        // Student data (processed from CSV)
+        const studentData = {
+            knowledgeLevel: {
+                labels: ['Beginner (1-2)', 'Intermediate (3)', 'Advanced (4-5)'],
+                data: [8, 10, 6],
+                colors: ['#ff4b4b', '#ffd700', '#4b96ff']
+            },
+            toolUsage: {
+                labels: ['Never/Rarely', 'Occasionally', 'Regularly/Daily'],
+                data: [8, 11, 5],
+                colors: ['#ff4b4b', '#ffd700', '#4b96ff']
+            },
+            tradeSpecialization: {
+                labels: ['Electrical', 'Carpentry', 'HVAC', 'Welding', 'Plumbing', 'Other'],
+                data: [10, 6, 3, 2, 1, 2],
+                colors: ['#ff4b4b', '#4b96ff', '#ffd700', '#ff4b4b', '#4b96ff', '#ffd700']
+            }
+        };
+
+        // Staff data (processed from CSV)
+        const staffData = {
+            experience: {
+                labels: ['Less than 2 years', '2-5 years', '11-15 years'],
+                data: [2, 6, 1],
+                colors: ['#ff4b4b', '#4b96ff', '#ffd700']
+            },
+            aiUsage: {
+                labels: ['Never/Rarely', 'Sometimes', 'Often'],
+                data: [4, 4, 1],
+                colors: ['#ff4b4b', '#ffd700', '#4b96ff']
+            },
+            timeOnTasks: {
+                labels: ['Lesson Planning', 'Grading', 'Communication', 'Admin Tasks'],
+                data: [3.5, 4, 4.5, 5],
+                colors: ['#ff4b4b', '#4b96ff', '#ffd700', '#ff4b4b']
+            }
+        };
+
+        function createChart(dataType, title) {
+            if (currentChart) {
+                currentChart.destroy();
+            }
+
+            const data = dataType === 'student' ? studentData.knowledgeLevel : staffData.experience;
+
+            currentChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.data,
+                        backgroundColor: data.colors,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: title,
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            color: '#333'
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        duration: 1000
+                    }
+                }
+            });
+        }
+
+        // Initialize with student data
+        createChart('student', 'Student AI Knowledge Level Distribution');
+
+        // Chart controls
+        document.getElementById('studentBtn').addEventListener('click', function () {
+            document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            createChart('student', 'Student AI Knowledge Level Distribution');
+        });
+
+        document.getElementById('staffBtn').addEventListener('click', function () {
+            document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            createChart('staff', 'Staff Teaching Experience Distribution');
+        });
+
+        // Set chart canvas height
+        document.getElementById('assessmentChart').height = 400;
+
+    </script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> G-Data Labs. All rights reserved. | Empowering Communities Through
+                AI & Data Literacy</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <a href="terms.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Terms &
+                    Conditions</a>
+                <a href="privacy.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Privacy
+                    Policy</a>
+                <a href="cookies.html" style="color: #ccc; text-decoration: none;">Cookie Policy</a>
+            </p>
+            <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Research & Consulting - G-Data Labs</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logos/light_logo_favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-header: #4a3c28;
+            --accent-primary: #8b7355;
+            --accent-secondary: #a08c69;
+            --bg-gradient-start: #f4f1e8;
+            --bg-gradient-end: #e8e0d0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --text-header: #f0f0f0;
+            --accent-primary: #F5B11A;
+            --accent-secondary: #d4af37;
+            --bg-gradient-start: #2d2d2d;
+            --bg-gradient-end: #1a1a1a;
+            --bg-card: #333333;
+            --bg-card-gradient-start: #3a3a3a;
+            --bg-card-gradient-end: #2d2d2d;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Dark mode footer */
+        [data-theme="dark"] footer {
+            background: #1a1a1a;
+            border-top: 1px solid var(--border-color);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-header);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-header);
+            transition: color 0.3s ease;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-header);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links .auth-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links .login-btn {
+            color: var(--text-header);
+            border: 1px solid var(--accent-primary);
+            background: transparent;
+        }
+
+        .nav-links .signup-btn {
+            color: var(--bg-primary);
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .nav-links .auth-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            color: inherit;
+        }
+
+        .nav-links .login-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .nav-links .signup-btn:hover {
+            background: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f4f1e8 0%, #e8e0d0 100%);
+            color: #4a3c28;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #8b7355;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: rgba(74, 60, 40, 0.8);
+        }
+
+        /* Research Overview */
+        .overview {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .overview-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .overview-card i {
+            font-size: 3rem;
+            color: #8b7355;
+            margin-bottom: 1rem;
+        }
+
+        .overview-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 80px 0;
+            background: white;
+            overflow: hidden;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .timeline-wrapper {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 40px 0;
+            width: 50%;
+            opacity: 1;
+            transform: none;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item.left {
+            left: 0;
+            padding-right: 50px;
+            text-align: right;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+            padding-left: 50px;
+            text-align: left;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #8b7355;
+            border: 3px solid #a08c69;
+            border-radius: 50%;
+            top: 60px;
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-item.left .timeline-dot {
+            right: -10px;
+        }
+
+        .timeline-item.right .timeline-dot {
+            left: -10px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #8b7355, #a08c69) border-box;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .timeline-hover-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            border-radius: 15px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #8b7355, #a08c69) border-box;
+        }
+
+        .timeline-hover-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 13px;
+        }
+
+        .timeline-content:hover .timeline-hover-image {
+            opacity: 1;
+        }
+
+        .timeline-content:hover .timeline-date,
+        .timeline-content:hover .timeline-title,
+        .timeline-content:hover .timeline-description,
+        .timeline-content:hover .timeline-stat {
+            opacity: 0;
+        }
+
+        .timeline-click-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            background: rgba(139, 115, 85, 0.1);
+            color: #8b7355;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover .timeline-click-hint {
+            opacity: 1;
+        }
+
+        .timeline-date {
+            font-size: 1rem;
+            color: #8b7355;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .timeline-stat {
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            color: #f4f1e8;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Research Areas */
+        .research-areas {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .research-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .research-icon {
+            font-size: 2.5rem;
+            color: #8b7355;
+            margin-bottom: 1rem;
+        }
+
+        .research-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .research-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .research-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            color: #666;
+        }
+
+        .research-features li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #8b7355;
+            font-weight: bold;
+        }
+
+        /* Publications Section */
+        .publications {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .publication-list {
+            margin-top: 3rem;
+        }
+
+        .publication-item {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #8b7355;
+            transition: all 0.3s;
+        }
+
+        .publication-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-venue {
+            color: #8b7355;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #8b7355 0%, #a08c69 100%);
+            color: #f4f1e8;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #f4f1e8;
+            color: #8b7355;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 241, 232, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 241, 232, 0.4);
+            background: #e8e0d0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .timeline-line {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+                text-align: left;
+            }
+
+            .timeline-item.right {
+                left: 0;
+            }
+
+            .timeline-dot {
+                left: 20px !important;
+                right: auto !important;
+            }
+
+            .timeline-content {
+                position: relative;
+                z-index: 3;
+                background: white;
+            }
+
+            .timeline-hover-image {
+                z-index: 4;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html#home" class="logo">
+                <img id="logo-img" src="{{ url_for('static', filename='logos/light_logo.png') }}" alt="G-Data Labs"
+                    style="height: 50px;">
+                G-Data Labs
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="/ai">GeGi AI</a></li>
+                <li><a href="ai-research-consulting.html">Research</a></li>
+                <li><a href="ai-literacy-workshops.html">Workshops</a></li>
+                <li><a href="ai-workflow-integration.html">Workflows</a></li>
+                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
+                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AI Research & Consulting</h1>
+            <p>Pioneering ethical AI research that shapes the future of human-AI interaction through groundbreaking
+                studies in biometrics, consent frameworks, and responsible AI development.</p>
+        </div>
+    </section>
+
+    <section class="overview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Research Excellence</h2>
+                <p style="font-size: 1.2rem; color: #666;">Leading the way in ethical AI research and development since
+                    2019</p>
+            </div>
+
+            <div class="overview-content">
+                <div class="overview-card fade-in">
+                    <i class="fas fa-brain"></i>
+                    <h3>Biometric AI Research</h3>
+                    <p>Pioneering the use of EEG, facial expression analysis, and eye tracking to create more
+                        human-aligned AI systems.</p>
+                </div>
+
+                <div class="overview-card fade-in">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Ethical AI Frameworks</h3>
+                    <p>Industry-first informed consent mechanisms using LLMs to ensure transparent and fair AI data
+                        usage.</p>
+                </div>
+
+                <div class="overview-card fade-in">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Societal Impact Studies</h3>
+                    <p>Comprehensive research on AI's effects on employment, diversity, and cultural representation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Research Timeline</h2>
+                <p style="font-size: 1.2rem; color: #666;">Our journey of innovation and discovery</p>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-wrapper">
+                    <div class="timeline-line"></div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content" data-url="https://youtu.be/ug6MJ_CRJHI">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/TAAI_teachers_assistant_ai.png') }}"
+                                    alt="TAAI - Teacher's Assistant AI">
+                            </div>
+                            <div class="timeline-date">2019</div>
+                            <h3 class="timeline-title">TAAI - Teacher's Assistant AI</h3>
+                            <p class="timeline-description">Built an AI system using Microsoft Azure to assist foreign
+                                language instructors, featuring real-time translation, student engagement analysis, and
+                                personalized learning recommendations.</p>
+                            <span class="timeline-stat">First AI Education Tool</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content"
+                            data-url="https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/GenAI_Diversity_Study.png') }}"
+                                    alt="GenAI Diversity Study">
+                            </div>
+                            <div class="timeline-date">June 2020</div>
+                            <h3 class="timeline-title">GenAI Diversity Study</h3>
+                            <p class="timeline-description">Conducted groundbreaking research on AI's potential to
+                                promote diversity and inclusion in media. Developed deepfake technology for
+                                representation studies.</p>
+                            <span class="timeline-stat">83% Believe AI Promotes Inclusion</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content" data-url="https://youtu.be/JcBvuPSKzsU">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/Public_sentiment_Analysis.png') }}"
+                                    alt="Public Sentiment Analysis">
+                            </div>
+                            <div class="timeline-date">2020</div>
+                            <h3 class="timeline-title">Public Sentiment Analysis</h3>
+                            <p class="timeline-description">Surveyed public preferences for AI in entertainment and
+                                education. Found 64.4% of respondents interested in seeing themselves represented in
+                                media through AI.</p>
+                            <span class="timeline-stat">64.4% Want AI Representation</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content" data-url="https://www.g-datalabs.com">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/G-Data_Labs_Founded.png') }}"
+                                    alt="G-Data Labs Founded">
+                            </div>
+                            <div class="timeline-date">July 2022</div>
+                            <h3 class="timeline-title">G-Data Labs Founded</h3>
+                            <p class="timeline-description">Established G-Data Labs with a mission to shepherd human-AI
+                                interaction for the safety and benefit of all people through responsible AI frameworks.
+                            </p>
+                            <span class="timeline-stat">Company Milestone</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content" data-url="terms.html">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/Industry-First_Informed_Consent.png') }}"
+                                    alt="Industry-First Informed Consent">
+                            </div>
+                            <div class="timeline-date">October 2022</div>
+                            <h3 class="timeline-title">Industry-First Informed Consent</h3>
+                            <p class="timeline-description">Deployed LLMs to translate legal documents and policies,
+                                ensuring users truly understand how their data is used - a breakthrough in AI
+                                transparency.</p>
+                            <span class="timeline-stat">First in Industry</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content"
+                            data-url="https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/iMotions_Biometric_Study.png') }}"
+                                    alt="iMotions Biometric Study">
+                            </div>
+                            <div class="timeline-date">Fall 2022</div>
+                            <h3 class="timeline-title">iMotions Biometric Study</h3>
+                            <p class="timeline-description">Partnered with iMotions in Boston to study human preferences
+                                using EEG, eye tracking, GSR, and facial expression analysis. Discovered frontal alpha
+                                asymmetry correlates with AI content preference.</p>
+                            <span class="timeline-stat">4 Biometric Modalities</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content" data-url="https://blog.g-datalabs.com/blog-post-2">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/SAG-AFTRA_Strike_Analysis.png') }}"
+                                    alt="SAG-AFTRA Strike Analysis">
+                            </div>
+                            <div class="timeline-date">August 2023</div>
+                            <h3 class="timeline-title">SAG-AFTRA Strike Analysis</h3>
+                            <p class="timeline-description">Conducted real-time field research during the 100th day of
+                                strikes, interviewing actors and writers about AI's impact on creative industries.
+                                Findings shaped our consent and compensation frameworks.</p>
+                            <span class="timeline-stat">100+ Interviews</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content" data-url="https://youtu.be/ngWUBlO2iHg">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/NMSBA_World_Forum_Presentation.png') }}"
+                                    alt="NMSBA World Forum Presentation">
+                            </div>
+                            <div class="timeline-date">March 2024</div>
+                            <h3 class="timeline-title">NMSBA World Forum Presentation</h3>
+                            <p class="timeline-description">Presented "Ethical AI Data Capture & the Monetization of
+                                Biometric Datasets" to international audience, establishing G-Data as thought leader in
+                                neuromarketing and AI.</p>
+                            <span class="timeline-stat">Global Recognition</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content" data-url="https://youtu.be/HDV2GxVwkPE">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/Data_Marketplace_Launch.png') }}"
+                                    alt="Data Marketplace Launch">
+                            </div>
+                            <div class="timeline-date">March 2024</div>
+                            <h3 class="timeline-title">Data Marketplace Launch</h3>
+                            <p class="timeline-description">Launched innovative platform for buying and selling personal
+                                data assets with granular consent controls, revolutionizing how individuals monetize
+                                their data.</p>
+                            <span class="timeline-stat">Platform Innovation</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content"
+                            data-url="https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a">
+                            <div class="timeline-hover-image">
+                                <img src="{{ url_for('static', filename='images/AI_Relaxation_Study.png') }}"
+                                    alt="AI Relaxation Study">
+                            </div>
+                            <div class="timeline-date">June 2024</div>
+                            <h3 class="timeline-title">AI Relaxation Study</h3>
+                            <p class="timeline-description">Presented EEG-based research at Center for Reiki Research
+                                comparing relaxation levels between AI-generated content (Sora, Runway, Pika) and
+                                traditional therapy methods.</p>
+                            <span class="timeline-stat">3 AI Models Tested</span>
+                            <span class="timeline-click-hint">Click to view</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="research-areas">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Research Areas</h2>
+                <p style="font-size: 1.2rem; color: #666;">Specialized domains where we're advancing the field of AI</p>
+            </div>
+
+            <div class="research-grid">
+                <div class="research-card fade-in">
+                    <div class="research-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Biometric AI Feedback</h3>
+                    <p>Using human biometric data as feedback for training more ethical and personalized AI systems.</p>
+                    <ul class="research-features">
+                        <li>EEG for preference detection</li>
+                        <li>Facial expression analysis</li>
+                        <li>Eye tracking for attention</li>
+                        <li>Galvanic skin response</li>
+                    </ul>
+                </div>
+
+                <div class="research-card fade-in">
+                    <div class="research-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>AI Ethics & Consent</h3>
+                    <p>Developing frameworks for responsible AI that prioritize user consent and fair compensation.</p>
+                    <ul class="research-features">
+                        <li>Informed consent mechanisms</li>
+                        <li>Granular data permissions</li>
+                        <li>Fair compensation models</li>
+                        <li>Transparency frameworks</li>
+                    </ul>
+                </div>
+
+                <div class="research-card fade-in">
+                    <div class="research-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Societal Impact Studies</h3>
+                    <p>Researching AI's effects on employment, diversity, and cultural representation.</p>
+                    <ul class="research-features">
+                        <li>Job displacement analysis</li>
+                        <li>Diversity in AI outputs</li>
+                        <li>Cultural bias detection</li>
+                        <li>Public sentiment tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="publications">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Publications & Presentations</h2>
+                <p style="font-size: 1.2rem; color: #666;">Sharing our findings with the global AI community</p>
+            </div>
+
+            <div class="publication-list">
+                <div class="publication-item fade-in" data-url="https://youtu.be/ngWUBlO2iHg">
+                    <h3 class="publication-title">Ethical AI Data Capture & the Monetization of Biometric Datasets</h3>
+                    <p class="publication-venue">NMSBA World Forum 2024 - Los Angeles</p>
+                    <p class="publication-description">Comprehensive presentation on using biometric data for AI
+                        training, introducing the AI + Bio = G-Data formula and demonstrating real-world applications of
+                        ethical data monetization.</p>
+                </div>
+
+                <div class="publication-item fade-in"
+                    data-url="https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a">
+                    <h3 class="publication-title">Electric Relaxation: Evaluating the Effectiveness of Reiki and
+                        AI-Generated Video Content on Relaxation</h3>
+                    <p class="publication-venue">Center for Reiki Research Conference 2024</p>
+                    <p class="publication-description">EEG-based study comparing relaxation responses to AI-generated
+                        content from Sora, Runway, and Pika Labs versus traditional Reiki therapy methods.</p>
+                </div>
+
+                <div class="publication-item fade-in"
+                    data-url="https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media">
+                    <h3 class="publication-title">The AI Models That Could Increase Diversity & Inclusion in Media</h3>
+                    <p class="publication-venue">Medium Publication - 2020</p>
+                    <p class="publication-description">Groundbreaking research showing 83% of respondents believe GenAI
+                        could promote diversity in media, with 64.4% interested in seeing themselves represented through
+                        AI technology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Partner With Our Research Team</h2>
+            <p>Join us in pioneering the future of ethical AI through collaborative research and consulting projects.
+            </p>
+            <a href="index.html#contact" class="cta-button">Start a Research Project</a>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Timeline and publication click functionality
+        document.addEventListener('click', function (e) {
+            const timelineContent = e.target.closest('.timeline-content');
+            const publicationItem = e.target.closest('.publication-item');
+
+            if (timelineContent) {
+                const url = timelineContent.getAttribute('data-url');
+                if (url) {
+                    window.open(url, '_blank');
+                }
+            } else if (publicationItem) {
+                const url = publicationItem.getAttribute('data-url');
+                if (url) {
+                    window.open(url, '_blank');
+                }
+            }
+        });
+
+        // Animation on scroll for other elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0.2s';
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.overview-card, .research-card, .publication-item').forEach(el => {
+            observer.observe(el);
+        });
+
+    </script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> G-Data Labs. All rights reserved. | Empowering Communities Through
+                AI & Data Literacy</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <a href="terms.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Terms &
+                    Conditions</a>
+                <a href="privacy.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Privacy
+                    Policy</a>
+                <a href="cookies.html" style="color: #ccc; text-decoration: none;">Cookie Policy</a>
+            </p>
+            <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
+        </div>
+    </footer>
+</body>
+
+</html>
