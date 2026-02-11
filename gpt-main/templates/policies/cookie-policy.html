@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="text-center">
+    <a href="/">
+      <img src="{{ url_for('static', filename='light_logo_web.png') }}" id="logo" width="256" height="256" />
+    </a>
+    <h3 class="fw-bolder mt-2">Cookie Policy</h3>
+  </div>
+  <form id="form-cookie-policy" class="mx-auto mt-3">
+    <textarea type="text"
+      title="Informed Consent ensures that you understand the G-Data legal agreements. Ask a Large Language Model to explain any aspect of the Cookie Policy."
+      id="user_ques" class="form-control" name="animal" placeholder="Ask Cookie Policy" required></textarea>
+    <button class="btn generate-btn" id="generate-cookie-policy-btn" type="submit">
+      <span>Generate</span>
+      <div class="typing d-none">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+  </form>
+  <div class="result-section mt-5"></div>
+  <div class="mt-5">
+    <p class="mt-2">This Cookie Policy applies to<a href="/"> www.g-datalabs.com</a> operated by G-Data Labs of 3296
+      West Manor Lane, Atlanta GA 30311, (“G-Data Labs”, “we”, “us”, or “our”) acting as the data controller.</p>
+    <p class="mt-2">This Policy sits in line with the Georgia Personal Identity Protection Act (“GPIPA”). As well as the
+      EU`s Privacy and Electronic Communications Directive (“PECD”) and the General Data Protection Act(“GDPR”).</p>
+    <p class="mt-2">If you have any questions about Cookies or about data protection at G-Data in general, you can reach
+      us by email using support@g-datalabs.com.</p>
+
+    <h5 class="fw-bolder mt-2">What are Cookies?</h5>
+    <p class="mt-2">On this website we use so-called "cookies". Cookies are small text files that are stored in the
+      memory of your device via your browser. Cookies store certain information (e.g., your preferred language or page
+      settings) which can be sent back to us by your browser when you visit the website again (depending on the lifetime
+      of the cookie).</p>
+
+    <h5 class="fw-bolder mt-2">Which cookies do we use?</h5>
+    <p>We distinguish between two categories of cookies: </p>
+    <p class="mt-2"><span class="fst-italic">Essential or Necessary cookies.</span> These cookies are essential or
+      necessary to ensure that a website works properly and is secure so that you can navigate a website and use its
+      features. Without these cookies, certain features of a website would not function, and thus you would not be able
+      to use certain services. </p>
+
+    <p class="mt-2">Optional cookies. These cookies are non-essential for the website to function and require your
+      consent.When it comes to optional cookies the following distinctions are made:
+    <ul class="mt-2" style="margin-left:40px">
+      <li> <span class="fst-italic">Functional cookies</span> or sometimes called convenience cookies. These cookies
+        allow a website to remember the options a user has made (including user ID`s stored, consents given, or
+        languages selected) and other personalization options you have selected when browsing.</li>
+      <li> <span class="fst-italic">Analysis and performance cookies, </span>which are used to monitor and improve the
+        function and service of a website. Those can track down problems when using a website, facilitate online
+        surveys, record visitor numbers, and provide analytics metrics. </li>
+      <li> <span class="fst-italic">Advertising cookies or targeting cookies. T </span> They are used to deliver
+        customized advertising to the user. This can be very convenient, but also very irritating.</li>
+    </ul>
+    </p>
+    <p class="mt-2">The GPIPA and PECD, require us to ask for your consent when using specific cookies (in particular
+      any cookie that is not strictly necessary for the operation of the website, for example, Functional cookies,
+      Analysis and performance cookies and Advertising cookies or targeting cookies “Optional cookies”). </p>
+    <p class="mt-2">Further and as the GPIPA and the GDPR also require a legal basis for the use of personal data in
+      relation to cookies, the use of cookies would then be your consent as well as our legitimate interest. </p>
+    <p class="mt-2">However, as we think it is important that you should have full control over your privacy online, we
+      refrained from placing optional cookies on our website and as such we are not required to obtain any consents.
+      Nonetheless, this may change, and we ask you to regularly check this policy for any updates.
+    </p>
+    <h5 class="fw-bolder mt-2">How to prevent the use of cookies</h5>
+    <p>If you do not wish to accept cookies, you can also change your web browser settings( <a
+        href="https://www.g-datalabs.com/">Google Chrome,</a> <a href="https://www.g-datalabs.com/"> Mozilla
+        Firefox,</a> <a href="https://www.g-datalabs.com/">Microsoft Internet Edge,</a> <a
+        href="https://www.g-datalabs.com/">Opera,</a> <a href="https://www.g-datalabs.com/"> Safari </a>) to
+      automatically block the storage of cookies or to inform you when a website wishes to store cookies on your device.
+    </p>
+
+
+    <h5 class="fw-bolder mt-2">Changes and Updates</h5>
+    <p>We may update our Cookie Policy from time to time. This might be for a number of reasons, such as to reflect a
+      change in the law or to accommodate a change in our business practices and the way we use cookies. We recommend
+      that you check here periodically for any changes to our Cookie Policy. </p>
+
+    <h5 class="fw-bolder mt-2">Validity and questions</h5>
+    <p>This Cookie Policy was last updated on Friday, June 16, 2023, and is the current and valid version.However, we
+      want to point out that from time to time due to actual or legal changes a revision to this policy may be
+      necessary. If you have any data protection questions, please feel free to contact us.</p>
+
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='/js/cookie-policy.js') }}"></script>
+{% endblock %}
