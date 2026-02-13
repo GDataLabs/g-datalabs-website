@@ -632,7 +632,9 @@
         }
 
         .showcase-text {
-            space-y: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .showcase-text h3 {
@@ -1156,83 +1158,84 @@
 
             .lab-video-section p {
                 font-size: 1rem !important;
+
+
             }
-        }
 
-        .benefits-header h3 {
-            font-size: 1.6rem;
-        }
+            .benefits-header h3 {
+                font-size: 1.6rem;
+            }
 
-        .benefits-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
 
-        .stats-row {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
 
-        .stat-item {
-            padding: 1rem;
-        }
+            .stat-item {
+                padding: 1rem;
+            }
 
-        /* G-World Section Mobile */
-        .g-world-section {
-            padding: 2rem 1rem;
-            margin: 3rem 0;
-        }
+            /* G-World Section Mobile */
+            .g-world-section {
+                padding: 2rem 1rem;
+                margin: 3rem 0;
+            }
 
-        .g-world-header h3 {
-            font-size: 1.8rem;
-        }
+            .g-world-header h3 {
+                font-size: 1.8rem;
+            }
 
-        .g-world-header p {
-            font-size: 1rem;
-        }
+            .g-world-header p {
+                font-size: 1rem;
+            }
 
-        .g-world-features {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
+            .g-world-features {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
 
-        .vision-stats {
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+            .vision-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
 
-        .g-world-vision {
-            padding: 2rem 1.5rem;
-        }
+            .g-world-vision {
+                padding: 2rem 1.5rem;
+            }
 
-        .g-world-cta {
-            padding: 1.5rem;
-        }
+            .g-world-cta {
+                padding: 1.5rem;
+            }
 
-        .g-world-cta strong {
-            font-size: 1.2rem;
-        }
+            .g-world-cta strong {
+                font-size: 1.2rem;
+            }
 
-        .g-world-cta p {
-            font-size: 1rem;
-        }
+            .g-world-cta p {
+                font-size: 1rem;
+            }
 
-        .earth-container {
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
+            .earth-container {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
 
-        .earth-container h5 {
-            font-size: 1.2rem;
-        }
+            .earth-container h5 {
+                font-size: 1.2rem;
+            }
 
-        .earth-iframe-wrapper iframe {
-            height: 300px;
-        }
+            .earth-iframe-wrapper iframe {
+                height: 300px;
+            }
 
-        .earth-description {
-            font-size: 0.9rem;
-        }
+            .earth-description {
+                font-size: 0.9rem;
+            }
         }
 
         .stat-number {
@@ -1444,8 +1447,7 @@
                 <li><a href="ai-research-consulting.html">Research</a></li>
                 <li><a href="ai-literacy-workshops.html">Workshops</a></li>
                 <li><a href="ai-workflow-integration.html">Workflows</a></li>
-                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
-                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+
             </ul>
         </nav>
     </header>

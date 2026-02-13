@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,12 +20,12 @@
             --bg-card-gradient-end: #f0ede6;
             --text-primary: #333;
             --text-secondary: #666;
-            --text-muted: rgba(74,60,40,0.8);
+            --text-muted: rgba(74, 60, 40, 0.8);
             --text-header: #4a3c28;
             --accent-primary: #8b7355;
             --accent-secondary: #a08c69;
-            --border-color: rgba(0,0,0,0.1);
-            --shadow-color: rgba(0,0,0,0.1);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
             --logo-path: 'logos/light_logo.png';
             /* Service colors for light mode */
             --color-workshops: #ff4b4b;
@@ -55,12 +56,13 @@
             --bg-card-gradient-end: #2d2d2d;
             --text-primary: #f0f0f0;
             --text-secondary: #cccccc;
-            --text-muted: rgba(240,240,240,0.8);
+            --text-muted: rgba(240, 240, 240, 0.8);
             --text-header: #f0f0f0;
-            --accent-primary: #F5B11A;  /* Gold from logo */
+            --accent-primary: #F5B11A;
+            /* Gold from logo */
             --accent-secondary: #d4af37;
-            --border-color: rgba(255,255,255,0.1);
-            --shadow-color: rgba(0,0,0,0.3);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
             --logo-path: 'logos/gdata_night_trans.png';
             /* Service colors for dark mode */
             --color-workshops: #E62431;
@@ -154,45 +156,9 @@
         .nav-links a:hover {
             color: var(--accent-primary);
         }
-        
-        .nav-links .auth-link {
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-        
-        .nav-links .login-btn {
-            color: var(--text-header);
-            border: 1px solid var(--accent-primary);
-            background: transparent;
-        }
-        
-        .nav-links .signup-btn {
-            color: var(--bg-primary);
-            background: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
-        }
-        
-        .nav-links .auth-link:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-            color: inherit;
-        }
-        
-        .nav-links .login-btn:hover {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-        }
-        
-        .nav-links .signup-btn:hover {
-            background: var(--accent-secondary);
-            border-color: var(--accent-secondary);
-        }
-        
+
+
+
 
         /* Hero Section */
         .hero {
@@ -261,7 +227,7 @@
             width: 350px;
             height: 350px;
             border-radius: 50%;
-            border: 3px solid rgba(74,60,40,0.3);
+            border: 3px solid rgba(74, 60, 40, 0.3);
             backdrop-filter: blur(10px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
@@ -304,15 +270,23 @@
         .venn-circle:hover .hover-video {
             opacity: 1;
         }
-        
+
         .venn-circle:hover .hover-video i {
             animation: pulse 1.5s infinite;
         }
-        
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .venn-circle:hover i {
@@ -356,7 +330,7 @@
 
         .venn-circle:hover {
             transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             z-index: 20;
         }
 
@@ -425,12 +399,12 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(139,115,85,0.3);
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139,115,85,0.4);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.4);
             background: #a08c69;
         }
 
@@ -531,7 +505,7 @@
 
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .service-card.workshops {
@@ -541,7 +515,7 @@
 
         .service-card.workshops:hover {
             background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
-            box-shadow: 0 10px 30px rgba(255,75,75,0.2);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
         }
 
         .service-card.integration {
@@ -551,7 +525,7 @@
 
         .service-card.integration:hover {
             background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
-            box-shadow: 0 10px 30px rgba(75,150,255,0.2);
+            box-shadow: 0 10px 30px rgba(75, 150, 255, 0.2);
         }
 
         .service-card.research {
@@ -561,7 +535,7 @@
 
         .service-card.research:hover {
             background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
-            box-shadow: 0 10px 30px rgba(255,215,0,0.2);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
         }
 
         /* Dark mode Service card colors - using CSS variables instead of !important */
@@ -680,9 +654,9 @@
 
         .research-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         /* Research image hover system using background images */
         .research-image-hover {
             position: relative;
@@ -699,27 +673,27 @@
             margin-bottom: 1rem;
             overflow: hidden;
         }
-        
+
         .research-image-hover i {
             font-size: 3rem;
             transition: opacity 0.4s ease;
             z-index: 2;
         }
-        
+
         /* Default state - show icon */
         .research-image-hover {
             background-image: none;
         }
-        
+
         /* Hover state - show background image and hide icon */
         .research-card:hover .research-image-hover {
             background-image: var(--hover-bg-image);
         }
-        
+
         .research-card:hover .research-image-hover i {
             opacity: 0;
         }
-        
+
         .research-card:hover .research-image-hover::before {
             content: '';
             position: absolute;
@@ -727,7 +701,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.1);
+            background: rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
 
@@ -800,10 +774,10 @@
         .team-member:hover {
             transform: translateY(-5px);
         }
-        
+
         .team-member:hover .team-icon {
             transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .team-member img {
@@ -850,24 +824,24 @@
         }
 
         .impact-stat {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             padding: 2rem 1.5rem;
             border-radius: 15px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
         }
 
         .impact-stat:hover {
             transform: translateY(-5px);
-            background: rgba(255,255,255,0.15);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .impact-number {
             font-size: 2.5rem;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             margin-bottom: 1rem;
         }
 
@@ -1067,33 +1041,33 @@
             .container {
                 padding: 0 15px;
             }
-            
+
             nav {
                 flex-direction: column;
                 gap: 1rem;
                 padding: 0.5rem 0;
             }
-            
+
             .logo {
                 font-size: 1.4rem;
             }
-            
+
             .logo img {
                 height: 35px;
             }
-            
+
             .nav-links {
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 1rem;
                 font-size: 0.9rem;
             }
-            
+
             .nav-links .auth-link {
                 font-size: 0.8rem;
                 padding: 6px 12px;
             }
-            
+
 
             .hero {
                 padding: 140px 0 40px;
@@ -1103,7 +1077,7 @@
                 font-size: 2.2rem;
                 line-height: 1.2;
             }
-            
+
             .subtitle {
                 font-size: 1rem;
                 margin-bottom: 2rem;
@@ -1113,7 +1087,7 @@
                 flex-direction: column;
                 gap: 1rem;
             }
-            
+
             /* Better mobile venn diagram */
             .venn-diagram {
                 width: 100%;
@@ -1121,44 +1095,44 @@
                 height: 300px;
                 margin: 0 auto;
             }
-            
+
             .venn-circle {
                 width: 160px;
                 height: 160px;
                 font-size: 0.9rem;
             }
-            
+
             .venn-circle.left {
                 top: 80px;
                 left: 10px;
             }
-            
+
             .venn-circle.right {
                 top: 80px;
                 right: 10px;
             }
-            
+
             .venn-circle.center {
                 top: 10px;
                 left: 50%;
                 transform: translateX(-50%);
             }
-            
+
             .venn-label {
                 font-size: 0.8rem;
                 font-weight: 600;
             }
-            
+
             .venn-label.left {
                 top: 260px;
                 left: 50px;
             }
-            
+
             .venn-label.right {
                 top: 260px;
                 right: 50px;
             }
-            
+
             .venn-label.center {
                 top: -5px;
                 left: 50%;
@@ -1175,7 +1149,7 @@
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-            
+
             .service-card,
             .research-card,
             .team-member {
@@ -1196,6 +1170,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="container">
@@ -1209,8 +1184,7 @@
                 <li><a href="ai-research-consulting.html">Research</a></li>
                 <li><a href="ai-literacy-workshops.html">Workshops</a></li>
                 <li><a href="ai-workflow-integration.html">Workflows</a></li>
-                <li><a href="https://ai.g-datalabs.com/login" class="auth-link login-btn">Log In</a></li>
-                <li><a href="https://ai.g-datalabs.com/signup" class="auth-link signup-btn">Sign Up</a></li>
+
             </ul>
         </nav>
     </header>
@@ -1219,36 +1193,44 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Empowering People Through AI Research & Literacy</h1>
-                <p class="subtitle">G-Data Labs is pioneering ethical AI research and literacy on the interaction between humans and AI.</p>
-                
+                <p class="subtitle">G-Data Labs is pioneering ethical AI research and literacy on the interaction
+                    between humans and AI.</p>
+
                 <div class="hero-stats">
                     <div class="venn-diagram">
-                        <div class="venn-circle left" data-video="videos/mobile_lab_truncated.mp4" onclick="window.location.href='ai-literacy-workshops.html'">
+                        <div class="venn-circle left" data-video="videos/mobile_lab_truncated.mp4"
+                            onclick="window.location.href='ai-literacy-workshops.html'">
                             <i class="fas fa-chalkboard-teacher"></i>
-                            <video class="hover-video" muted loop preload="auto" playsinline webkit-playsinline disablepictureinpicture>
+                            <video class="hover-video" muted loop preload="auto" playsinline webkit-playsinline
+                                disablepictureinpicture>
                                 <source src="videos/mobile_lab_truncated.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="venn-label left">AI Literacy<br>Workshops</div>
-                        
-                        <div class="venn-circle right" data-video="videos/G-Data's_Data_Market_Transaction_prototype.mp4" onclick="window.location.href='ai-workflow-integration.html'">
+
+                        <div class="venn-circle right"
+                            data-video="videos/G-Data's_Data_Market_Transaction_prototype.mp4"
+                            onclick="window.location.href='ai-workflow-integration.html'">
                             <i class="fas fa-cogs"></i>
-                            <video class="hover-video" muted loop preload="auto" playsinline webkit-playsinline disablepictureinpicture>
+                            <video class="hover-video" muted loop preload="auto" playsinline webkit-playsinline
+                                disablepictureinpicture>
                                 <source src="videos/G-Data's_Data_Market_Transaction_prototype.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="venn-label right">AI Workflow<br>Integration</div>
-                        
-                        <div class="venn-circle center" data-video="videos/You_Choose_with_the_Faces_of_AI.mp4" onclick="window.location.href='ai-research-consulting.html'">
+
+                        <div class="venn-circle center" data-video="videos/You_Choose_with_the_Faces_of_AI.mp4"
+                            onclick="window.location.href='ai-research-consulting.html'">
                             <i class="fas fa-flask"></i>
-                            <video class="hover-video" muted loop preload="auto" playsinline webkit-playsinline disablepictureinpicture>
+                            <video class="hover-video" muted loop preload="auto" playsinline webkit-playsinline
+                                disablepictureinpicture>
                                 <source src="videos/You_Choose_with_the_Faces_of_AI.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="venn-label center">AI Research &<br>Consulting</div>
                     </div>
                 </div>
-                
+
                 <a href="#contact" class="cta-button">Partner With Us</a>
             </div>
         </div>
@@ -1258,26 +1240,32 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Our Mission</h2>
-                <p class="section-subtitle">To shepherd the interaction of Humans and AI for the safety and benefit of all people by researching and developing responsible AI frameworks, providing accessible AI literacy, and implementing effective AI integrations to organizations across a wide range of industries.</p>
+                <p class="section-subtitle">To shepherd the interaction of Humans and AI for the safety and benefit of
+                    all people by researching and developing responsible AI frameworks, providing accessible AI
+                    literacy, and implementing effective AI integrations to organizations across a wide range of
+                    industries.</p>
             </div>
-            
+
             <div class="mission-grid">
                 <div class="mission-card fade-in">
                     <i class="fas fa-lightbulb"></i>
                     <h3>Our Vision</h3>
-                    <p>We believe every person generates value and deserves to understand and benefit from AI technology.</p>
+                    <p>We believe every person generates value and deserves to understand and benefit from AI
+                        technology.</p>
                 </div>
-                
+
                 <div class="mission-card fade-in">
                     <i class="fas fa-shield-alt"></i>
                     <h3>Our Values</h3>
-                    <p>Ethical AI development with explicit consent, transparency, and fair compensation for data contributors.</p>
+                    <p>Ethical AI development with explicit consent, transparency, and fair compensation for data
+                        contributors.</p>
                 </div>
-                
+
                 <div class="mission-card fade-in">
                     <i class="fas fa-rocket"></i>
                     <h3>Our Goal</h3>
-                    <p>Foster new careers, entrepreneurship, and ownership in the AI economy through education and empowerment.</p>
+                    <p>Foster new careers, entrepreneurship, and ownership in the AI economy through education and
+                        empowerment.</p>
                 </div>
             </div>
         </div>
@@ -1287,16 +1275,18 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Our Services</h2>
-                <p class="section-subtitle">Comprehensive AI literacy programs designed to empower communities and organizations</p>
+                <p class="section-subtitle">Comprehensive AI literacy programs designed to empower communities and
+                    organizations</p>
             </div>
-            
+
             <div class="services-grid">
                 <div class="service-card workshops fade-in" data-url="ai-literacy-workshops.html">
                     <div class="service-icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </div>
                     <h3>AI Literacy Workshops</h3>
-                    <p>Interactive, hands-on workshops that demystify AI and teach practical applications. Our workshops help participants understand AI's impact on their daily lives and career opportunities.</p>
+                    <p>Interactive, hands-on workshops that demystify AI and teach practical applications. Our workshops
+                        help participants understand AI's impact on their daily lives and career opportunities.</p>
                     <ul class="service-features">
                         <li>Step-by-step AI demonstrations</li>
                         <li>Real-world applications and examples</li>
@@ -1304,13 +1294,14 @@
                         <li>Career pathway guidance</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card integration fade-in" data-url="ai-workflow-integration.html">
                     <div class="service-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
                     <h3>AI Workflow Integration</h3>
-                    <p>Custom AI solutions and workflow integrations that help organizations leverage artificial intelligence to improve efficiency and outcomes.</p>
+                    <p>Custom AI solutions and workflow integrations that help organizations leverage artificial
+                        intelligence to improve efficiency and outcomes.</p>
                     <ul class="service-features">
                         <li>Industry-ready automation</li>
                         <li>Custom AI model development</li>
@@ -1318,13 +1309,14 @@
                         <li>Ethical AI implementation</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card research fade-in" data-url="ai-research-consulting.html">
                     <div class="service-icon">
                         <i class="fas fa-flask"></i>
                     </div>
                     <h3>AI Research & Consulting</h3>
-                    <p>Cutting-edge research into AI's societal impact, with expert consulting services to guide organizations in ethical AI adoption.</p>
+                    <p>Cutting-edge research into AI's societal impact, with expert consulting services to guide
+                        organizations in ethical AI adoption.</p>
                     <ul class="service-features">
                         <li>Biometric AI research</li>
                         <li>Ethical AI framework development</li>
@@ -1340,29 +1332,37 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Groundbreaking Research</h2>
-                <p class="section-subtitle">Industry-leading research that shapes the future of ethical AI development</p>
+                <p class="section-subtitle">Industry-leading research that shapes the future of ethical AI development
+                </p>
             </div>
-            
+
             <div class="research-grid">
-                <div class="research-card fade-in" onclick="window.open('terms.html', '_blank')" style="--hover-bg-image: url('images/Industry-First_Informed_Consent.png');">
+                <div class="research-card fade-in" onclick="window.open('terms.html', '_blank')"
+                    style="--hover-bg-image: url('images/Industry-First_Informed_Consent.png');">
                     <div class="research-image-hover">
                         <i class="fas fa-file-contract" style="color: var(--color-workshops); opacity: 0.8;"></i>
                     </div>
                     <h4>Industry-First Informed Consent</h4>
                     <div class="research-stat">2022</div>
-                    <p>First to use LLMs to translate company policies, ensuring truly informed consent for AI data usage.</p>
+                    <p>First to use LLMs to translate company policies, ensuring truly informed consent for AI data
+                        usage.</p>
                 </div>
-                
-                <div class="research-card fade-in" onclick="window.open('https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true', '_blank')" style="--hover-bg-image: url('images/iMotions_Biometric_Study.png');">
+
+                <div class="research-card fade-in"
+                    onclick="window.open('https://docs.google.com/presentation/d/1Wg7GUiN8nMUD_EB0mBF0cca_h184liwu/edit?usp=sharing&ouid=108908702130297532211&rtpof=true&sd=true', '_blank')"
+                    style="--hover-bg-image: url('images/iMotions_Biometric_Study.png');">
                     <div class="research-image-hover">
                         <i class="fas fa-brain" style="color: var(--color-integration); opacity: 0.8;"></i>
                     </div>
                     <h4>Biometric AI Feedback</h4>
                     <div class="research-stat">EEG + FEA</div>
-                    <p>Pioneering research using biometric data as human feedback for training more ethical, personalized AI systems.</p>
+                    <p>Pioneering research using biometric data as human feedback for training more ethical,
+                        personalized AI systems.</p>
                 </div>
-                
-                <div class="research-card fade-in" onclick="window.open('https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media', '_blank')" style="--hover-bg-image: url('images/GenAI_Diversity_Study.png');">
+
+                <div class="research-card fade-in"
+                    onclick="window.open('https://github.com/MoJoMoon/Deep-Learning-for-Diversity-Inclusion-in-Media', '_blank')"
+                    style="--hover-bg-image: url('images/GenAI_Diversity_Study.png');">
                     <div class="research-image-hover">
                         <i class="fas fa-users" style="color: var(--color-research); opacity: 0.8;"></i>
                     </div>
@@ -1370,26 +1370,33 @@
                     <div class="research-stat">83%</div>
                     <p>Groundbreaking research showing GenAI can promote diversity and inclusion in media.</p>
                 </div>
-                
-                <div class="research-card fade-in" onclick="window.open('https://blog.g-datalabs.com/blog-post-2', '_blank')" style="--hover-bg-image: url('images/SAG-AFTRA_Strike_Analysis.png');">
+
+                <div class="research-card fade-in"
+                    onclick="window.open('https://blog.g-datalabs.com/blog-post-2', '_blank')"
+                    style="--hover-bg-image: url('images/SAG-AFTRA_Strike_Analysis.png');">
                     <div class="research-image-hover">
                         <i class="fas fa-theater-masks" style="color: var(--color-workshops); opacity: 0.8;"></i>
                     </div>
                     <h4>SAG-AFTRA Analysis</h4>
                     <div class="research-stat">100 Days</div>
-                    <p>Real-time analysis of entertainment industry strikes, informing consent and compensation frameworks.</p>
+                    <p>Real-time analysis of entertainment industry strikes, informing consent and compensation
+                        frameworks.</p>
                 </div>
-                
-                <div class="research-card fade-in" onclick="window.open('https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a', '_blank')" style="--hover-bg-image: url('images/AI_Relaxation_Study.png');">
+
+                <div class="research-card fade-in"
+                    onclick="window.open('https://www.canva.com/design/DAGDiPg_7uw/b-XKhHPqal46J1LNYb5_Zg/view?utm_content=DAGDiPg_7uw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08365969a', '_blank')"
+                    style="--hover-bg-image: url('images/AI_Relaxation_Study.png');">
                     <div class="research-image-hover">
                         <i class="fas fa-spa" style="color: var(--color-integration); opacity: 0.8;"></i>
                     </div>
                     <h4>AI Relaxation Study</h4>
                     <div class="research-stat">2024</div>
-                    <p>EEG-based study comparing relaxation levels between AI-generated content and traditional therapy methods.</p>
+                    <p>EEG-based study comparing relaxation levels between AI-generated content and traditional therapy
+                        methods.</p>
                 </div>
-                
-                <div class="research-card fade-in" onclick="window.open('https://youtu.be/ngWUBlO2iHg', '_blank')" style="--hover-bg-image: url('images/NMSBA_World_Forum_Presentation.png');">
+
+                <div class="research-card fade-in" onclick="window.open('https://youtu.be/ngWUBlO2iHg', '_blank')"
+                    style="--hover-bg-image: url('images/NMSBA_World_Forum_Presentation.png');">
                     <div class="research-image-hover">
                         <i class="fas fa-presentation" style="color: var(--color-research); opacity: 0.8;"></i>
                     </div>
@@ -1405,56 +1412,62 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Our Expert Team</h2>
-                <p class="section-subtitle">A diverse team of researchers, engineers, and consultants focused on human-centric AI</p>
+                <p class="section-subtitle">A diverse team of researchers, engineers, and consultants focused on
+                    human-centric AI</p>
             </div>
-            
+
             <div class="team-grid">
                 <div class="team-member fade-in">
-                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-workshops) 0%, var(--color-workshops-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                    <div class="team-icon"
+                        style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-workshops) 0%, var(--color-workshops-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
                         <i class="fas fa-user-tie" style="font-size: 3rem; color: white;"></i>
                     </div>
                     <h4>Morgan Jones</h4>
                     <p class="role">Founder & Chief Data Scientist</p>
                     <p>Educator to 10,000+ students across U.S. & China, Howard University alumnus</p>
                 </div>
-                
+
                 <div class="team-member fade-in">
-                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-integration) 0%, var(--color-integration-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                    <div class="team-icon"
+                        style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-integration) 0%, var(--color-integration-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
                         <i class="fas fa-brain" style="font-size: 3rem; color: white;"></i>
                     </div>
                     <h4>Devin Gore</h4>
                     <p class="role">EEG Researcher</p>
                     <p>Electroencephalogram Tech & Researcher specializing in biometric AI</p>
                 </div>
-                
+
                 <div class="team-member fade-in">
-                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-research) 0%, var(--color-research-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                    <div class="team-icon"
+                        style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-research) 0%, var(--color-research-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
                         <i class="fas fa-robot" style="font-size: 3rem; color: white;"></i>
                     </div>
                     <h4>Naveen Balaji</h4>
                     <p class="role">Robotics Engineer</p>
                     <p>Leading our mobile AI lab robotics and automation initiatives</p>
                 </div>
-                
+
                 <div class="team-member fade-in">
-                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-workshops) 0%, var(--color-workshops-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                    <div class="team-icon"
+                        style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-workshops) 0%, var(--color-workshops-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
                         <i class="fas fa-code" style="font-size: 3rem; color: white;"></i>
                     </div>
                     <h4>Haris Muhammed</h4>
                     <p class="role">Frontend Software Engineer</p>
                     <p>Developing intuitive AI platform interfaces and user experiences</p>
                 </div>
-                
+
                 <div class="team-member fade-in">
-                    <div class="team-icon" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-integration) 0%, var(--color-integration-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
+                    <div class="team-icon"
+                        style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-integration) 0%, var(--color-integration-hover-bg) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s ease;">
                         <i class="fas fa-server" style="font-size: 3rem; color: white;"></i>
                     </div>
                     <h4>Tahir Muhammed</h4>
                     <p class="role">Backend Software Engineer</p>
                     <p>Building robust AI systems and data processing infrastructure</p>
                 </div>
-                
-                </div>
+
+            </div>
         </div>
     </section>
 
@@ -1464,26 +1477,29 @@
                 <h2 class="section-title">Our Commitment to Transparency</h2>
                 <p class="section-subtitle">Industry-first informed consent through AI-powered policy explanations</p>
             </div>
-            
+
             <div class="policy-cards">
                 <a href="terms.html" class="policy-card">
                     <i class="fas fa-file-contract"></i>
                     <h3>Terms & Conditions</h3>
-                    <p>Understand your rights and our commitments. Our AI assistant helps explain complex legal language in simple terms.</p>
+                    <p>Understand your rights and our commitments. Our AI assistant helps explain complex legal language
+                        in simple terms.</p>
                     <span class="learn-more">Read Terms →</span>
                 </a>
-                
+
                 <a href="privacy.html" class="policy-card">
                     <i class="fas fa-shield-alt"></i>
                     <h3>Privacy Policy</h3>
-                    <p>Learn how we protect your data and respect your privacy. Get clear explanations about data collection and usage.</p>
+                    <p>Learn how we protect your data and respect your privacy. Get clear explanations about data
+                        collection and usage.</p>
                     <span class="learn-more">Read Privacy Policy →</span>
                 </a>
-                
+
                 <a href="cookies.html" class="policy-card">
                     <i class="fas fa-cookie-bite"></i>
                     <h3>Cookie Policy</h3>
-                    <p>Discover how we use cookies and how to manage your preferences. Understand tracking in plain English.</p>
+                    <p>Discover how we use cookies and how to manage your preferences. Understand tracking in plain
+                        English.</p>
                     <span class="learn-more">Read Cookie Policy →</span>
                 </a>
             </div>
@@ -1496,7 +1512,7 @@
                 <h2 class="section-title">Our Partners</h2>
                 <p class="section-subtitle">Collaborating with leading organizations to maximize impact</p>
             </div>
-            
+
             <div class="partners-grid">
                 <div class="partner-logo">
                     <img src="logos/ailp3_logo.png" alt="AILP3">
@@ -1538,27 +1554,30 @@
                 <h2 class="section-title">Partner With Us</h2>
                 <p class="section-subtitle">Ready to bring ethical AI education and research to your organization?</p>
             </div>
-            
+
             <div class="contact-info">
                 <div class="contact-card fade-in">
                     <i class="fas fa-university"></i>
                     <h4>Educational Partnerships</h4>
-                    <p>Collaborate with us to bring AI literacy programs to your institution and prepare students for the AI economy.</p>
+                    <p>Collaborate with us to bring AI literacy programs to your institution and prepare students for
+                        the AI economy.</p>
                 </div>
-                
+
                 <div class="contact-card fade-in">
                     <i class="fas fa-building"></i>
                     <h4>Organizational Training</h4>
-                    <p>Transform your workforce with comprehensive AI literacy training and ethical AI implementation strategies.</p>
+                    <p>Transform your workforce with comprehensive AI literacy training and ethical AI implementation
+                        strategies.</p>
                 </div>
-                
+
                 <div class="contact-card fade-in">
                     <i class="fas fa-handshake"></i>
                     <h4>Research Collaboration</h4>
-                    <p>Partner with us on cutting-edge AI research projects that shape the future of human-AI interaction.</p>
+                    <p>Partner with us on cutting-edge AI research projects that shape the future of human-AI
+                        interaction.</p>
                 </div>
             </div>
-            
+
             <div class="contact-details">
                 <h3>Get in Touch</h3>
                 <p class="contact-person">
@@ -1573,10 +1592,13 @@
 
     <footer>
         <div class="container">
-            <p>&copy; <span id="current-year"></span> G-Data Labs. All rights reserved. | Empowering Communities Through AI & Data Literacy</p>
+            <p>&copy; <span id="current-year"></span> G-Data Labs. All rights reserved. | Empowering Communities Through
+                AI & Data Literacy</p>
             <p style="margin-top: 10px; font-size: 0.9rem;">
-                <a href="terms.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Terms & Conditions</a>
-                <a href="privacy.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Privacy Policy</a>
+                <a href="terms.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Terms &
+                    Conditions</a>
+                <a href="privacy.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Privacy
+                    Policy</a>
                 <a href="cookies.html" style="color: #ccc; text-decoration: none;">Cookie Policy</a>
             </p>
             <script>
@@ -1631,7 +1653,7 @@
                 circle.addEventListener('mouseenter', () => {
                     video.play();
                 });
-                
+
                 circle.addEventListener('mouseleave', () => {
                     video.pause();
                     video.currentTime = 0;
@@ -1640,7 +1662,7 @@
         });
 
         // Service card click functionality
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const serviceCard = e.target.closest('.service-card');
             if (serviceCard) {
                 const url = serviceCard.getAttribute('data-url');
@@ -1652,4 +1674,5 @@
 
     </script>
 </body>
+
 </html>
