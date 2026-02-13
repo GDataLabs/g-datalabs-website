@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,7 +64,7 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: background 0.3s ease, color 0.3s ease;
         }
 
@@ -105,7 +106,7 @@
         .nav-links a:hover {
             color: var(--accent-primary);
         }
-        
+
         .nav-links .auth-link {
             font-size: 0.9rem;
             font-weight: 500;
@@ -115,35 +116,35 @@
             transition: all 0.3s ease;
             white-space: nowrap;
         }
-        
+
         .nav-links .login-btn {
             color: var(--text-header);
             border: 1px solid var(--accent-primary);
             background: transparent;
         }
-        
+
         .nav-links .signup-btn {
             color: var(--bg-primary);
             background: var(--accent-primary);
             border: 1px solid var(--accent-primary);
         }
-        
+
         .nav-links .auth-link:hover {
             transform: translateY(-1px);
-            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
             color: inherit;
         }
-        
+
         .nav-links .login-btn:hover {
             background: var(--accent-primary);
             color: var(--bg-primary);
         }
-        
+
         .nav-links .signup-btn:hover {
             background: var(--accent-secondary);
             border-color: var(--accent-secondary);
         }
-        
+
 
         /* Hero Section */
         .hero {
@@ -164,7 +165,7 @@
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto;
-            color: rgba(74,60,40,0.8);
+            color: rgba(74, 60, 40, 0.8);
         }
 
         /* Key Features Section */
@@ -190,7 +191,7 @@
 
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .feature-card:nth-child(1) {
@@ -199,7 +200,7 @@
 
         .feature-card:nth-child(1):hover {
             background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
-            box-shadow: 0 10px 30px rgba(75,150,255,0.2);
+            box-shadow: 0 10px 30px rgba(75, 150, 255, 0.2);
         }
 
         .feature-card:nth-child(2) {
@@ -208,7 +209,7 @@
 
         .feature-card:nth-child(2):hover {
             background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
-            box-shadow: 0 10px 30px rgba(255,75,75,0.2);
+            box-shadow: 0 10px 30px rgba(255, 75, 75, 0.2);
         }
 
         .feature-card:nth-child(3) {
@@ -217,7 +218,7 @@
 
         .feature-card:nth-child(3):hover {
             background: linear-gradient(135deg, #fffdf5 0%, #fff8e8 100%);
-            box-shadow: 0 10px 30px rgba(255,215,0,0.2);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
         }
 
         .feature-icon {
@@ -282,7 +283,7 @@
             padding: 2.5rem;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
         }
 
@@ -380,12 +381,12 @@
             border-radius: 50px;
             font-weight: 600;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(139,115,85,0.3);
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
         }
 
         .demo-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139,115,85,0.4);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.4);
             background: #a08c69;
         }
 
@@ -406,7 +407,7 @@
             background: white;
             padding: 2.5rem;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
         }
 
@@ -472,12 +473,12 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(244,241,232,0.3);
+            box-shadow: 0 4px 15px rgba(244, 241, 232, 0.3);
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(244,241,232,0.4);
+            box-shadow: 0 6px 20px rgba(244, 241, 232, 0.4);
             background: #e8e0d0;
         }
 
@@ -538,7 +539,7 @@
             background: white;
             border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             border: 2px solid #e0e0e0;
         }
 
@@ -693,8 +694,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Animations */
@@ -703,6 +709,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -715,6 +722,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="container">
@@ -724,7 +732,7 @@
             </a>
             <ul class="nav-links">
                 <li><a href="index.html#home">Home</a></li>
-                <li><a href="https://ai.g-datalabs.com/" target="_blank">G-Data AI</a></li>
+
                 <li><a href="ai-research-consulting.html">Research</a></li>
                 <li><a href="ai-literacy-workshops.html">Workshops</a></li>
                 <li><a href="ai-workflow-integration.html">Workflows</a></li>
@@ -737,7 +745,9 @@
     <section class="hero">
         <div class="container">
             <h1>AI Workflow Integration</h1>
-            <p>Transform your organization's efficiency with intelligent automation. Our custom AI solutions seamlessly integrate into your existing workflows, reducing manual tasks while enhancing productivity and decision-making across all departments.</p>
+            <p>Transform your organization's efficiency with intelligent automation. Our custom AI solutions seamlessly
+                integrate into your existing workflows, reducing manual tasks while enhancing productivity and
+                decision-making across all departments.</p>
         </div>
     </section>
 
@@ -747,14 +757,15 @@
                 <h2 class="section-title">Core Integration Solutions</h2>
                 <p class="section-subtitle">Powerful AI tools that revolutionize how your team works</p>
             </div>
-            
+
             <div class="features-grid">
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-database"></i>
                     </div>
                     <h3>RAG Database Integration</h3>
-                    <p>Retrieval-Augmented Generation systems that connect your organization's knowledge base with AI reasoning, enabling instant access to relevant information and context-aware responses.</p>
+                    <p>Retrieval-Augmented Generation systems that connect your organization's knowledge base with AI
+                        reasoning, enabling instant access to relevant information and context-aware responses.</p>
                     <ul class="feature-list">
                         <li>Custom knowledge base integration</li>
                         <li>Real-time document processing</li>
@@ -763,13 +774,14 @@
                         <li>Secure data handling and privacy</li>
                     </ul>
                 </div>
-                
+
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-user-tie"></i>
                     </div>
                     <h3>AI Spokesperson Integration</h3>
-                    <p>Intelligent virtual representatives that handle communications, customer service, and information dissemination with your organization's voice, tone, and expertise.</p>
+                    <p>Intelligent virtual representatives that handle communications, customer service, and information
+                        dissemination with your organization's voice, tone, and expertise.</p>
                     <ul class="feature-list">
                         <li>Brand-consistent voice and messaging</li>
                         <li>24/7 automated customer support</li>
@@ -778,13 +790,14 @@
                         <li>Performance analytics and insights</li>
                     </ul>
                 </div>
-                
+
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
                     <h3>Workflow Automation</h3>
-                    <p>Intelligent process automation that learns from your team's patterns, optimizes repetitive tasks, and creates seamless workflows across departments and systems.</p>
+                    <p>Intelligent process automation that learns from your team's patterns, optimizes repetitive tasks,
+                        and creates seamless workflows across departments and systems.</p>
                     <ul class="feature-list">
                         <li>Process mapping and optimization</li>
                         <li>Automated task scheduling</li>
@@ -801,26 +814,30 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Proven Time Savings</h2>
-                <p class="section-subtitle">Real results from organizations that have implemented our AI workflow solutions</p>
+                <p class="section-subtitle">Real results from organizations that have implemented our AI workflow
+                    solutions</p>
             </div>
-            
+
             <div class="savings-grid">
                 <div class="savings-card fade-in">
                     <div class="savings-stat">33%</div>
                     <div class="savings-label">Reduction in Manual Tasks</div>
-                    <p class="savings-description">Organizations report a 33% decrease in time spent on repetitive manual processes after implementing our AI automation solutions.</p>
+                    <p class="savings-description">Organizations report a 33% decrease in time spent on repetitive
+                        manual processes after implementing our AI automation solutions.</p>
                 </div>
-                
+
                 <div class="savings-card fade-in">
                     <div class="savings-stat">10hrs</div>
                     <div class="savings-label">Weekly Time Savings</div>
-                    <p class="savings-description">Average team saves 10 hours per week through intelligent document processing, automated scheduling, and streamlined communications.</p>
+                    <p class="savings-description">Average team saves 10 hours per week through intelligent document
+                        processing, automated scheduling, and streamlined communications.</p>
                 </div>
-                
+
                 <div class="savings-card fade-in">
                     <div class="savings-stat">75%</div>
                     <div class="savings-label">ROI Within 6 Months</div>
-                    <p class="savings-description">Clients typically see a 75% return on investment within six months through increased productivity and reduced operational costs.</p>
+                    <p class="savings-description">Clients typically see a 75% return on investment within six months
+                        through increased productivity and reduced operational costs.</p>
                 </div>
             </div>
         </div>
@@ -830,13 +847,15 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">RAG Database in Action</h2>
-                <p class="section-subtitle">See how our Retrieval-Augmented Generation system transforms organizational knowledge</p>
+                <p class="section-subtitle">See how our Retrieval-Augmented Generation system transforms organizational
+                    knowledge</p>
             </div>
-            
+
             <div class="showcase-grid">
                 <div class="showcase-content">
                     <h3>Instant Knowledge Access</h3>
-                    <p>Our RAG system ingests your organization's documents, policies, and procedures, creating an intelligent knowledge base that provides instant, accurate responses to complex queries.</p>
+                    <p>Our RAG system ingests your organization's documents, policies, and procedures, creating an
+                        intelligent knowledge base that provides instant, accurate responses to complex queries.</p>
                     <p><strong>Key Benefits:</strong></p>
                     <ul class="feature-list">
                         <li>Reduces information search time by 90%</li>
@@ -845,7 +864,7 @@
                         <li>Integrates with existing systems seamlessly</li>
                     </ul>
                 </div>
-                
+
                 <div class="showcase-demo">
                     <div id="rag-demo-container" class="rag-demo-container">
                         <div class="demo-header">
@@ -857,29 +876,32 @@
                                 Ask questions about G-Data Labs services, research, or AI integration
                             </p>
                         </div>
-                        
+
                         <div class="search-section">
                             <div class="search-input-container">
-                                <input type="text" 
-                                       id="rag-search-input" 
-                                       placeholder="Ask anything about our services, research, or AI capabilities..."
-                                       class="rag-search-input">
+                                <input type="text" id="rag-search-input"
+                                    placeholder="Ask anything about our services, research, or AI capabilities..."
+                                    class="rag-search-input">
                                 <button id="rag-search-btn" class="rag-search-btn">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
-                            
+
                             <div class="quick-questions">
                                 <span style="font-size: 0.8rem; color: #666;">Quick questions:</span>
                                 <div class="question-tags">
-                                    <span class="question-tag" data-question="What is RAG database integration?">RAG Integration</span>
-                                    <span class="question-tag" data-question="How does AI spokesperson work?">AI Spokesperson</span>
-                                    <span class="question-tag" data-question="What research has G-Data Labs conducted?">Our Research</span>
-                                    <span class="question-tag" data-question="How much time can workflow automation save?">Time Savings</span>
+                                    <span class="question-tag" data-question="What is RAG database integration?">RAG
+                                        Integration</span>
+                                    <span class="question-tag" data-question="How does AI spokesperson work?">AI
+                                        Spokesperson</span>
+                                    <span class="question-tag"
+                                        data-question="What research has G-Data Labs conducted?">Our Research</span>
+                                    <span class="question-tag"
+                                        data-question="How much time can workflow automation save?">Time Savings</span>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div id="rag-response-container" class="rag-response-container" style="display: none;">
                             <div class="response-header">
                                 <i class="fas fa-brain" style="color: #4b96ff; margin-right: 8px;"></i>
@@ -895,7 +917,7 @@
                                 <div id="sources-list" class="sources-list"></div>
                             </div>
                         </div>
-                        
+
                         <div id="loading-indicator" class="loading-indicator" style="display: none;">
                             <div class="loading-spinner"></div>
                             <span>Searching knowledge base...</span>
@@ -909,72 +931,100 @@
     <section class="customer-engagement-section" style="background: linear-gradient(135deg, #f9f8f5 0%, #f5f3ed 100%);">
         <div class="container">
             <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
-                <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 1rem; color: #333;">24/7 Customer Engagement</h2>
-                <p class="section-subtitle" style="font-size: 1.2rem; color: #8b7355; font-weight: 500;">Transform customer interactions with intelligent AI spokespersons</p>
+                <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 1rem; color: #333;">24/7 Customer
+                    Engagement</h2>
+                <p class="section-subtitle" style="font-size: 1.2rem; color: #8b7355; font-weight: 500;">Transform
+                    customer interactions with intelligent AI spokespersons</p>
             </div>
-            
+
             <div class="engagement-intro" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
                 <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: #333;">Your Digital Brand Ambassador</h3>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: #666;">Our AI spokespersons serve as the perfect digital ambassadors for your organization, providing consistent, knowledgeable, and empathetic interactions at scale. Available 24/7 across all channels, they ensure your customers always receive immediate, accurate assistance.</p>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #666;">Our AI spokespersons serve as the perfect
+                    digital ambassadors for your organization, providing consistent, knowledgeable, and empathetic
+                    interactions at scale. Available 24/7 across all channels, they ensure your customers always receive
+                    immediate, accurate assistance.</p>
             </div>
-            
+
             <!-- Large Video Section -->
             <div class="video-showcase" style="max-width: 1000px; margin: 0 auto 4rem;">
-                <div style="position: relative; overflow: hidden; aspect-ratio: 1920/1080; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
-                    <iframe src="https://share.synthesia.io/embeds/videos/674b0ef8-9b95-438f-99bc-d9d9a7926b65" 
-                            loading="lazy" 
-                            title="Synthesia video player - G-Data AI Spokesperson" 
-                            allowfullscreen 
-                            allow="encrypted-media; fullscreen;" 
-                            style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;">
+                <div
+                    style="position: relative; overflow: hidden; aspect-ratio: 1920/1080; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
+                    <iframe src="https://share.synthesia.io/embeds/videos/674b0ef8-9b95-438f-99bc-d9d9a7926b65"
+                        loading="lazy" title="Synthesia video player - G-Data AI Spokesperson" allowfullscreen
+                        allow="encrypted-media; fullscreen;"
+                        style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;">
                     </iframe>
                 </div>
-                <p style="text-align: center; margin-top: 1.5rem; color: #666; font-style: italic;">Experience our AI spokesperson delivering intelligent, brand-consistent communication</p>
+                <p style="text-align: center; margin-top: 1.5rem; color: #666; font-style: italic;">Experience our AI
+                    spokesperson delivering intelligent, brand-consistent communication</p>
             </div>
-            
+
             <!-- Key Features Grid -->
-            <div class="engagement-features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
-                <div class="feature-card" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
+            <div class="engagement-features"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                <div class="feature-card"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ff4b4b;">
                     <i class="fas fa-comments" style="font-size: 2.5rem; color: #ff4b4b; margin-bottom: 1rem;"></i>
                     <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Natural Conversations</h4>
-                    <p style="color: #666;">Advanced NLP enables human-like interactions that understand context, emotion, and intent</p>
+                    <p style="color: #666;">Advanced NLP enables human-like interactions that understand context,
+                        emotion, and intent</p>
                 </div>
-                
-                <div class="feature-card" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #4b96ff;">
+
+                <div class="feature-card"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #4b96ff;">
                     <i class="fas fa-globe" style="font-size: 2.5rem; color: #4b96ff; margin-bottom: 1rem;"></i>
                     <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Omnichannel Presence</h4>
-                    <p style="color: #666;">Deploy across web, mobile, social media, and messaging platforms seamlessly</p>
+                    <p style="color: #666;">Deploy across web, mobile, social media, and messaging platforms seamlessly
+                    </p>
                 </div>
-                
-                <div class="feature-card" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ffd700;">
+
+                <div class="feature-card"
+                    style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid #ffd700;">
                     <i class="fas fa-brain" style="font-size: 2.5rem; color: #ffd700; margin-bottom: 1rem;"></i>
                     <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Continuous Learning</h4>
-                    <p style="color: #666;">Improves with every interaction, adapting to customer needs and preferences</p>
+                    <p style="color: #666;">Improves with every interaction, adapting to customer needs and preferences
+                    </p>
                 </div>
             </div>
-            
+
             <!-- Industries and Implementation -->
-            <div class="implementation-section" style="background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 4rem;">
-                <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 2rem; color: #333;">Enterprise-Ready Solutions</h3>
+            <div class="implementation-section"
+                style="background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 4rem;">
+                <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 2rem; color: #333;">Enterprise-Ready
+                    Solutions</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
                     <div>
                         <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Industries We Serve</h4>
                         <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check" style="color: #8b7355; margin-right: 0.5rem;"></i> Healthcare & Medical Services</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check" style="color: #8b7355; margin-right: 0.5rem;"></i> Financial Services & Banking</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check" style="color: #8b7355; margin-right: 0.5rem;"></i> Education & E-Learning</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check" style="color: #8b7355; margin-right: 0.5rem;"></i> Retail & E-Commerce</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check" style="color: #8b7355; margin-right: 0.5rem;"></i> Government & Public Services</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Healthcare & Medical Services
+                            </li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Financial Services & Banking</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Education & E-Learning</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Retail & E-Commerce</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-check"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Government & Public Services</li>
                         </ul>
                     </div>
                     <div>
                         <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Implementation Benefits</h4>
                         <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right" style="color: #8b7355; margin-right: 0.5rem;"></i> 90% reduction in response time</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right" style="color: #8b7355; margin-right: 0.5rem;"></i> 24/7 availability without staffing costs</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right" style="color: #8b7355; margin-right: 0.5rem;"></i> Consistent brand messaging</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right" style="color: #8b7355; margin-right: 0.5rem;"></i> Multilingual support capabilities</li>
-                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right" style="color: #8b7355; margin-right: 0.5rem;"></i> Seamless CRM integration</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> 90% reduction in response time
+                            </li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> 24/7 availability without
+                                staffing costs</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Consistent brand messaging</li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Multilingual support capabilities
+                            </li>
+                            <li style="padding: 0.5rem 0; color: #666;"><i class="fas fa-arrow-right"
+                                    style="color: #8b7355; margin-right: 0.5rem;"></i> Seamless CRM integration</li>
                         </ul>
                     </div>
                 </div>
@@ -988,11 +1038,12 @@
                 <h2 class="section-title">Workflow Automation Excellence</h2>
                 <p class="section-subtitle">Streamline operations with intelligent process automation</p>
             </div>
-            
+
             <div class="showcase-grid">
                 <div class="showcase-content">
                     <h3>End-to-End Process Optimization</h3>
-                    <p>Our workflow automation solutions learn from your existing processes and create intelligent workflows that adapt and improve over time.</p>
+                    <p>Our workflow automation solutions learn from your existing processes and create intelligent
+                        workflows that adapt and improve over time.</p>
                     <p><strong>Automation Capabilities:</strong></p>
                     <ul class="feature-list">
                         <li>Document processing and data extraction</li>
@@ -1002,9 +1053,10 @@
                         <li>Predictive task prioritization</li>
                         <li>Compliance monitoring and alerts</li>
                     </ul>
-                    <p style="margin-top: 1.5rem;"><strong>Common Use Cases:</strong> Invoice processing, HR onboarding, Customer support ticketing, Inventory management, Quality assurance workflows</p>
+                    <p style="margin-top: 1.5rem;"><strong>Common Use Cases:</strong> Invoice processing, HR onboarding,
+                        Customer support ticketing, Inventory management, Quality assurance workflows</p>
                 </div>
-                
+
                 <div class="showcase-demo">
                     <video width="100%" height="300" controls style="border-radius: 10px; margin-bottom: 1.5rem;">
                         <source src="videos/ai_training_vid_combined.mp4" type="video/mp4">
@@ -1024,31 +1076,35 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Success Stories</h2>
-                <p class="section-subtitle">How organizations transformed their operations with our AI workflow solutions</p>
+                <p class="section-subtitle">How organizations transformed their operations with our AI workflow
+                    solutions</p>
             </div>
-            
+
             <div class="case-studies-grid">
                 <div class="case-study-card fade-in">
                     <h4>Healthcare System Integration</h4>
-                    <p>Implemented RAG database for medical records and AI spokesperson for patient inquiries, reducing administrative burden on medical staff.</p>
+                    <p>Implemented RAG database for medical records and AI spokesperson for patient inquiries, reducing
+                        administrative burden on medical staff.</p>
                     <div class="case-study-result">
                         <i class="fas fa-chart-line"></i>
                         Result: 60% reduction in administrative tasks, 24/7 patient support coverage
                     </div>
                 </div>
-                
+
                 <div class="case-study-card fade-in">
                     <h4>Manufacturing Workflow Optimization</h4>
-                    <p>Automated quality control processes and supply chain management with intelligent monitoring and predictive maintenance scheduling.</p>
+                    <p>Automated quality control processes and supply chain management with intelligent monitoring and
+                        predictive maintenance scheduling.</p>
                     <div class="case-study-result">
                         <i class="fas fa-industry"></i>
                         Result: 35% increase in production efficiency, 50% reduction in downtime
                     </div>
                 </div>
-                
+
                 <div class="case-study-card fade-in">
                     <h4>Educational Institution Support</h4>
-                    <p>Deployed AI spokesperson for student services and RAG system for academic resources, improving accessibility and response times.</p>
+                    <p>Deployed AI spokesperson for student services and RAG system for academic resources, improving
+                        accessibility and response times.</p>
                     <div class="case-study-result">
                         <i class="fas fa-graduation-cap"></i>
                         Result: 80% faster response to student inquiries, improved satisfaction scores
@@ -1061,7 +1117,8 @@
     <section class="cta">
         <div class="container">
             <h2>Ready to Transform Your Workflows?</h2>
-            <p>Let's discuss how our AI integration solutions can revolutionize your organization's efficiency and productivity. Schedule a consultation to explore custom solutions tailored to your specific needs.</p>
+            <p>Let's discuss how our AI integration solutions can revolutionize your organization's efficiency and
+                productivity. Schedule a consultation to explore custom solutions tailored to your specific needs.</p>
             <a href="index.html#contact" class="cta-button">Get Started Today</a>
         </div>
     </section>
@@ -1162,13 +1219,13 @@
         function searchRAGDatabase(query) {
             // Simulate processing time
             const searchTime = Math.random() * 1000 + 500; // 500-1500ms
-            
+
             return new Promise((resolve) => {
                 setTimeout(() => {
                     // Find best match
                     let bestMatch = null;
                     let highestScore = 0;
-                    
+
                     Object.keys(ragKnowledgeBase).forEach(key => {
                         const score = calculateSimilarity(query.toLowerCase(), key.toLowerCase());
                         if (score > highestScore) {
@@ -1176,7 +1233,7 @@
                             bestMatch = key;
                         }
                     });
-                    
+
                     if (bestMatch && highestScore > 0.3) {
                         resolve({
                             success: true,
@@ -1215,10 +1272,10 @@
             const responseTime = document.getElementById('response-time');
             const sourcesSection = document.getElementById('sources-section');
             const sourcesList = document.getElementById('sources-list');
-            
+
             responseContent.textContent = result.response;
             responseTime.textContent = `(${(result.searchTime / 1000).toFixed(1)}s)`;
-            
+
             // Display sources
             sourcesList.innerHTML = '';
             result.sources.forEach(source => {
@@ -1230,21 +1287,21 @@
                 `;
                 sourcesList.appendChild(sourceItem);
             });
-            
+
             sourcesSection.style.display = 'block';
             responseContainer.style.display = 'block';
         }
 
         function performRAGSearch(query) {
             if (!query.trim()) return;
-            
+
             const loadingIndicator = document.getElementById('loading-indicator');
             const responseContainer = document.getElementById('rag-response-container');
-            
+
             // Show loading, hide previous results
             loadingIndicator.style.display = 'flex';
             responseContainer.style.display = 'none';
-            
+
             searchRAGDatabase(query).then(result => {
                 loadingIndicator.style.display = 'none';
                 displayRAGResponse(result);
@@ -1252,23 +1309,23 @@
         }
 
         // Event listeners for RAG demo
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.getElementById('rag-search-input');
             const searchBtn = document.getElementById('rag-search-btn');
             const questionTags = document.querySelectorAll('.question-tag');
-            
+
             // Search button click
             searchBtn.addEventListener('click', () => {
                 performRAGSearch(searchInput.value);
             });
-            
+
             // Enter key in search input
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     performRAGSearch(searchInput.value);
                 }
             });
-            
+
             // Quick question tags
             questionTags.forEach(tag => {
                 tag.addEventListener('click', () => {
@@ -1281,4 +1338,5 @@
 
     </script>
 </body>
+
 </html>
