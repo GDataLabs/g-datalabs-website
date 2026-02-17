@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Marketplace - G-Data Labs</title>
+    <link rel="icon" type="image/png" href="logos/light_logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #4f46e5;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .page-header {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-card .label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .metric-card .change {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .change.positive {
+            color: var(--success-color);
+        }
+
+        .change.negative {
+            color: var(--danger-color);
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .data-selector {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .time-range {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .time-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background-color: transparent;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Data Table */
+        .data-table-section {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .data-type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .data-type-badge.voice {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .data-type-badge.image {
+            background-color: #fce7f3;
+            color: #be185d;
+        }
+
+        .data-type-badge.text {
+            background-color: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .data-type-badge.biometric {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        /* Order Book */
+        .order-book {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-book h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .order-book-table {
+            width: 100%;
+            font-size: 0.875rem;
+        }
+
+        .order-book-table th {
+            text-align: left;
+            padding: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .order-book-table td {
+            padding: 0.5rem;
+        }
+
+        .buy-order {
+            color: var(--success-color);
+        }
+
+        .sell-order {
+            color: var(--danger-color);
+        }
+
+        /* Active Trades */
+        .active-trades {
+            margin-top: 2rem;
+        }
+
+        .trade-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .trade-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .trade-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .trade-icon.voice {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .trade-icon.image {
+            background-color: #fce7f3;
+            color: #be185d;
+        }
+
+        .trade-details h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .trade-details p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .trade-status {
+            text-align: right;
+        }
+
+        .trade-price {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        .trade-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .time-range {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Data Marketplace Dashboard</h1>
+            <p>Monitor real-time data prices, manage your listings, and track market trends</p>
+        </div>
+
+        <!-- Dashboard Metrics -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="label">Portfolio Value</div>
+                <div class="value">$12,845</div>
+                <div class="change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    +5.2% today
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="label">Active Listings</div>
+                <div class="value">24</div>
+                <div class="change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    +3 this week
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="label">Total Sales</div>
+                <div class="value">156</div>
+                <div class="change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    +12% this month
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="label">Avg. Price/Data</div>
+                <div class="value">$2.34</div>
+                <div class="change negative">
+                    <i class="fas fa-arrow-down"></i>
+                    -0.8% today
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-grid">
+            <!-- Chart Section -->
+            <div class="chart-section">
+                <div class="chart-header">
+                    <h2>Market Price Trends</h2>
+                    <div class="chart-controls">
+                        <select class="data-selector" id="dataTypeSelector">
+                            <option value="all">All Data Types</option>
+                            <option value="voice">Voice Data</option>
+                            <option value="image">Image Data</option>
+                            <option value="text">Text Data</option>
+                            <option value="biometric">Biometric Data</option>
+                        </select>
+                        <div class="time-range">
+                            <button class="time-btn active" data-range="1H">1H</button>
+                            <button class="time-btn" data-range="1D">1D</button>
+                            <button class="time-btn" data-range="1W">1W</button>
+                            <button class="time-btn" data-range="1M">1M</button>
+                            <button class="time-btn" data-range="3M">3M</button>
+                            <button class="time-btn" data-range="1Y">1Y</button>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="marketChart" height="100"></canvas>
+            </div>
+
+            <!-- Order Book -->
+            <div>
+                <div class="order-book">
+                    <h3>Order Book</h3>
+                    <table class="order-book-table">
+                        <thead>
+                            <tr>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="sell-order">
+                                <td>$2.45</td>
+                                <td>125</td>
+                                <td>$306.25</td>
+                            </tr>
+                            <tr class="sell-order">
+                                <td>$2.42</td>
+                                <td>87</td>
+                                <td>$210.54</td>
+                            </tr>
+                            <tr class="sell-order">
+                                <td>$2.40</td>
+                                <td>203</td>
+                                <td>$487.20</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="text-align: center; padding: 0.5rem;">
+                                    <strong style="color: var(--primary-color);">Current: $2.38</strong>
+                                </td>
+                            </tr>
+                            <tr class="buy-order">
+                                <td>$2.35</td>
+                                <td>156</td>
+                                <td>$366.60</td>
+                            </tr>
+                            <tr class="buy-order">
+                                <td>$2.33</td>
+                                <td>94</td>
+                                <td>$219.02</td>
+                            </tr>
+                            <tr class="buy-order">
+                                <td>$2.30</td>
+                                <td>178</td>
+                                <td>$409.40</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Volume Chart -->
+                <div class="order-book" style="margin-top: 2rem;">
+                    <h3>Trading Volume</h3>
+                    <canvas id="volumeChart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table Section -->
+        <div class="data-table-section" style="margin-top: 2rem;">
+            <div class="table-header">
+                <h3>My Data Listings</h3>
+                <button class="btn btn-primary" onclick="openListingModal()">
+                    <i class="fas fa-plus"></i>
+                    New Listing
+                </button>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Sales</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="dataListings">
+                    <tr>
+                        <td>
+                            <span class="data-type-badge voice">
+                                <i class="fas fa-microphone"></i>
+                                Voice
+                            </span>
+                        </td>
+                        <td>30-minute conversation dataset</td>
+                        <td>$3.50</td>
+                        <td><span style="color: var(--success-color);">Active</span></td>
+                        <td>245</td>
+                        <td>18</td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="data-type-badge image">
+                                <i class="fas fa-image"></i>
+                                Image
+                            </span>
+                        </td>
+                        <td>Labeled facial expressions (500 images)</td>
+                        <td>$2.25</td>
+                        <td><span style="color: var(--success-color);">Active</span></td>
+                        <td>189</td>
+                        <td>32</td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="data-type-badge text">
+                                <i class="fas fa-file-alt"></i>
+                                Text
+                            </span>
+                        </td>
+                        <td>Product review corpus (10k reviews)</td>
+                        <td>$1.85</td>
+                        <td><span style="color: var(--warning-color);">Pending</span></td>
+                        <td>56</td>
+                        <td>0</td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="data-type-badge biometric">
+                                <i class="fas fa-heartbeat"></i>
+                                Biometric
+                            </span>
+                        </td>
+                        <td>Heart rate variability data (7 days)</td>
+                        <td>$5.00</td>
+                        <td><span style="color: var(--success-color);">Active</span></td>
+                        <td>312</td>
+                        <td>45</td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="data-table-section" style="margin-top: 2rem;">
+            <div class="table-header">
+                <h3>Recent Transactions</h3>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-download"></i>
+                    Export
+                </button>
+            </div>
+            
+            <div class="active-trades">
+                <div class="trade-item">
+                    <div class="trade-info">
+                        <div class="trade-icon voice">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <div class="trade-details">
+                            <h4>Voice Recording - Customer Service Training</h4>
+                            <p>Purchased by: Acme Corp</p>
+                        </div>
+                    </div>
+                    <div class="trade-status">
+                        <div class="trade-price">+$3.50</div>
+                        <div class="trade-time">2 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="trade-item">
+                    <div class="trade-info">
+                        <div class="trade-icon image">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="trade-details">
+                            <h4>Facial Expression Dataset</h4>
+                            <p>Purchased by: AI Research Lab</p>
+                        </div>
+                    </div>
+                    <div class="trade-status">
+                        <div class="trade-price">+$2.25</div>
+                        <div class="trade-time">15 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="trade-item">
+                    <div class="trade-info">
+                        <div class="trade-icon biometric">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="trade-details">
+                            <h4>Fitness Tracking Data</h4>
+                            <p>Purchased by: HealthTech Inc</p>
+                        </div>
+                    </div>
+                    <div class="trade-status">
+                        <div class="trade-price">+$5.00</div>
+                        <div class="trade-time">1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Listing Modal -->
+    <div class="modal" id="listingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Data Listing</h2>
+                <button class="close-btn" onclick="closeListingModal()">&times;</button>
+            </div>
+            
+            <form id="listingForm">
+                <div class="form-group">
+                    <label for="dataType">Data Type</label>
+                    <select id="dataType" required>
+                        <option value="">Select type...</option>
+                        <option value="voice">Voice Data</option>
+                        <option value="image">Image Data</option>
+                        <option value="text">Text Data</option>
+                        <option value="biometric">Biometric Data</option>
+                        <option value="behavioral">Behavioral Data</option>
+                        <option value="location">Location Data</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" required placeholder="Give your data a descriptive title">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" required placeholder="Describe your data in detail..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price per Use ($)</label>
+                    <input type="number" id="price" min="0" step="0.01" required placeholder="0.00">
+                </div>
+
+                <div class="form-group">
+                    <label for="consent">Consent Settings</label>
+                    <select id="consent" required>
+                        <option value="research">Research Only</option>
+                        <option value="commercial">Commercial Use</option>
+                        <option value="both">Research & Commercial</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeListingModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Listing</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Chart configurations
+        const chartColors = {
+            primary: '#2563eb',
+            success: '#10b981',
+            danger: '#ef4444',
+            warning: '#f59e0b',
+            purple: '#8b5cf6',
+            pink: '#ec4899'
+        };
+
+        // Initialize main market chart
+        const marketCtx = document.getElementById('marketChart').getContext('2d');
+        const marketChart = new Chart(marketCtx, {
+            type: 'line',
+            data: {
+                labels: generateTimeLabels('1H'),
+                datasets: [
+                    {
+                        label: 'Voice Data',
+                        data: generatePriceData(60, 2.2, 2.8),
+                        borderColor: chartColors.primary,
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Image Data',
+                        data: generatePriceData(60, 1.5, 2.2),
+                        borderColor: chartColors.pink,
+                        backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Text Data',
+                        data: generatePriceData(60, 0.8, 1.5),
+                        borderColor: chartColors.purple,
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Biometric Data',
+                        data: generatePriceData(60, 3.5, 5.5),
+                        borderColor: chartColors.success,
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            usePointStyle: true,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toFixed(2);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Initialize volume chart
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        const volumeChart = new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: generateTimeLabels('1H', 12),
+                datasets: [{
+                    label: 'Volume',
+                    data: generateVolumeData(12),
+                    backgroundColor: 'rgba(37, 99, 235, 0.5)',
+                    borderColor: chartColors.primary,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + ' GB';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Helper functions
+        function generateTimeLabels(range, points = 60) {
+            const labels = [];
+            const now = new Date();
+            
+            switch(range) {
+                case '1H':
+                    for(let i = points - 1; i >= 0; i--) {
+                        const time = new Date(now.getTime() - i * 60000);
+                        if (i % 10 === 0) {
+                            labels.push(time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+                        } else {
+                            labels.push('');
+                        }
+                    }
+                    break;
+                case '1D':
+                    for(let i = 23; i >= 0; i--) {
+                        labels.push(`${23-i}:00`);
+                    }
+                    break;
+                case '1W':
+                    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    for(let i = 6; i >= 0; i--) {
+                        const date = new Date(now);
+                        date.setDate(date.getDate() - i);
+                        labels.push(days[date.getDay()]);
+                    }
+                    break;
+            }
+            return labels;
+        }
+
+        function generatePriceData(points, min, max) {
+            const data = [];
+            let currentPrice = (min + max) / 2;
+            
+            for(let i = 0; i < points; i++) {
+                const change = (Math.random() - 0.5) * 0.2;
+                currentPrice = Math.max(min, Math.min(max, currentPrice + change));
+                data.push(currentPrice);
+            }
+            return data;
+        }
+
+        function generateVolumeData(points) {
+            return Array.from({length: points}, () => Math.floor(Math.random() * 100) + 50);
+        }
+
+        // Time range buttons
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateChartData(this.getAttribute('data-range'));
+            });
+        });
+
+        function updateChartData(range) {
+            const points = {
+                '1H': 60,
+                '1D': 24,
+                '1W': 7,
+                '1M': 30,
+                '3M': 90,
+                '1Y': 365
+            };
+            
+            marketChart.data.labels = generateTimeLabels(range, points[range]);
+            marketChart.data.datasets.forEach(dataset => {
+                const [min, max] = getMinMaxForDataType(dataset.label);
+                dataset.data = generatePriceData(points[range], min, max);
+            });
+            marketChart.update();
+        }
+
+        function getMinMaxForDataType(type) {
+            const ranges = {
+                'Voice Data': [2.2, 2.8],
+                'Image Data': [1.5, 2.2],
+                'Text Data': [0.8, 1.5],
+                'Biometric Data': [3.5, 5.5]
+            };
+            return ranges[type] || [1, 3];
+        }
+
+        // Data type selector
+        document.getElementById('dataTypeSelector').addEventListener('change', function() {
+            const selectedType = this.value;
+            if (selectedType === 'all') {
+                marketChart.data.datasets.forEach(dataset => {
+                    dataset.hidden = false;
+                });
+            } else {
+                marketChart.data.datasets.forEach(dataset => {
+                    dataset.hidden = !dataset.label.toLowerCase().includes(selectedType);
+                });
+            }
+            marketChart.update();
+        });
+
+        // Modal functions
+        function openListingModal() {
+            document.getElementById('listingModal').style.display = 'flex';
+        }
+
+        function closeListingModal() {
+            document.getElementById('listingModal').style.display = 'none';
+            document.getElementById('listingForm').reset();
+        }
+
+        // Form submission
+        document.getElementById('listingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                dataType: document.getElementById('dataType').value,
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                price: document.getElementById('price').value,
+                consent: document.getElementById('consent').value
+            };
+            
+            console.log('New listing:', formData);
+            // Here you would send the data to your backend API
+            
+            // Add to table (temporary - would come from backend)
+            addListingToTable(formData);
+            closeListingModal();
+        });
+
+        function addListingToTable(data) {
+            const tbody = document.getElementById('dataListings');
+            const row = tbody.insertRow(0);
+            
+            const typeIcons = {
+                voice: 'fa-microphone',
+                image: 'fa-image',
+                text: 'fa-file-alt',
+                biometric: 'fa-heartbeat',
+                behavioral: 'fa-brain',
+                location: 'fa-map-marker-alt'
+            };
+            
+            row.innerHTML = `
+                <td>
+                    <span class="data-type-badge ${data.dataType}">
+                        <i class="fas ${typeIcons[data.dataType]}"></i>
+                        ${data.dataType.charAt(0).toUpperCase() + data.dataType.slice(1)}
+                    </span>
+                </td>
+                <td>${data.title}</td>
+                <td>$${parseFloat(data.price).toFixed(2)}</td>
+                <td><span style="color: var(--warning-color);">Pending</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>
+                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                        Edit
+                    </button>
+                </td>
+            `;
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update order book prices
+            const sellOrders = document.querySelectorAll('.sell-order td:first-child');
+            const buyOrders = document.querySelectorAll('.buy-order td:first-child');
+            
+            sellOrders.forEach(cell => {
+                const currentPrice = parseFloat(cell.textContent.replace('$', ''));
+                const change = (Math.random() - 0.5) * 0.05;
+                cell.textContent = '$' + (currentPrice + change).toFixed(2);
+            });
+            
+            buyOrders.forEach(cell => {
+                const currentPrice = parseFloat(cell.textContent.replace('$', ''));
+                const change = (Math.random() - 0.5) * 0.05;
+                cell.textContent = '$' + (currentPrice + change).toFixed(2);
+            });
+            
+            // Update volume chart
+            const newVolume = volumeChart.data.datasets[0].data.slice(1);
+            newVolume.push(Math.floor(Math.random() * 100) + 50);
+            volumeChart.data.datasets[0].data = newVolume;
+            volumeChart.update('none');
+        }, 5000);
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('listingModal');
+            if (event.target === modal) {
+                closeListingModal();
+            }
+        }
+    </script>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 2rem 0;">
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> G-Data Labs. All rights reserved. | Empowering Communities Through AI & Data Literacy</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <a href="terms.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Terms &
+                    Conditions</a>
+                <a href="privacy.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Privacy
+                    Policy</a>
+                <a href="cookies.html" style="color: #ccc; text-decoration: none;">Cookie Policy</a>
+            </p>
+            <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
+        </div>
+    </footer>
+</body>
+</html>

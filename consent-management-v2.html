@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consent Management - G-Data Labs</title>
+    <link rel="icon" type="image/png" href="logos/light_logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #4f46e5;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .page-header {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Consent Overview Cards */
+        .consent-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .overview-card {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .overview-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .overview-card.active i {
+            color: var(--success-color);
+        }
+
+        .overview-card.pending i {
+            color: var(--warning-color);
+        }
+
+        .overview-card.revoked i {
+            color: var(--danger-color);
+        }
+
+        .overview-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .overview-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Consent Settings */
+        .consent-section {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .consent-category {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .consent-category:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .category-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--success-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .consent-options {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .consent-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background-color: var(--bg-secondary);
+            border-radius: 0.5rem;
+        }
+
+        .consent-option label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .consent-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .price-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-input input {
+            width: 80px;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.25rem;
+            text-align: right;
+        }
+
+        /* Active Consents Table */
+        .consents-table {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .consents-table th {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .consents-table td {
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .consent-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .consent-badge.active {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .consent-badge.pending {
+            background-color: #fed7aa;
+            color: #92400e;
+        }
+
+        .consent-badge.expired {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        /* Privacy Settings */
+        .privacy-setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-info {
+            flex: 1;
+        }
+
+        .privacy-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .privacy-info p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Alert Box */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .alert-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        .alert-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .consent-overview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Data Consent Management</h1>
+            <p>Control how your data is used and set your pricing preferences</p>
+        </div>
+
+        <!-- Consent Overview -->
+        <div class="consent-overview">
+            <div class="overview-card active">
+                <i class="fas fa-check-circle"></i>
+                <h3>24</h3>
+                <p>Active Consents</p>
+            </div>
+            <div class="overview-card pending">
+                <i class="fas fa-clock"></i>
+                <h3>3</h3>
+                <p>Pending Requests</p>
+            </div>
+            <div class="overview-card revoked">
+                <i class="fas fa-times-circle"></i>
+                <h3>5</h3>
+                <p>Revoked Consents</p>
+            </div>
+            <div class="overview-card">
+                <i class="fas fa-dollar-sign" style="color: var(--success-color);"></i>
+                <h3>$127.50</h3>
+                <p>Total Earnings</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-grid">
+            <!-- Global Consent Settings -->
+            <div class="consent-section">
+                <h2 class="section-title">
+                    <i class="fas fa-cog"></i>
+                    Global Consent Settings
+                </h2>
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Data Marketplace Active</strong><br>
+                        Your data preferences are automatically applied when you interact with AI models.
+                    </div>
+                </div>
+
+                <!-- Voice Data Consent -->
+                <div class="consent-category">
+                    <div class="category-header">
+                        <div class="category-title">
+                            <i class="fas fa-microphone"></i>
+                            Voice Data
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="voiceConsent" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="consent-options" id="voiceOptions">
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span>Allow for AI training</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="3.50" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span>Allow commercial use</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="5.00" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox">
+                                <span>Allow research use</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="2.00" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Data Consent -->
+                <div class="consent-category">
+                    <div class="category-header">
+                        <div class="category-title">
+                            <i class="fas fa-image"></i>
+                            Image Data
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="imageConsent" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="consent-options" id="imageOptions">
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span>Allow facial recognition training</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="2.50" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox">
+                                <span>Allow object detection training</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="1.50" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Data Consent -->
+                <div class="consent-category">
+                    <div class="category-header">
+                        <div class="category-title">
+                            <i class="fas fa-file-alt"></i>
+                            Text Data
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="textConsent" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="consent-options" id="textOptions">
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span>Allow language model training</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="1.00" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span>Allow sentiment analysis</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="0.75" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biometric Data Consent -->
+                <div class="consent-category">
+                    <div class="category-header">
+                        <div class="category-title">
+                            <i class="fas fa-heartbeat"></i>
+                            Biometric Data
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="biometricConsent">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="consent-options" id="biometricOptions" style="display: none;">
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox">
+                                <span>Allow health analytics</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="5.00" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                        <div class="consent-option">
+                            <label>
+                                <input type="checkbox">
+                                <span>Allow fitness tracking</span>
+                            </label>
+                            <div class="price-input">
+                                <span>$</span>
+                                <input type="number" value="3.00" min="0" step="0.01">
+                                <span>per use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveGlobalSettings()">
+                    <i class="fas fa-save"></i>
+                    Save Settings
+                </button>
+            </div>
+
+            <!-- Active Consents & Privacy Settings -->
+            <div>
+                <!-- Active Consents -->
+                <div class="consent-section" style="margin-bottom: 2rem;">
+                    <h2 class="section-title">
+                        <i class="fas fa-list"></i>
+                        Active Consents
+                    </h2>
+
+                    <table class="consents-table">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Data Type</th>
+                                <th>Status</th>
+                                <th>Expires</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AI Research Lab</td>
+                                <td>Voice, Text</td>
+                                <td><span class="consent-badge active">Active</span></td>
+                                <td>Dec 31, 2024</td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewConsent(1)">View</button>
+                                    <button class="btn btn-danger btn-sm" onclick="revokeConsent(1)">Revoke</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HealthTech Inc</td>
+                                <td>Biometric</td>
+                                <td><span class="consent-badge active">Active</span></td>
+                                <td>Jun 15, 2024</td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewConsent(2)">View</button>
+                                    <button class="btn btn-danger btn-sm" onclick="revokeConsent(2)">Revoke</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vision Corp</td>
+                                <td>Image</td>
+                                <td><span class="consent-badge pending">Pending</span></td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="approveConsent(3)">Approve</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewConsent(3)">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Privacy Settings -->
+                <div class="consent-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Privacy Settings
+                    </h2>
+
+                    <div class="privacy-setting">
+                        <div class="privacy-info">
+                            <h4>Data Anonymization</h4>
+                            <p>Remove personally identifiable information before sharing</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="privacy-setting">
+                        <div class="privacy-info">
+                            <h4>Location Masking</h4>
+                            <p>Hide precise location data, share only general area</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="privacy-setting">
+                        <div class="privacy-info">
+                            <h4>Time Shifting</h4>
+                            <p>Randomize timestamps to prevent activity tracking</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="privacy-setting">
+                        <div class="privacy-info">
+                            <h4>Require Approval</h4>
+                            <p>Manually approve each data request</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consent Details Modal -->
+    <div class="modal" id="consentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Consent Details</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <div id="consentDetails">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle consent category options
+        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const category = this.id.replace('Consent', '');
+                const options = document.getElementById(category + 'Options');
+                if (options) {
+                    options.style.display = this.checked ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Save global settings
+        async function saveGlobalSettings() {
+            const settings = {
+                voice: {
+                    enabled: document.getElementById('voiceConsent').checked,
+                    options: getConsentOptions('voice')
+                },
+                image: {
+                    enabled: document.getElementById('imageConsent').checked,
+                    options: getConsentOptions('image')
+                },
+                text: {
+                    enabled: document.getElementById('textConsent').checked,
+                    options: getConsentOptions('text')
+                },
+                biometric: {
+                    enabled: document.getElementById('biometricConsent').checked,
+                    options: getConsentOptions('biometric')
+                }
+            };
+
+            console.log('Saving settings:', settings);
+            
+            // Show success message
+            showNotification('Settings saved successfully!', 'success');
+        }
+
+        function getConsentOptions(category) {
+            const options = [];
+            const container = document.getElementById(category + 'Options');
+            if (container) {
+                container.querySelectorAll('.consent-option').forEach(option => {
+                    const checkbox = option.querySelector('input[type="checkbox"]');
+                    const priceInput = option.querySelector('input[type="number"]');
+                    options.push({
+                        name: option.querySelector('span').textContent,
+                        enabled: checkbox.checked,
+                        price: parseFloat(priceInput.value)
+                    });
+                });
+            }
+            return options;
+        }
+
+        // View consent details
+        function viewConsent(id) {
+            const modal = document.getElementById('consentModal');
+            const details = document.getElementById('consentDetails');
+            
+            // Mock consent data
+            details.innerHTML = `
+                <div class="consent-detail">
+                    <h3>AI Research Lab - Voice & Text Data Consent</h3>
+                    <p><strong>Request Date:</strong> January 15, 2024</p>
+                    <p><strong>Expiration:</strong> December 31, 2024</p>
+                    <p><strong>Purpose:</strong> Training advanced language models for customer service applications</p>
+                    <p><strong>Data Types:</strong> Voice recordings, Text transcriptions</p>
+                    <p><strong>Compensation:</strong> $3.50 per voice sample, $1.00 per text sample</p>
+                    <p><strong>Usage Restrictions:</strong> Research only, no commercial redistribution</p>
+                    
+                    <div class="alert alert-info" style="margin-top: 1rem;">
+                        <i class="fas fa-info-circle"></i>
+                        <span>You have contributed 45 voice samples and 123 text samples under this consent.</span>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        // Revoke consent
+        async function revokeConsent(id) {
+            if (confirm('Are you sure you want to revoke this consent? This action cannot be undone.')) {
+                console.log('Revoking consent:', id);
+                showNotification('Consent revoked successfully', 'success');
+                // Reload the table or update the row
+            }
+        }
+
+        // Approve consent
+        async function approveConsent(id) {
+            console.log('Approving consent:', id);
+            showNotification('Consent approved successfully', 'success');
+            // Update the table row
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('consentModal').style.display = 'none';
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'info' : 'warning'}`;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '1001';
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('consentModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 2rem 0;">
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> G-Data Labs. All rights reserved. | Empowering Communities Through AI & Data Literacy</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <a href="terms.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Terms &
+                    Conditions</a>
+                <a href="privacy.html" style="color: #ccc; text-decoration: none; margin-right: 20px;">Privacy
+                    Policy</a>
+                <a href="cookies.html" style="color: #ccc; text-decoration: none;">Cookie Policy</a>
+            </p>
+            <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
+        </div>
+    </footer>
+</body>
+</html>
