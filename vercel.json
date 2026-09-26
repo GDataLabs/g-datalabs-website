@@ -30,5 +30,15 @@
       "destination": "/cookies.html",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/guideai",
+      "destination": "https://g-datalabs-guideai.vercel.app/guideai"
+    },
+    {
+      "source": "/guideai/:path*",
+      "destination": "https://g-datalabs-guideai.vercel.app/guideai/:path*"
+    }
   ]
 }
